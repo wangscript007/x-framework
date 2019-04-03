@@ -1,14 +1,13 @@
 <template>
   <page :showHeader="false">
-    <div>Dashboard</div>
-    <div style="height: 1500px;width: 120px;margin: 0 auto;background-color: #000;"></div>
+    <h1 class="text-center">Dashboard</h1>
   </page>
 </template>
 
 <script>
 import Page from '@/components/Page'
 export default {
-  name: 'dashboard',
+  name: 'Dashboard',
   components: {
     Page
   }

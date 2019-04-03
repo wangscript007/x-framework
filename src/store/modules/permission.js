@@ -5,20 +5,20 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
 /*
  * 通过meta.role判断是否与当前用户权限匹配
  */
-function hasPermission (route, roles) {
+function hasPermission(route, roles) {
   return route.meta && route.meta.roles ? roles.some(role => route.meta.roles.includes(role)) : true
 }
 
 /*
  * 过滤异步路由表，返回符合用户角色权限的路由表
  */
-function filterAsyncRouter (routerMap, roles) {
+function filterAsyncRouter(routerMap, roles) {
   return routerMap.filter(route => {
     return hasPermission(route, roles) ? (() => {
       if (route.children && route.children.length) {
         const matchedChildren = filterAsyncRouter(route.children, roles)
         route.children = matchedChildren
-        /* 更新路由重定向 */
+          /* 更新路由重定向 */
         if (route.redirect && matchedChildren.length > 0) {
           route.redirect = `${route.path}/${matchedChildren[0].path}`
         }
@@ -44,7 +44,7 @@ const permission = {
     }
   },
   actions: {
-    generateRoutes ({ commit }, data) {
+    createRoutes({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
         commit(permissionTypes.SET_ROUTERS, roles.includes('admin') ? asyncRouterMap : filterAsyncRouter(asyncRouterMap, roles))

@@ -1,16 +1,14 @@
 import router from '@/router'
 import store from '@/store'
 import { Message } from 'element-ui'
-import { getToken } from '@/common/utils/auth' // getToken from cookie
-import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
+import { getToken } from '@/common/utils/auth'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
-NProgress.configure({ showSpinner: false }) // NProgress Configuration
+NProgress.configure({ showSpinner: false })
 
-function hasPermission (roles, permissionRoles) {
-  if (roles.indexOf('admin') >= 0) return true // admin permission passed directly
-  if (!permissionRoles) return true
-  return roles.some(role => permissionRoles.indexOf(role) >= 0)
+function hasPermission(roles, permissionRoles) {
+  return roles.includes('admin') || !permissionRoles ? true : roles.some(role => permissionRoles.includes(role))
 }
 
 /* 拦截白名单 */
@@ -25,10 +23,10 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      if (store.getters.user.roles.length === 0) {
+      if (store.getters.user.roles && store.getters.user.roles.length === 0) {
         store.dispatch('getUserInfo').then(res => {
           const roles = res.data.roles
-          store.dispatch('generateRoutes', { roles }).then(() => {
+          store.dispatch('createRoutes', { roles }).then(() => {
             /* 将经过权限筛选后的路由表添加到router */
             router.addRoutes(store.getters.permission.matchedRouters)
             next({
@@ -43,13 +41,12 @@ router.beforeEach((to, from, next) => {
           })
         })
       } else {
-        /* 没有动态改变权限的需求可直接next() 删除下方判断 */
+        /* 判断即将访问的路由有没有许可，如果不需要动态改变权限可直接next() */
         if (hasPermission(store.getters.user.roles, to.meta.roles)) {
           next()
         } else {
           next({ path: '/401', replace: true, query: { noGoBack: true } })
         }
-        /* 可删除部分 */
       }
     }
   } else {

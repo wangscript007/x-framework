@@ -21,6 +21,13 @@ const userMap = {
     token: 'user',
     introduction: '普通用户',
     roles: ['user']
+  },
+  visitor: {
+    name: 'Visitor',
+    avatar: '',
+    token: 'visitor',
+    introduction: '访客',
+    roles: []
   }
 }
 

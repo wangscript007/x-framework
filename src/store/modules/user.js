@@ -34,11 +34,12 @@ const user = {
     }
   },
   actions: {
-    login ({ commit }, user) {
+    login({ commit }, user) {
       const username = user.username.trim()
       return new Promise((resolve, reject) => {
         login(username, user.password).then(response => {
           const data = response.data
+          console.log(data)
           commit('SET_TOKEN', data.token)
           setToken(response.data.token)
           resolve()
@@ -47,7 +48,7 @@ const user = {
         })
       })
     },
-    logout ({ commit, state }) {
+    logout({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.user.token).then(() => {
           commit('SET_TOKEN', '')
@@ -59,7 +60,7 @@ const user = {
         })
       })
     },
-    getUserInfo ({ commit, state }) {
+    getUserInfo({ commit, state }) {
       return new Promise((resolve, reject) => {
         getUserInfo(state.user.token).then(response => {
           if (!response.data) {
@@ -82,7 +83,7 @@ const user = {
       })
     },
     /* 前端登出 */
-    fedLogout ({ commit }) {
+    fedLogout({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
         removeToken()
@@ -90,7 +91,7 @@ const user = {
       })
     },
     /* 动态修改权限 */
-    changeRoles ({ commit, dispatch }, role) {
+    changeRoles({ commit, dispatch }, role) {
       return new Promise(resolve => {
         commit('SET_TOKEN', role)
         setToken(role)
