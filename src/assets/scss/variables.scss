@@ -1,0 +1,46 @@
+/* ------ global ------ */
+
+$default-font-color: rgba(0, 0, 0, .65);
+
+/* ------ global end ------ */
+
+
+/* ------ element-ui ------ */
+
+
+/* ------ element-ui end ------ */
+
+
+/* ------ layout ------ */
+
+$layout-bg-color: #f0f2f5;
+
+/* layout-header */
+
+$layout-header-height: 64px;
+$layout-header-bg-color: #fff;
+
+/* layout-sider */
+
+$sider-width: 256px;
+$sider-width-collapsed: 64px;
+$sider-bg-color: #001529;
+
+/* layout-sider-header */
+
+$sider-header-height: 64px;
+$sider-header-bg-color: #002140;
+$sider-header-text-color: #fff;
+$logo-size: 32px;
+$logo-margin: $logo-size/2;
+
+/* layout-sider-nav */
+
+$menu-bg-color: $sider-bg-color;
+$sub-menu-bg-color: #000c17;
+$sub-menu-item-bg-color: transparent;
+$menu-item-bg-color-active: #1890ff;
+$menu-item-text-color: hsla(0, 0%, 100%, 0.65);
+$menu-item-text-color-active: #fff;
+
+/* ------ layout end ------ */
