@@ -1,13 +1,17 @@
 <template>
   <el-menu-item :index="matchedRoutePath">
-    <svg-icon v-if="matchedRoute.meta && matchedRoute.meta.icon"
-              :icon-class="matchedRoute.meta.icon" />
-    <span slot="title">{{ matchedRoute.meta && matchedRoute.meta.title ? matchedRoute.meta.title : '-'}}</span>
+    <item-link :external="matchedRoute.meta && matchedRoute.meta.external"
+               :path="matchedRoutePath">
+      <svg-icon v-if="matchedRoute.meta && matchedRoute.meta.icon"
+                :icon-class="matchedRoute.meta.icon" />
+      <span>{{ matchedRoute.meta && matchedRoute.meta.title ? matchedRoute.meta.title : '-'}}</span>
+    </item-link>
   </el-menu-item>
 </template>
 
 <script>
 import path from 'path'
+import ItemLink from '@/views/layout/components/Sider/ItemLink'
 
 export default {
   name: 'ItemAlone',
@@ -37,7 +41,7 @@ export default {
     },
     /* 最终显示的路由的path */
     matchedRoutePath () {
-      return this.resolvePath(
+      return this.route.meta && this.route.meta.external ? this.route.path : this.resolvePath(
         this.matchedChildrenLength === 0
           ? this.route.path
           : `${this.route.path}/${this.route.children[0].path}`
@@ -49,6 +53,9 @@ export default {
     resolvePath (routePath) {
       return path.resolve(this.basePath, routePath)
     }
+  },
+  components: {
+    ItemLink
   }
 }
 </script>

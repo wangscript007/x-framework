@@ -21,6 +21,10 @@
                     :collapsed="false"
                     :fixed="true"></layout-sider>
     </layout-drawer>
+    <el-tooltip placement="top"
+                content="回到顶部">
+      <back-to-top />
+    </el-tooltip>
   </div>
 </template>
 
@@ -32,6 +36,7 @@ import LayoutHeader from '@/views/layout/components/Header'
 import LayoutSider from '@/views/layout/components/Sider'
 import LayoutMain from '@/views/layout/components/Main'
 import LayoutDrawer from '@/components/Drawer'
+import BackToTop from '@/components/BackToTop'
 
 export default {
   name: 'layout',
@@ -92,7 +97,8 @@ export default {
     LayoutSider,
     LayoutHeader,
     LayoutMain,
-    LayoutDrawer
+    LayoutDrawer,
+    BackToTop
   }
 }
 </script>

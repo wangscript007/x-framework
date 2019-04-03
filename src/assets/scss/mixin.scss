@@ -13,5 +13,5 @@
 }
 
 @mixin x-transition($duration) {
-    transition: all duration cubic-bezier(0.9, 0, 0.3, 0.7);
+    transition: all $duration cubic-bezier(0.9, 0, 0.3, 0.7);
 }

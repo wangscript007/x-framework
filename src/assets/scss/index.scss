@@ -30,6 +30,22 @@ body {
     font-variant: tabular-nums;
     line-height: 1.5;
     color: $default-font-color;
-    background-color: #fff;
+    background-color: $color-write;
     overflow-x: hidden;
+}
+
+
+/* ------ element-ui ------ */
+
+$--color-primary: $theme-color;
+
+/* ------ nprogress ------ */
+
+#nprogress {
+    .bar {
+        background: $theme-color !important;
+    }
+    .peg {
+        box-shadow: 0 0 10px $theme-color, 0 0 5px $theme-color !important;
+    }
 }

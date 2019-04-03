@@ -7,7 +7,7 @@
         <el-menu :defaultActive="$route.path"
                  :collapse="collapsed"
                  :collapseTransition="true"
-                 :router="true">
+                 :router="false">
           <template v-for="item in routers">
             <template v-if="item.meta && !item.meta.hidden">
               <item-alone v-if="isAloneRoute(item) && item.meta && !item.meta.alwaysShow"

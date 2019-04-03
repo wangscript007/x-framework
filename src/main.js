@@ -8,10 +8,10 @@ import router from '@/router'
 import store from '@/store'
 
 import 'normalize.css/normalize.css'
-import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/scss/index.scss'
-import '@/icon/iconfont.js'
+import 'element-ui/lib/theme-chalk/index.css'
 import '@/icon/iconfont.css'
+import '@/icon/iconfont'
 import '@/mock'
 import '@/permission'
 

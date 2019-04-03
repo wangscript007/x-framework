@@ -1,4 +1,27 @@
-/*x-layout*/
+/* ------ layout size options ------ */
+
+$sider-width: 256px;
+$sider-width-collapsed: 64px;
+$sider-header-height: 64px;
+$logo-size: 32px;
+$logo-margin: $logo-size/2;
+$layout-header-height: 64px;
+
+/* ------ layout color options ------ */
+
+$layout-bg-color: $color-write-1;
+$layout-header-bg-color: $color-write;
+$sider-bg-color: $theme-color-deputy;
+$sider-header-bg-color: $theme-color-deputy-light;
+$sider-header-text-color: $color-write;
+$menu-bg-color: $sider-bg-color;
+$sub-menu-bg-color: $theme-color-deputy-dark;
+$sub-menu-item-bg-color: transparent;
+$menu-item-bg-color-active: $theme-color;
+$menu-item-text-color: $color-write-2;
+$menu-item-text-color-active: $color-write;
+
+/* ------ layout ------ */
 
 .x-layout {
     position: relative;
@@ -24,7 +47,6 @@
     .el-submenu__title {
         height: 48px;
         line-height: 45px;
-        color: $menu-item-text-color;
         .svg-icon {
             width: 24px;
             height: 19px;
@@ -32,14 +54,22 @@
         }
         [class^=el-icon-] {
             height: 19px;
-            @include x-transition(0.2s);
+            @include x-transition(0.3s);
         }
     }
     .el-menu-item {
+        &>a {
+            @include x-transition(0.3s);
+            display: block;
+            color: $menu-item-text-color;
+            text-decoration: none;
+        }
         &:hover,
         &:focus,
         &.is-active {
-            @include el-menu-item-active-common;
+            &>a {
+                @include el-menu-item-active-common;
+            }
         }
         &:hover,
         &:focus {
@@ -51,6 +81,7 @@
     }
     .el-submenu {
         .el-submenu__title {
+            color: $menu-item-text-color;
             &:hover,
             &:focus {
                 background-color: $menu-bg-color !important;
@@ -125,14 +156,14 @@
     }
     .sider-nav {
         height: 100%;
-        padding-top: $layout-header-height;
+        padding-top: $layout-header-height + 8px;
+        padding-bottom: 8px;
         .el-menu {
             border: none;
             width: 100% !important;
             @include el-menu-common;
             .el-submenu {
                 .el-menu {
-                    padding: 10px 0;
                     background-color: $sub-menu-bg-color !important;
                     box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.45);
                     .el-menu-item,
@@ -154,7 +185,7 @@
                 }
             }
             .el-submenu__icon-arrow {
-                @include x-transition(0.2s);
+                @include x-transition(0.3s);
             }
         }
     }
@@ -181,7 +212,7 @@
             line-height: $toggle-button-icon-height;
             padding: ($sider-header-height - $toggle-button-icon-height) / 2;
             color: $default-font-color;
-            @include x-transition(0.2s);
+            @include x-transition(0.3s);
             &:hover {
                 color: #000;
                 background: rgba(0, 0, 0, 0.025);
@@ -209,7 +240,7 @@
 }
 
 
-/*x-drawer*/
+/* ------ x-drawer ------ */
 
 .x-drawer {
     position: fixed;
@@ -271,7 +302,7 @@
 }
 
 
-/*animation*/
+/* ------ animation ------ */
 
 
 /* sider在xs屏幕和其他大小屏幕切换时的动画 */

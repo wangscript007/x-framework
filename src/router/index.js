@@ -4,7 +4,7 @@ import Router from 'vue-router'
 /* 布局组件 */
 import Layout from '@/views/layout'
 
-/* 模块路由表，统一在动态路由表（asyncRouterMap）中引入 */
+/* 模块路由表，统一在动态路由表（asyncRouterMap）最前面引入 */
 import componentsRouter from '@/router/modules/components'
 
 Vue.use(Router)
@@ -27,6 +27,7 @@ Vue.use(Router)
     showInBreadcrumb: true,      面包屑中是否显示该路由，默认true
     redirectInBreadcrumb: true   面包屑中该路由是否可点击重定向，默认true
     roles: null                  路由权限，Array格式，默认null
+    external: false              是否外部链接，默认false
   }
 **/
 
@@ -88,7 +89,10 @@ export const constantRouterMap = [{
 ]
 
 /* 动态路由表 */
-export const asyncRouterMap = [{
+export const asyncRouterMap = [
+  /* 模块路由表引入 */
+  componentsRouter,
+  {
     path: '/permission',
     name: 'Permission',
     component: Layout,
@@ -164,8 +168,15 @@ export const asyncRouterMap = [{
       }
     }]
   },
-  /* 模块路由表引入 */
-  componentsRouter,
+  {
+    path: 'https://github.com/xustshinn/x-framework',
+    name: 'Github',
+    meta: {
+      title: 'Github',
+      icon: 'github-fill',
+      external: true
+    }
+  },
   /* 由于路由是从上到下解析执行，所以404判断必须放最后 */
   {
     path: '*',
