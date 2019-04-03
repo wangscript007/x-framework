@@ -2,8 +2,7 @@
   <div class="screen"
        :class="app.screenSize">
     <div class="x-layout">
-      <transition name="sider"
-                  mode="in-out">
+      <transition name="sider-toggle">
         <layout-sider v-if="!smallScreen"
                       :routers="permission.routers"
                       :collapsed="app.siderCollapsed"
@@ -99,13 +98,4 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.sider-enter-active,
-.sider-leave-active {
-  transition: all 0.3s cubic-bezier(0.9, 0, 0.3, 0.7);
-}
-
-.sider-enter,
-.sider-leave-to {
-  transform: translateX(-100%);
-}
 </style>

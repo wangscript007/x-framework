@@ -16,19 +16,19 @@ const app = {
     }
   },
   mutations: {
-    [appTypes.SET_SCREEN_SIZE] (state, screenSize = '') {
+    [appTypes.SET_SCREEN_SIZE](state, screenSize = '') {
       state.app.screenSize = screenSize
     },
-    [appTypes.SET_SIDER_FIXED] (state, siderFixed = false) {
+    [appTypes.SET_SIDER_FIXED](state, siderFixed = false) {
       state.app.siderFixed = siderFixed
     },
-    [appTypes.SET_SIDER_COLLAPSED] (state, siderCollapsed = false) {
+    [appTypes.SET_SIDER_COLLAPSED](state, siderCollapsed = false) {
       state.app.siderCollapsed = siderCollapsed
     },
-    [appTypes.SET_SIDER_OPENED] (state, siderOpened = false) {
+    [appTypes.SET_SIDER_OPENED](state, siderOpened = false) {
       state.app.siderOpened = siderOpened
     },
-    [appTypes.SET_DISABLE_ANIMATION] (state, disableAnimation = false) {
+    [appTypes.SET_DISABLE_ANIMATION](state, disableAnimation = false) {
       state.app.disableAnimation = disableAnimation
     }
   },

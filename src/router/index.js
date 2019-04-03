@@ -1,80 +1,18 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+/* 布局组件 */
 import Layout from '@/views/layout'
 
+/* 模块路由表，统一在动态路由表（asyncRouterMap）中引入 */
 import componentsRouter from '@/router/modules/components'
 
 Vue.use(Router)
 
-/* 默认路由表 */
-export const constantRouterMap = [{
-  path: '',
-  component: Layout,
-  redirect: '/dashboard',
-  meta: {},
-  children: [{
-    path: 'dashboard',
-    name: 'Dashboard',
-    component: () =>
-        import('@/views/dashboard'),
-    meta: {
-      title: '首页',
-      icon: 'dashboard',
-      noCache: true,
-      describe: '监控系统各项功能运作情况以及一些相关统计'
-    }
-  }]
-},
-{
-  path: '/redirect',
-  component: Layout,
-  meta: {
-    hidden: true
-  },
-  children: [{
-    path: '/redirect/:path*',
-    component: () =>
-        import('@/views/redirect')
-  }]
-},
-{
-  path: '/login',
-  meta: {
-    hidden: true
-  },
-  component: () =>
-      import('@/views/login')
-},
-{
-  path: '/404',
-  meta: {
-    hidden: true
-  },
-  component: () =>
-      import('@/views/error/404')
-},
-{
-  path: '/401',
-  meta: {
-    hidden: true
-  },
-  component: () =>
-      import('@/views/error/401')
-}
-  // {
-  //   path: '*',
-  //   redirect: '/404',
-  //   meta: {
-  //     hidden: true
-  //   }
-  // }
-]
-
-/* 动态路由表 */
 /**
+* 路由表相关参数
 * name:'router-name'
-* meta : {
+* meta : {                       由于vue-router自定义属性迁移到meta中，所以每一个路由至少定义meta: {}
     title: '',                   路由标题，用于显示在sider、breadcrumb、和pageHeader中的路由名称
     icon: '',                    该路由在sider中显示的图标，值：iconfont中的svg-name
     describe: ''                 路由相关描述，显示在Page组件中的PageHeader
@@ -91,83 +29,151 @@ export const constantRouterMap = [{
     roles: null                  路由权限，Array格式，默认null
   }
 **/
+
+/* 默认路由表 */
+export const constantRouterMap = [{
+    path: '',
+    component: Layout,
+    redirect: '/dashboard',
+    meta: {},
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () =>
+        import ('@/views/dashboard'),
+      meta: {
+        title: '首页',
+        icon: 'dashboard',
+        noCache: true,
+        describe: '监控系统各项功能运作情况以及一些相关统计'
+      }
+    }]
+  },
+  {
+    path: '/redirect',
+    component: Layout,
+    meta: {
+      hidden: true
+    },
+    children: [{
+      path: '/redirect/:path*',
+      component: () =>
+        import ('@/views/redirect')
+    }]
+  },
+  {
+    path: '/login',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/login')
+  },
+  {
+    path: '/404',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/error/404')
+  },
+  {
+    path: '/401',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/error/401')
+  }
+]
+
+/* 动态路由表 */
 export const asyncRouterMap = [{
-  path: '/permission',
-  name: 'Permission',
-  component: Layout,
-  redirect: '/permission/admin',
-  meta: {
-    title: '权限',
-    icon: 'lock',
-    roles: ['admin', 'editor', 'user'],
-    alwaysShow: true,
-    redirectInBreadcrumb: false
-  },
-  children: [{
-    path: 'admin',
-    name: 'PageAdmin',
-    component: () =>
-          import('@/views/permission/pageAdmin'),
+    path: '/permission',
+    name: 'Permission',
+    component: Layout,
+    redirect: '/permission/admin',
     meta: {
-      title: '权限控制页-Admin',
-      describe: '权限控制页，该功能只有拥有‘admin’权限的用户能访问',
-      roles: ['admin']
-    }
+      title: '权限',
+      icon: 'lock',
+      roles: ['admin', 'editor', 'user'],
+      alwaysShow: true,
+      redirectInBreadcrumb: false
+    },
+    children: [{
+        path: 'admin',
+        name: 'PageAdmin',
+        component: () =>
+          import ('@/views/permission/pageAdmin'),
+        meta: {
+          title: '权限控制页-Admin',
+          describe: '权限控制页，该功能只有拥有‘admin’权限的用户能访问',
+          roles: ['admin']
+        }
+      },
+      {
+        path: 'editor',
+        name: 'PageEditor',
+        component: () =>
+          import ('@/views/permission/pageEditor'),
+        meta: {
+          title: '权限控制页-Editor',
+          describe: '权限控制页，该功能只有拥有‘admin’、‘editor’权限的用户能访问',
+          roles: ['editor']
+        }
+      },
+      {
+        path: 'user',
+        name: 'PageUser',
+        component: () =>
+          import ('@/views/permission/pageUser'),
+        meta: {
+          title: '权限控制页-User',
+          describe: '权限控制页，该功能只有拥有‘admin’、‘editor’、‘user’权限的用户能访问'
+        }
+      },
+      {
+        path: 'directive',
+        name: 'DirectivePermission',
+        component: () =>
+          import ('@/views/permission/directive'),
+        meta: {
+          title: 'DirectivePermission',
+          roles: ['editor']
+        }
+      }
+    ]
   },
   {
-    path: 'editor',
-    name: 'PageEditor',
-    component: () =>
-          import('@/views/permission/pageEditor'),
+    path: '/template',
+    name: 'Template',
+    component: Layout,
+    redirect: '/template/index',
     meta: {
-      title: '权限控制页-Editor',
-      describe: '权限控制页，该功能只有拥有‘admin’、‘editor’权限的用户能访问',
-      roles: ['editor']
-    }
+      showInBreadcrumb: false
+    },
+    children: [{
+      path: 'index',
+      name: 'TemplateIndex',
+      component: () =>
+        import ('@/views/template'),
+      meta: {
+        title: 'Template模板',
+        icon: 'layout',
+        describe: '监控系统各项功能运作情况以及一些相关统计'
+      }
+    }]
   },
+  /* 模块路由表引入 */
+  componentsRouter,
+  /* 由于路由是从上到下解析执行，所以404判断必须放最后 */
   {
-    path: 'user',
-    name: 'PageUser',
-    component: () =>
-          import('@/views/permission/pageUser'),
+    path: '*',
+    redirect: '/404',
     meta: {
-      title: '权限控制页-User',
-      describe: '权限控制页，该功能只有拥有‘admin’、‘editor’、‘user’权限的用户能访问'
-    }
-  },
-  {
-    path: 'directive',
-    name: 'DirectivePermission',
-    component: () =>
-          import('@/views/permission/directive'),
-    meta: {
-      title: 'DirectivePermission',
-      roles: ['editor']
+      hidden: true
     }
   }
-  ]
-},
-{
-  path: '/template',
-  name: 'Template',
-  component: Layout,
-  redirect: '/template/index',
-  meta: {
-    showInBreadcrumb: false
-  },
-  children: [{
-    path: 'index',
-    name: 'TemplateIndex',
-    component: () =>
-        import('@/views/template'),
-    meta: {
-      title: 'Template模板',
-      icon: 'layout',
-      describe: '监控系统各项功能运作情况以及一些相关统计'
-    }
-  }]
-},
-componentsRouter
 ]
 
 export default new Router({

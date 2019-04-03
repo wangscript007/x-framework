@@ -1,5 +1,13 @@
-@mixin sider-transition-common {
-    transition: all 200ms cubic-bezier(.9, 0, .3, .7);
+/*x-layout*/
+
+.x-layout {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    background: $layout-bg-color;
+    min-height: 0;
+    z-index: 1;
+    overflow-x: hidden;
 }
 
 @mixin el-menu-item-active-common {
@@ -24,7 +32,7 @@
         }
         [class^=el-icon-] {
             height: 19px;
-            @include sider-transition-common;
+            @include x-transition(0.2s);
         }
     }
     .el-menu-item {
@@ -56,16 +64,6 @@
             }
         }
     }
-}
-
-.x-layout {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    background: $layout-bg-color;
-    min-height: 0;
-    z-index: 1;
-    overflow-x: hidden;
 }
 
 .x-layout-sider {
@@ -156,7 +154,7 @@
                 }
             }
             .el-submenu__icon-arrow {
-                @include sider-transition-common;
+                @include x-transition(0.2s);
             }
         }
     }
@@ -183,7 +181,7 @@
             line-height: $toggle-button-icon-height;
             padding: ($sider-header-height - $toggle-button-icon-height) / 2;
             color: $default-font-color;
-            @include sider-transition-common;
+            @include x-transition(0.2s);
             &:hover {
                 color: #000;
                 background: rgba(0, 0, 0, 0.025);
@@ -208,4 +206,116 @@
     .el-menu {
         @include el-menu-common;
     }
+}
+
+
+/*x-drawer*/
+
+.x-drawer {
+    position: fixed;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    &.x-drawer-open {
+        width: 100%;
+    }
+    * {
+        transition: transform 0.3s cubic-bezier(0.9, 0, 0.3, 0.7), box-shadow 0.3s cubic-bezier(0.9, 0, 0.3, 0.7);
+    }
+    .x-drawer-wrapper {
+        position: fixed;
+        height: 100%;
+        .x-drawer-content {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+            background-color: #fff;
+        }
+    }
+    &.x-drawer-left .x-drawer-wrapper {
+        left: 0;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    }
+    &.x-drawer-right .x-drawer-wrapper {
+        right: 0;
+        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    }
+    .x-drawer-mask {
+        position: fixed;
+        width: 100%;
+        height: 0;
+        background-color: rgba(0, 0, 0, 0.65);
+        opacity: 0;
+        filter: alpha(opacity=50);
+        transition: opacity 0.3s linear, height 0s ease 0.3s;
+        cursor: pointer;
+    }
+    &.x-drawer-open .x-drawer-mask {
+        height: 100%;
+        opacity: 0.3;
+        transition: none;
+        animation: x-drawer-fade-in 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+    }
+}
+
+@keyframes x-drawer-fade-in {
+    0% {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.3;
+    }
+}
+
+
+/*animation*/
+
+
+/* sider在xs屏幕和其他大小屏幕切换时的动画 */
+
+.sider-toggle-enter-active,
+.sider-toggle-leave-active {
+    @include x-transition(0.3s);
+}
+
+.sider-toggle-enter,
+.sider-toggle-leave-to {
+    transform: translateX(-100%);
+}
+
+
+/* sider收缩展开时header标题的动画 */
+
+.sider-title-leave-active {
+    transition: opacity 0.05s;
+}
+
+.sider-title-enter-active {
+    transition: opacity 2.5s ease-in-out;
+}
+
+.sider-title-enter,
+.sider-title-leave-to {
+    opacity: 0;
+}
+
+
+/* 工作区路由变化时的动画 */
+
+.page-change-leave-active,
+.page-change-enter-active {
+    transition: all 0.5s;
+}
+
+.page-change-enter {
+    opacity: 0;
+    transform: translateX(-30px);
+}
+
+.page-change-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
 }

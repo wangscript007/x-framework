@@ -1,22 +1,17 @@
 @mixin clearfix {
-  &:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
-@mixin scroll-bar {
-  &::-webkit-scrollbar-track-piece {
-    background: #d3dce6;
-  }
+@mixin ellipsis() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-  &::-webkit-scrollbar {
-    width: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #99a9bf;
-    border-radius: 20px;
-  }
+@mixin x-transition($duration) {
+    transition: all duration cubic-bezier(0.9, 0, 0.3, 0.7);
 }

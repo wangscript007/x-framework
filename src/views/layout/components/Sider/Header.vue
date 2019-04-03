@@ -4,7 +4,7 @@
        :title="webside.title">
       <img :src="webside.logo"
            :alt="webside.title" />
-      <transition name="fade">
+      <transition name="sider-title">
         <h1 v-if="!collapsed"
             key="0">{{webside.title}}</h1>
       </transition>
@@ -30,14 +30,4 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.fade-leave-active {
-  transition: opacity 0.05s;
-}
-.fade-enter-active {
-  transition: opacity 2.5s ease-in-out;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
-}
 </style>

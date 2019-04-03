@@ -48,13 +48,4 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.btn-enter-active,
-.btn-leave-active {
-  transition: all 0.3s cubic-bezier(0.9, 0, 0.3, 0.7);
-}
-
-.btn-enter,
-.btn-leave-to {
-  opacity: 0;
-}
 </style>

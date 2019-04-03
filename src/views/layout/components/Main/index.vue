@@ -1,6 +1,6 @@
 <template>
   <div class="x-layout-main">
-    <transition name="toggle-page"
+    <transition name="page-change"
                 mode="out-in">
       <router-view />
     </transition>
@@ -14,18 +14,4 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.toggle-page-leave-active,
-.toggle-page-enter-active {
-  transition: all 0.5s;
-}
-
-.toggle-page-enter {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.toggle-page-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
 </style>
