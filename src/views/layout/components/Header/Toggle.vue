@@ -12,9 +12,11 @@ import screen from '@/common/constants/screen'
 
 export default {
   name: 'Toggle',
-  created () {
-    this.clickReady = true
-    this.clickDelay = 500
+  data () {
+    return {
+      clickReady: true,
+      clickDelay: 500
+    }
   },
   methods: {
     ...mapMutations({

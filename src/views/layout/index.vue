@@ -40,9 +40,11 @@ import BackToTop from '@/components/BackToTop'
 
 export default {
   name: 'layout',
-  created () {
-    this.refreshReady = true
-    this.refreshDelay = 300
+  data () {
+    return {
+      refreshReady: true,
+      refreshDelay: 300
+    }
   },
   beforeMount () {
     window.addEventListener('resize', this._resizeHandler)

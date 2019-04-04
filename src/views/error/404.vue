@@ -6,18 +6,7 @@
 
 <script>
 export default {
-  name: 'Page404',
-  props: {},
-  data () {
-    return {
-    }
-  },
-  created () {},
-  mounted () {},
-  computed: {},
-  watch: {},
-  methods: {},
-  components: {}
+  name: 'Page404'
 }
 </script>
 

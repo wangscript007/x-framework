@@ -17,9 +17,11 @@
 import pathToRegexp from 'path-to-regexp'
 
 export default {
-  data: () => ({
-    breadcrumb: null
-  }),
+  data () {
+    return {
+      breadcrumb: null
+    }
+  },
   watch: {
     $route () {
       this.getBreadcrumb()

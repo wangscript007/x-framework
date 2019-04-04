@@ -1,48 +1,40 @@
 import { param2Obj } from '@/common/utils'
 
-const userMap = {
-  admin: {
-    name: 'Admin',
-    avatar: '',
-    token: 'admin',
-    introduction: '超级管理员',
-    roles: ['admin']
-  },
-  editor: {
-    name: 'Editor',
-    avatar: '',
-    token: 'editor',
-    introduction: '网站编辑',
-    roles: ['editor']
-  },
-  user: {
-    name: 'User',
-    avatar: '',
-    token: 'user',
-    introduction: '普通用户',
-    roles: ['user']
-  },
-  visitor: {
-    name: 'Visitor',
-    avatar: '',
-    token: 'visitor',
-    introduction: '访客',
-    roles: []
-  }
-}
+const userList = [{
+  userId: 'u01001001',
+  userName: 'admin',
+  realName: 'Admin',
+  avatar: '',
+  introduction: '超级管理员',
+  roles: ['admin']
+}, {
+  userId: 'u01001003',
+  userName: 'editor',
+  realName: '网站编辑',
+  avatar: '',
+  introduction: '网站编辑',
+  roles: ['editor']
+}, {
+  userId: 'u01001005',
+  userName: 'user01',
+  realName: '王一新',
+  avatar: '',
+  introduction: '普通用户'
+}]
 
 export default {
   login: config => {
     const { username } = JSON.parse(config.body)
-    return userMap[username]
+    const matchedUser = userList.find(item => {
+      return item.userName === username
+    })
+    return matchedUser ? { token: matchedUser.userName, userId: matchedUser.userId } : null
   },
   getUserInfo: config => {
-    const { token } = param2Obj(config.url)
-    if (userMap[token]) {
-      return userMap[token]
-    } else {
-      return false
-    }
+    const { userId } = param2Obj(config.url)
+    return userList.find(item => {
+      return item.userId === userId
+    })
   },
   logout: () => 'success'
 }

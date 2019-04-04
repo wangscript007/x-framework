@@ -1,28 +1,24 @@
-import request from '@/common/utils/request'
+import request from "@/common/utils/request";
 
-export function login (username, password) {
-  const data = {
-    username,
-    password
-  }
+export function login(formData) {
   return request({
-    url: '/login',
-    method: 'post',
-    data
-  })
+    url: "/login",
+    method: "post",
+    data: formData
+  });
 }
 
-export function logout () {
+export function logout() {
   return request({
-    url: '/logout',
-    method: 'post'
-  })
+    url: "/logout",
+    method: "post"
+  });
 }
 
-export function getUserInfo (token) {
+export function getUserInfo(token, userId) {
   return request({
-    url: '/userinfo',
-    method: 'get',
-    params: { token }
-  })
+    url: "/userinfo",
+    method: "get",
+    params: { token, userId }
+  });
 }

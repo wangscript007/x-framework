@@ -34,21 +34,16 @@ Vue.use(Router)
 /* 默认路由表 */
 export const constantRouterMap = [{
     path: '',
-    component: Layout,
-    redirect: '/dashboard',
-    meta: {},
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () =>
-        import ('@/views/dashboard'),
-      meta: {
-        title: '首页',
-        icon: 'dashboard',
-        noCache: true,
-        describe: '监控系统各项功能运作情况以及一些相关统计'
-      }
-    }]
+    redirect: '/index'
+  },
+  {
+    path: '/index',
+    name: 'index',
+    component: () =>
+      import ('@/views/index'),
+    meta: {
+      hidden: true
+    }
   },
   {
     path: '/redirect',
@@ -85,11 +80,39 @@ export const constantRouterMap = [{
     },
     component: () =>
       import ('@/views/error/401')
+  },
+  {
+    path: '/unauthorized',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/error/unauthorized')
   }
 ]
 
 /* 动态路由表 */
-export const asyncRouterMap = [
+export const asyncRouterMap = [{
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: Layout,
+    redirect: '/dashboard',
+    meta: {
+      icon: 'dashboard'
+    },
+    children: [{
+      path: 'index',
+      name: 'DashboardIndex',
+      component: () =>
+        import ('@/views/dashboard'),
+      meta: {
+        title: '首页',
+        icon: 'dashboard',
+        noCache: true,
+        describe: '监控系统各项功能运作情况以及一些相关统计'
+      }
+    }]
+  },
   /* 模块路由表引入 */
   componentsRouter,
   {
@@ -133,7 +156,8 @@ export const asyncRouterMap = [
           import ('@/views/permission/pageUser'),
         meta: {
           title: '权限控制页-User',
-          describe: '权限控制页，该功能只有拥有‘admin’、‘editor’、‘user’权限的用户能访问'
+          describe: '权限控制页，该功能只有拥有‘admin’、‘user’权限的用户能访问',
+          roles: ['user']
         }
       },
       {

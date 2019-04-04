@@ -15,7 +15,7 @@ const componentsRouter = {
     path: 'uploader',
     name: 'Uploader',
     component: () =>
-      import('@/views/components-demo/uploader'),
+      import ('@/views/components-demo/uploader'),
     meta: {
       title: 'Uploader-上传组件',
       describe: '图片上传、文件上传等'

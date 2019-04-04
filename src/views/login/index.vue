@@ -11,7 +11,7 @@
                auto-complete="on"
                label-position="left">
         <el-form-item prop="username">
-          <el-input v-model="form.username"
+          <el-input v-model.trim="form.username"
                     prefix-icon="iconfont icon-user"
                     :placeholder="'用户名'"
                     name="username"
@@ -19,7 +19,7 @@
                     auto-complete="on" />
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="form.password"
+          <el-input v-model.trim="form.password"
                     prefix-icon="iconfont icon-key"
                     :type="passwordType"
                     :placeholder="'密码'"
@@ -66,7 +66,7 @@ export default {
       },
       showPassword: false,
       loading: false,
-      redirect: undefined
+      redirect: null
     }
   },
   computed: {

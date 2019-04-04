@@ -50,11 +50,13 @@ export default {
       default: 'fade'
     }
   },
-  data: () => ({
-      visible: false,
-      interval: null,
-      isMoving: false
-  }),
+  data () {
+    return {
+        visible: false,
+        interval: null,
+        isMoving: false
+    }
+  },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
   },

@@ -42,14 +42,16 @@ export default {
       default: false
     }
   },
-  data: () => ({
-    ops: {
+  data () {
+    return {
+      ops: {
       vuescroll: {},
       scrollPanel: {},
       rail: {},
       bar: {}
     }
-  }),
+    }
+  },
   created () {
     this.ops.vuescroll.mode = this.mode
     this.ops.vuescroll.detectResize = this.detectResize
