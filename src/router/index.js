@@ -34,6 +34,7 @@ Vue.use(Router)
 /* 默认路由表 */
 export const constantRouterMap = [{
     path: '',
+    name: 'base',
     redirect: '/index'
   },
   {
@@ -80,14 +81,6 @@ export const constantRouterMap = [{
     },
     component: () =>
       import ('@/views/error/401')
-  },
-  {
-    path: '/unauthorized',
-    meta: {
-      hidden: true
-    },
-    component: () =>
-      import ('@/views/error/unauthorized')
   }
 ]
 

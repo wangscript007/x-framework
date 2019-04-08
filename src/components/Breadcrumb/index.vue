@@ -32,10 +32,10 @@ export default {
   },
   methods: {
     getBreadcrumb () {
-      let matched = this.$route.matched.filter(item => item.name)
+      let matched = this.$route.matched
       const first = matched[0]
-      if (first && first.name.trim().toLocaleLowerCase() !== 'dashboard') {
-        matched = [{path: '/dashboard', meta: { title: '首页' }}].concat(matched)
+      if (first && first.name.trim().toLocaleLowerCase() !== 'base') {
+        matched = [{path: '/', meta: { title: '首页' }}].concat(matched)
       }
       this.breadcrumb = matched.filter(item => item.meta && item.meta.title && item.meta.showInBreadcrumb !== false)
     },

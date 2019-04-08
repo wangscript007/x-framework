@@ -1,7 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
 import { Message } from 'element-ui'
-import { getToken } from '@/common/utils/auth'
+import { getToken } from '@/common/cache/user'
 
 /* 创建axios对象 */
 const service = axios.create({
