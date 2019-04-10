@@ -6,20 +6,23 @@ const userList = [{
   realName: 'Admin',
   avatar: '',
   introduction: '超级管理员',
-  roles: ['admin']
+  roles: ['admin'],
+  token: 'admin'
 }, {
   userId: 'u01001003',
   userName: 'editor',
   realName: '网站编辑',
   avatar: '',
   introduction: '网站编辑',
-  roles: ['editor']
+  roles: ['editor'],
+  token: 'editor'
 }, {
   userId: 'u01001005',
   userName: 'user01',
   realName: '王一新',
   avatar: '',
-  introduction: '普通用户'
+  introduction: '普通用户',
+  token: 'user01'
 }]
 
 export default {
@@ -28,12 +31,12 @@ export default {
     const matchedUser = userList.find(item => {
       return item.userName === username
     })
-    return matchedUser ? { token: matchedUser.userName, userId: matchedUser.userId } : null
+    return matchedUser ? matchedUser.token : null
   },
   getUserInfo: config => {
-    const { userId } = param2Obj(config.url)
+    const { token } = param2Obj(config.url)
     return userList.find(item => {
-      return item.userId === userId
+      return item.token === token
     })
   },
   logout: () => 'success'

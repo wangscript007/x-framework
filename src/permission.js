@@ -23,43 +23,34 @@ function hasPermission(userRoles, toRoles) {
   return false
 }
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   /* 开启progress */
   NProgress.start()
     /* 判断token是否存在 */
   if (getToken()) {
     /* token存在，则判断用户信息是否存在，store中的user在浏览器刷新时会丢失，所以浏览器刷新时也会重新获取用户信息并重新生成路由表 */
     const userInfo = store.getters.user
-    if (!userInfo) {
       /* 用户信息不存在，则获取用户信息 */
-      store.dispatch('getUserInfo').then(response => {
-        /* 获取用户信息成功时，则根据用户权限生成相应的路由表 */
-        const userRoles = response.data.roles || []
-        store.dispatch('createRouterMap', userRoles).then(() => {
-          /* 将经过权限筛选后的路由表添加到router */
-          router.addRoutes(store.getters.permission.matchedRouters)
-          next({...to, replace: true })
-        })
-      }).catch(error => {
-        /* 获取用户信息失败时，直接登出 */
-        store.dispatch('fedLogout').then(() => {
-          Message({ message: error.message, type: 'error' })
-          next({ path: '/' })
-        })
-      })
+    if (!userInfo) {
+      try {
+        /* 则获取用户信息、生成路由表、更新router对象、跳转 */
+        const res = await store.dispatch('getUserInfo')
+        await store.dispatch('createRouterMap', res.data.roles || [])
+        router.addRoutes(store.getters.permission.matchedRouters)
+        next({...to, replace: true })
+      } catch (err) {
+        await store.dispatch('fedLogout')
+        Message.error(err.message)
+        next({ path: '/' })
+      }
     } else {
       /* 用户信息存在 */
       if (to.path === '/login') {
-        /* 如果是去登录页，则跳转到'/' */
         next({ path: '/' })
         NProgress.done()
       } else {
         /* 如果是去其他路由，则判断有没有许可，没有许可就去401 */
-        if (hasPermission(userInfo.roles, to.meta && to.meta.roles ? to.meta.roles : null)) {
-          next()
-        } else {
-          next({ path: '/401', replace: true, query: { noGoBack: true } })
-        }
+        hasPermission(userInfo.roles, to.meta && to.meta.roles ? to.meta.roles : null) ? next() : next({ path: '/401', replace: true, query: { noGoBack: true } })
       }
     }
   } else {

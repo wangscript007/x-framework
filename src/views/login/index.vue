@@ -92,15 +92,17 @@ export default {
       }
     },
     loginHandler () {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async(valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('login', this.form).then(() => {
-            this.loading = false
+          try {
+            this.loading = true
+            await this.$store.dispatch('login', this.form)
             this.$router.push({ path: this.redirect || '/' })
-          }).catch(() => {
+          } catch (err) {
+            this.$message.error(err.message)
+          } finally {
             this.loading = false
-          })
+          }
         } else {
           return false
         }

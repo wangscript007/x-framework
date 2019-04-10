@@ -15,10 +15,10 @@ export function logout() {
   });
 }
 
-export function getUserInfo(token, userId) {
+export function getUserInfo(token) {
   return request({
     url: "/userinfo",
     method: "get",
-    params: { token, userId }
+    params: { token }
   });
 }

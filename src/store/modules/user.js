@@ -1,64 +1,44 @@
 import * as loginApi from '@/api/login'
 import { userTypes } from '@/store/mutation-types'
 import * as cache from '@/common/cache/user'
+import CommonException from '@/common/model/exception'
 
 const user = {
   state: {
     token: cache.getToken(),
-    userId: cache.getUserId(),
     user: null
   },
   mutations: {
     [userTypes.SET_TOKEN]: (state, token) => {
       state.token = token
     },
-    [userTypes.SET_USERID]: (state, userId) => {
-      state.userId = userId
-    },
     [userTypes.SET_USER]: (state, user) => {
       state.user = user
     }
   },
   actions: {
-    login({ commit }, formData) {
-      return new Promise((resolve, reject) => {
-        loginApi.login(formData).then(response => {
-          const data = response.data
-          if (!data) {
-            reject(new Error({ message: '验证失败，请重新登录' }))
-          }
-          commit(userTypes.SET_USERID, data.userId)
-          commit(userTypes.SET_TOKEN, data.token)
-          cache.setToken(data.token)
-          cache.setUserId(data.userId)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+    login: async({ commit }, formData) => {
+      const res = await loginApi.login(formData)
+      if (!res.data) {
+        throw new CommonException({ message: '验证失败，请重新登录', code: 1 })
+      }
+      commit(userTypes.SET_TOKEN, res.data)
+      cache.setToken(res.data)
     },
-    getUserInfo({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        loginApi.getUserInfo(state.token, state.userId).then(response => {
-          const data = response.data
-          if (!data) {
-            reject(new Error({ message: '用户不存在' }))
-          }
-          commit(userTypes.SET_USER, data)
-          resolve(response)
-        }).catch(error => {
-          reject(error)
-        })
-      })
+    getUserInfo: async({ commit, state }) => {
+      const res = await loginApi.getUserInfo(state.token)
+      if (!res.data) {
+        throw new CommonException({ message: '用户不存在', code: 1 })
+      }
+      commit(userTypes.SET_USER, res.data)
+      return res
     },
     logout({ commit, state }) {
       return new Promise((resolve, reject) => {
         loginApi.logout(state.user.token).then(() => {
-          commit(userTypes.SET_USERID, '')
           commit(userTypes.SET_TOKEN, '')
           commit(userTypes.SET_USER, null)
           cache.removeToken()
-          cache.removeUserId()
           resolve()
         }).catch(error => {
           reject(error)
@@ -68,17 +48,14 @@ const user = {
     /* 前端登出 */
     fedLogout({ commit }) {
       return new Promise(resolve => {
-        commit(userTypes.SET_USERID, '')
         commit(userTypes.SET_TOKEN, '')
         commit(userTypes.SET_USER, null)
         cache.removeToken()
-        cache.removeUserId()
         resolve()
       })
     }
   },
   getters: {
-    userId: state => state.userId,
     token: state => state.token,
     user: state => state.user,
   }

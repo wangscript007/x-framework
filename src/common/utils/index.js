@@ -3,7 +3,7 @@ import screen from '@/common/constants/screen'
 const { body } = document
 const RATIO = 3
 
-export function getScreenSize () {
+export function getScreenSize() {
   const width = body.getBoundingClientRect().width - RATIO
   let matched = Object.values(screen).find((item) => {
     return item.maxSize ? item.minSize <= width && width <= item.maxSize : item.minSize <= width
@@ -11,11 +11,11 @@ export function getScreenSize () {
   return matched ? matched.name : ''
 }
 
-export function hasScrollBar () {
+export function hasScrollBar() {
   return document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
 }
 
-export function getScrollbarWidth () {
+export function getScrollbarWidth() {
   var scrollDiv = document.createElement('div')
   scrollDiv.style.cssText = 'width:99px;height:99px;overflow:scroll;position:absolute;top:-9999px;opacity:0;'
   document.body.appendChild(scrollDiv)
@@ -24,7 +24,7 @@ export function getScrollbarWidth () {
   return scrollbarWidth
 }
 
-export function parseTime (time, cFormat) {
+export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
   }
@@ -52,7 +52,7 @@ export function parseTime (time, cFormat) {
   }
   return format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
     let value = formatObj[key]
-    // Note: getDay() returns 0 on Sunday
+      // Note: getDay() returns 0 on Sunday
     if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
     if (result.length > 0) {
       value = value.toString().padStart(2, 0)
@@ -61,7 +61,7 @@ export function parseTime (time, cFormat) {
   })
 }
 
-export function formatTime (time, option) {
+export function formatTime(time, option) {
   time = +time * 1000
   const d = new Date(time)
   const now = Date.now()
@@ -86,7 +86,7 @@ export function formatTime (time, option) {
 }
 
 // 格式化时间
-export function getQueryObject (url) {
+export function getQueryObject(url) {
   url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf('?') + 1)
   const obj = {}
@@ -106,7 +106,7 @@ export function getQueryObject (url) {
  * @param {Sting} val input value
  * @returns {number} output value
  */
-export function getByteLen (val) {
+export function getByteLen(val) {
   let len = 0
   for (let i = 0; i < val.length; i++) {
     // eslint-disable-next-line
@@ -119,7 +119,7 @@ export function getByteLen (val) {
   return Math.floor(len)
 }
 
-export function cleanArray (actual) {
+export function cleanArray(actual) {
   const newArray = []
   for (let i = 0; i < actual.length; i++) {
     if (actual[i]) {
@@ -129,7 +129,7 @@ export function cleanArray (actual) {
   return newArray
 }
 
-export function param (json) {
+export function param(json) {
   if (!json) return ''
   return cleanArray(
     Object.keys(json).map(key => {
@@ -139,7 +139,7 @@ export function param (json) {
   ).join('&')
 }
 
-export function param2Obj (url) {
+export function param2Obj(url) {
   const search = url.split('?')[1]
   if (!search) {
     return {}
@@ -149,13 +149,13 @@ export function param2Obj (url) {
   )
 }
 
-export function html2Text (val) {
+export function html2Text(val) {
   const div = document.createElement('div')
   div.innerHTML = val
   return div.textContent || div.innerText
 }
 
-export function objectMerge (target, source) {
+export function objectMerge(target, source) {
   /* Merges two  objects,
      giving the last one precedence */
 
@@ -176,7 +176,7 @@ export function objectMerge (target, source) {
   return target
 }
 
-export function toggleClass (element, className) {
+export function toggleClass(element, className) {
   if (!element || !className) {
     return
   }
@@ -193,44 +193,44 @@ export function toggleClass (element, className) {
 }
 
 export const pickerOptions = [{
-  text: '今天',
-  onClick (picker) {
-    const end = new Date()
-    const start = new Date(new Date().toDateString())
-    end.setTime(start.getTime())
-    picker.$emit('pick', [start, end])
+    text: '今天',
+    onClick(picker) {
+      const end = new Date()
+      const start = new Date(new Date().toDateString())
+      end.setTime(start.getTime())
+      picker.$emit('pick', [start, end])
+    }
+  },
+  {
+    text: '最近一周',
+    onClick(picker) {
+      const end = new Date(new Date().toDateString())
+      const start = new Date()
+      start.setTime(end.getTime() - 3600 * 1000 * 24 * 7)
+      picker.$emit('pick', [start, end])
+    }
+  },
+  {
+    text: '最近一个月',
+    onClick(picker) {
+      const end = new Date(new Date().toDateString())
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+      picker.$emit('pick', [start, end])
+    }
+  },
+  {
+    text: '最近三个月',
+    onClick(picker) {
+      const end = new Date(new Date().toDateString())
+      const start = new Date()
+      start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+      picker.$emit('pick', [start, end])
+    }
   }
-},
-{
-  text: '最近一周',
-  onClick (picker) {
-    const end = new Date(new Date().toDateString())
-    const start = new Date()
-    start.setTime(end.getTime() - 3600 * 1000 * 24 * 7)
-    picker.$emit('pick', [start, end])
-  }
-},
-{
-  text: '最近一个月',
-  onClick (picker) {
-    const end = new Date(new Date().toDateString())
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-    picker.$emit('pick', [start, end])
-  }
-},
-{
-  text: '最近三个月',
-  onClick (picker) {
-    const end = new Date(new Date().toDateString())
-    const start = new Date()
-    start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-    picker.$emit('pick', [start, end])
-  }
-}
 ]
 
-export function getTime (type) {
+export function getTime(type) {
   if (type === 'start') {
     return new Date().getTime() - 3600 * 1000 * 24 * 90
   } else {
@@ -238,10 +238,10 @@ export function getTime (type) {
   }
 }
 
-export function debounce (func, wait, immediate) {
+export function debounce(func, wait, immediate) {
   let timeout, args, context, timestamp, result
 
-  const later = function () {
+  const later = function() {
     // 据上一次触发时间间隔
     const last = +new Date() - timestamp
 
@@ -250,7 +250,7 @@ export function debounce (func, wait, immediate) {
       timeout = setTimeout(later, wait - last)
     } else {
       timeout = null
-      // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
+        // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
       if (!immediate) {
         result = func.apply(context, args)
         if (!timeout) context = args = null
@@ -258,11 +258,11 @@ export function debounce (func, wait, immediate) {
     }
   }
 
-  return function (...args) {
+  return function(...args) {
     context = this
     timestamp = +new Date()
     const callNow = immediate && !timeout
-    // 如果延时不存在，重新设定延时
+      // 如果延时不存在，重新设定延时
     if (!timeout) timeout = setTimeout(later, wait)
     if (callNow) {
       result = func.apply(context, args)
@@ -278,7 +278,7 @@ export function debounce (func, wait, immediate) {
  * Has a lot of edge cases bug
  * If you want to use a perfect deep copy, use lodash's _.cloneDeep
  */
-export function deepClone (source) {
+export function deepClone(source) {
   if (!source && typeof source !== 'object') {
     throw new Error('error arguments', 'shallowClone')
   }
@@ -293,10 +293,10 @@ export function deepClone (source) {
   return targetObj
 }
 
-export function uniqueArr (arr) {
+export function uniqueArr(arr) {
   return Array.from(new Set(arr))
 }
 
-export function isExternal (path) {
+export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
