@@ -1,6 +1,7 @@
 import path from 'path'
 import { permissionTypes } from '@/store/mutation-types'
-import { asyncRouterMap, constantRouterMap } from '@/router'
+import systemRouterMap from '@/router/maps/systemRouterMap'
+import asyncRouterMap from '@/router/maps/asyncRouterMap'
 
 /* 通过meta.role判断是否与当前用户权限匹配 */
 function hasPermission(route, userRoles) {
@@ -60,7 +61,7 @@ const permission = {
     [permissionTypes.SET_ROUTERS]: (state, { matchedRouters, defaultPath }) => {
       state.permission.defaultPath = defaultPath
       state.permission.matchedRouters = matchedRouters
-      state.permission.routers = constantRouterMap.concat(matchedRouters)
+      state.permission.routers = systemRouterMap.concat(matchedRouters)
     }
   },
   actions: {

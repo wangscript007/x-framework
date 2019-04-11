@@ -2,8 +2,9 @@
   <el-menu-item :index="matchedRoutePath">
     <item-link :external="matchedRoute.meta && matchedRoute.meta.external"
                :path="matchedRoutePath">
-      <svg-icon v-if="matchedRoute.meta && matchedRoute.meta.icon"
-                :icon-class="matchedRoute.meta.icon" />
+      <x-icon v-if="showIcon && matchedRoute.meta && matchedRoute.meta.icon"
+              :icon="matchedRoute.meta.icon"
+              :type="matchedRoute.meta.iconType" />
       <span>{{ matchedRoute.meta && matchedRoute.meta.title ? matchedRoute.meta.title : '-'}}</span>
     </item-link>
   </el-menu-item>
@@ -19,6 +20,10 @@ export default {
     route: {
       type: Object,
       required: true
+    },
+    showIcon: {
+      type: Boolean,
+      default: true
     },
     /* 父级路由的path */
     basePath: {

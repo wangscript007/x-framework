@@ -2,7 +2,7 @@
   <a @click.stop="toggle"
      class="sider-toggle-button"
      href="javascript:void(0);">
-    <svg-icon :icon-class="icon" />
+    <x-icon :icon="icon" />
   </a>
 </template>
 

@@ -1,6 +1,8 @@
 <template>
-  <svg class="svg-icon" aria-hidden="true" >
-    <use :xlink:href="iconName"></use>
+  <svg :style="styles"
+       class="svg-icon"
+       aria-hidden="true">
+    <use :xlink:href="`#icon-${icon}`"></use>
   </svg>
 </template>
 
@@ -8,14 +10,13 @@
 export default {
   name: 'icon-svg',
   props: {
-    iconClass: {
+    icon: {
       type: String,
       required: true
-    }
-  },
-  computed: {
-    iconName () {
-      return `#icon-${this.iconClass}`
+    },
+    styles: {
+      type: Object,
+      default: null
     }
   }
 }

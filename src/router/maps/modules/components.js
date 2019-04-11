@@ -18,7 +18,9 @@ const componentsRouter = {
       import ('@/views/components-demo/uploader'),
     meta: {
       title: 'Uploader-上传组件',
-      describe: '图片上传、文件上传等'
+      describe: '图片上传、文件上传等',
+      icon: 'fa fa-upload',
+      iconType: 'class'
     }
   }]
 }

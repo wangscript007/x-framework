@@ -2,24 +2,26 @@ import Vue from 'vue'
 import App from '@/App.vue'
 
 import Element from 'element-ui'
-import SvgIcon from '@/components/SvgIcon'
+import XIcon from '@/components/Icon'
 import router from '@/router'
 import store from '@/store'
 
 import 'normalize.css/normalize.css'
 import '@/assets/scss/index.scss'
 import 'element-ui/lib/theme-chalk/index.css'
+import 'font-awesome/css/font-awesome.min.css'
 import '@/icon/iconfont.css'
+
 import '@/icon/iconfont'
 import '@/mock'
 import '@/permission'
 
 Vue.config.productionTip = false
 
-Vue.component('svg-icon', SvgIcon)
+Vue.component('x-icon', XIcon)
 
 Vue.use(Element, {
-  size: 'medium' // set element-ui default size
+  size: 'medium'
 })
 
 new Vue({

@@ -47,10 +47,21 @@ $menu-item-text-color-active: $color-write;
     .el-submenu__title {
         height: 48px;
         line-height: 45px;
-        .svg-icon {
+        .svg-icon,
+        .class-icon,
+        .image-icon {
             width: 24px;
             height: 19px;
             margin-right: 5px;
+        }
+        .class-icon {
+            text-align: center;
+            font-size: 16px;
+            line-height: 19px;
+            @include x-transition(0.3s);
+        }
+        .image-icon {
+            background-size: 16px 16px;
         }
         [class^=el-icon-] {
             height: 19px;
