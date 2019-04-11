@@ -65,13 +65,10 @@ const permission = {
   },
   actions: {
     /* 创建路由表 */
-    createRouterMap({ commit }, userRoles) {
-      return new Promise(resolve => {
-        const matchedRouters = userRoles.includes('admin') ? asyncRouterMap : routerFilter(asyncRouterMap, userRoles)
-        const defaultPath = findDefaultPath('', matchedRouters)
-        commit(permissionTypes.SET_ROUTERS, { matchedRouters, defaultPath })
-        resolve()
-      })
+    createRouterMap: async({ commit }, userRoles) => {
+      const matchedRouters = userRoles.includes('admin') ? asyncRouterMap : routerFilter(asyncRouterMap, userRoles)
+      const defaultPath = findDefaultPath('', matchedRouters)
+      commit(permissionTypes.SET_ROUTERS, { matchedRouters, defaultPath })
     }
   },
   getters: {

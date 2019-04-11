@@ -24,7 +24,6 @@ function hasPermission(userRoles, toRoles) {
 }
 
 router.beforeEach(async(to, from, next) => {
-  /* 开启progress */
   NProgress.start()
     /* 判断token是否存在 */
   if (getToken()) {
@@ -46,10 +45,11 @@ router.beforeEach(async(to, from, next) => {
     } else {
       /* 用户信息存在 */
       if (to.path === '/login') {
+        /* 如果前往登录，则跳转到/ */
         next({ path: '/' })
         NProgress.done()
       } else {
-        /* 如果是去其他路由，则判断有没有许可，没有许可就去401 */
+        /* 如果是去其他路由，则判断有没有许可，无许可则跳转401 */
         hasPermission(userInfo.roles, to.meta && to.meta.roles ? to.meta.roles : null) ? next() : next({ path: '/401', replace: true, query: { noGoBack: true } })
       }
     }
@@ -65,6 +65,5 @@ router.beforeEach(async(to, from, next) => {
 })
 
 router.afterEach(() => {
-  /* 关闭progress */
   NProgress.done()
 })

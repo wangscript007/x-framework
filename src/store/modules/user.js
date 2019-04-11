@@ -20,7 +20,7 @@ const user = {
     login: async({ commit }, formData) => {
       const res = await loginApi.login(formData)
       if (!res.data) {
-        throw new CommonException({ message: '验证失败，请重新登录', code: 1 })
+        throw new CommonException({ message: '验证失败，请重新登录' })
       }
       commit(userTypes.SET_TOKEN, res.data)
       cache.setToken(res.data)
@@ -28,31 +28,21 @@ const user = {
     getUserInfo: async({ commit, state }) => {
       const res = await loginApi.getUserInfo(state.token)
       if (!res.data) {
-        throw new CommonException({ message: '用户不存在', code: 1 })
+        throw new CommonException({ message: '用户不存在' })
       }
       commit(userTypes.SET_USER, res.data)
       return res
     },
-    logout({ commit, state }) {
-      return new Promise((resolve, reject) => {
-        loginApi.logout(state.user.token).then(() => {
-          commit(userTypes.SET_TOKEN, '')
-          commit(userTypes.SET_USER, null)
-          cache.removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
+    logout: async({ commit, state }) => {
+      await loginApi.logout(state.user.token)
+      commit(userTypes.SET_TOKEN, '')
+      commit(userTypes.SET_USER, null)
+      cache.removeToken()
     },
-    /* 前端登出 */
-    fedLogout({ commit }) {
-      return new Promise(resolve => {
-        commit(userTypes.SET_TOKEN, '')
-        commit(userTypes.SET_USER, null)
-        cache.removeToken()
-        resolve()
-      })
+    fedLogout: async({ commit }) => {
+      commit(userTypes.SET_TOKEN, '')
+      commit(userTypes.SET_USER, null)
+      cache.removeToken()
     }
   },
   getters: {
