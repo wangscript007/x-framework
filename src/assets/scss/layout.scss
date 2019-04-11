@@ -229,6 +229,41 @@ $menu-item-text-color-active: $color-write;
                 background: rgba(0, 0, 0, 0.025);
             }
         }
+        .right-menu {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            width: auto;
+            height: 100%;
+            float: right;
+            .right-menu-item {
+                display: inline-flex;
+                flex-direction: row;
+                align-items: center;
+            }
+            .user-wrapper {
+                display: inline-flex;
+                height: 100%;
+                cursor: pointer;
+                .avatar-wrapper {
+                    height: 24px;
+                    img,
+                    span {
+                        display: inline-block;
+                        vertical-align: top;
+                    }
+                    img {
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                    }
+                    span {
+                        line-height: 24px;
+                    }
+                }
+            }
+        }
     }
     .x-layout-main {
         position: relative;

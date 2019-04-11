@@ -136,7 +136,7 @@ const asyncRouterMap = [{
     path: 'http://183.6.175.42:2001/html/platform_visitor.html',
     name: 'sjq-it-visitor',
     meta: {
-      title: '水晶球智能访客管理系统',
+      title: '智能访客管理系统',
       icon: 'http://183.6.175.42:2001/resources/images/frame/index1.png',
       iconType: 'image',
       external: true
