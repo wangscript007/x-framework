@@ -44,7 +44,7 @@ export default {
   name: 'LayoutHeader',
   computed: {
     ...mapGetters(['app']),
-    isXsScreen() {
+    isXsScreen () {
       return this.app.screenSize === screen.xs.name
     }
   },

@@ -24,327 +24,327 @@ $menu-item-text-color-active: $color-write;
 /* ------ layout ------ */
 
 .x-layout {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    background: $layout-bg-color;
-    min-height: 0;
-    z-index: 1;
-    overflow-x: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  background: $layout-bg-color;
+  min-height: 0;
+  z-index: 1;
+  overflow-x: hidden;
 }
 
 @mixin el-menu-item-active-common {
+  color: $menu-item-text-color-active;
+  &>i,
+  & .el-tooltip>i {
     color: $menu-item-text-color-active;
-    &>i,
-    & .el-tooltip>i {
-        color: $menu-item-text-color-active;
-    }
+  }
 }
 
 @mixin el-menu-common {
-    background-color: $menu-bg-color;
-    .el-menu-item,
+  background-color: $menu-bg-color;
+  .el-menu-item,
+  .el-submenu__title {
+    height: 48px;
+    line-height: 45px;
+    .svg-icon,
+    .class-icon,
+    .image-icon {
+      width: 24px;
+      height: 19px;
+      margin-right: 5px;
+    }
+    .class-icon {
+      text-align: center;
+      font-size: 16px;
+      line-height: 19px;
+      @include x-transition(0.3s);
+    }
+    .image-icon {
+      background-size: 16px 16px;
+    }
+    [class^=el-icon-] {
+      height: 19px;
+      @include x-transition(0.3s);
+    }
+  }
+  .el-menu-item {
+    &>a {
+      @include x-transition(0.3s);
+      display: block;
+      color: $menu-item-text-color;
+      text-decoration: none;
+    }
+    &:hover,
+    &:focus,
+    &.is-active {
+      &>a {
+        @include el-menu-item-active-common;
+      }
+    }
+    &:hover,
+    &:focus {
+      background-color: $menu-bg-color !important;
+    }
+    &.is-active {
+      background-color: $menu-item-bg-color-active !important;
+    }
+  }
+  .el-submenu {
     .el-submenu__title {
-        height: 48px;
-        line-height: 45px;
-        .svg-icon,
-        .class-icon,
-        .image-icon {
-            width: 24px;
-            height: 19px;
-            margin-right: 5px;
-        }
-        .class-icon {
-            text-align: center;
-            font-size: 16px;
-            line-height: 19px;
-            @include x-transition(0.3s);
-        }
-        .image-icon {
-            background-size: 16px 16px;
-        }
-        [class^=el-icon-] {
-            height: 19px;
-            @include x-transition(0.3s);
-        }
+      color: $menu-item-text-color;
+      &:hover,
+      &:focus {
+        background-color: $menu-bg-color !important;
+        @include el-menu-item-active-common;
+      }
     }
-    .el-menu-item {
-        &>a {
-            @include x-transition(0.3s);
-            display: block;
-            color: $menu-item-text-color;
-            text-decoration: none;
-        }
-        &:hover,
-        &:focus,
-        &.is-active {
-            &>a {
-                @include el-menu-item-active-common;
-            }
-        }
-        &:hover,
-        &:focus {
-            background-color: $menu-bg-color !important;
-        }
-        &.is-active {
-            background-color: $menu-item-bg-color-active !important;
-        }
+    &.is-opened,
+    &.is-active {
+      &>.el-submenu__title {
+        @include el-menu-item-active-common;
+      }
     }
-    .el-submenu {
-        .el-submenu__title {
-            color: $menu-item-text-color;
-            &:hover,
-            &:focus {
-                background-color: $menu-bg-color !important;
-                @include el-menu-item-active-common;
-            }
-        }
-        &.is-opened,
-        &.is-active {
-            &>.el-submenu__title {
-                @include el-menu-item-active-common;
-            }
-        }
-    }
+  }
 }
 
 .x-layout-sider {
-    position: relative;
-    min-height: 100vh;
-    width: $sider-width;
-    max-width: $sider-width;
-    min-width: $sider-width;
-    z-index: 10;
-    background: $sider-bg-color;
-    transition: all .3s cubic-bezier(.9, 0, .3, .7);
-    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-    &.collapsed {
-        width: $sider-width-collapsed;
-        max-width: $sider-width-collapsed;
-        min-width: $sider-width-collapsed;
+  position: relative;
+  min-height: 100vh;
+  width: $sider-width;
+  max-width: $sider-width;
+  min-width: $sider-width;
+  z-index: 10;
+  background: $sider-bg-color;
+  transition: all .3s cubic-bezier(.9, 0, .3, .7);
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  &.collapsed {
+    width: $sider-width-collapsed;
+    max-width: $sider-width-collapsed;
+    min-width: $sider-width-collapsed;
+  }
+  &.fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    .sider-nav .scroll-wrapper {
+      height: 100%;
     }
-    &.fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        .sider-nav .scroll-wrapper {
-            height: 100%;
-        }
+  }
+  .sider-header {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    height: $sider-header-height;
+    line-height: $sider-header-height;
+    background: $sider-header-bg-color;
+    overflow: hidden;
+    &>a {
+      display: flex;
+      height: 100%;
+      flex-direction: row;
+      align-items: center;
+      text-decoration: none;
+      img {
+        flex: 0 0 $logo-size;
+        width: $logo-size;
+        height: $logo-size;
+        margin: 0 $logo-margin;
+      }
+      h1 {
+        flex: auto;
+        margin: 0;
+        color: $sider-header-text-color;
+        font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
     }
-    .sider-header {
-        position: absolute;
-        width: 100%;
-        top: 0;
-        left: 0;
-        z-index: 2;
-        height: $sider-header-height;
-        line-height: $sider-header-height;
-        background: $sider-header-bg-color;
-        overflow: hidden;
-        &>a {
-            display: flex;
-            height: 100%;
-            flex-direction: row;
-            align-items: center;
-            text-decoration: none;
-            img {
-                flex: 0 0 $logo-size;
-                width: $logo-size;
-                height: $logo-size;
-                margin: 0 $logo-margin;
-            }
-            h1 {
-                flex: auto;
-                margin: 0;
-                color: $sider-header-text-color;
-                font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-                font-size: 20px;
-                font-weight: 600;
-                text-transform: uppercase;
-            }
-        }
-    }
-    .sider-nav {
-        height: 100%;
-        padding-top: $layout-header-height + 8px;
-        padding-bottom: 8px;
+  }
+  .sider-nav {
+    height: 100%;
+    padding-top: $layout-header-height + 8px;
+    padding-bottom: 8px;
+    .el-menu {
+      border: none;
+      width: 100% !important;
+      @include el-menu-common;
+      .el-submenu {
         .el-menu {
-            border: none;
-            width: 100% !important;
-            @include el-menu-common;
-            .el-submenu {
-                .el-menu {
-                    background-color: $sub-menu-bg-color !important;
-                    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.45);
-                    .el-menu-item,
-                    .el-submenu__title {
-                        background-color: $sub-menu-item-bg-color !important;
-                    }
-                    .el-menu-item {
-                        &.is-active {
-                            background-color: $menu-item-bg-color-active !important;
-                        }
-                    }
-                    .el-submenu__title {
-                        &:hover,
-                        &:focus {
-                            color: $menu-item-text-color-active;
-                            background-color: $sub-menu-item-bg-color !important;
-                        }
-                    }
-                }
+          background-color: $sub-menu-bg-color !important;
+          box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.45);
+          .el-menu-item,
+          .el-submenu__title {
+            background-color: $sub-menu-item-bg-color !important;
+          }
+          .el-menu-item {
+            &.is-active {
+              background-color: $menu-item-bg-color-active !important;
             }
-            .el-submenu__icon-arrow {
-                @include x-transition(0.3s);
+          }
+          .el-submenu__title {
+            &:hover,
+            &:focus {
+              color: $menu-item-text-color-active;
+              background-color: $sub-menu-item-bg-color !important;
             }
+          }
         }
+      }
+      .el-submenu__icon-arrow {
+        @include x-transition(0.3s);
+      }
     }
+  }
 }
 
 .x-layout-content {
-    display: flex;
-    flex-direction: column;
-    flex: auto;
-    min-height: 100vh;
-    transition: all .3s cubic-bezier(.9, 0, .3, .7);
-    .x-layout-header {
-        position: relative;
-        width: 100%;
-        height: $layout-header-height;
-        z-index: 1;
-        background: $layout-header-bg-color;
-        box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-        .sider-toggle-button {
-            $toggle-button-icon-height: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: auto;
+  min-height: 100vh;
+  transition: all .3s cubic-bezier(.9, 0, .3, .7);
+  .x-layout-header {
+    position: relative;
+    width: 100%;
+    height: $layout-header-height;
+    z-index: 1;
+    background: $layout-header-bg-color;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    .sider-toggle-button {
+      $toggle-button-icon-height: 20px;
+      display: inline-block;
+      height: $sider-header-height;
+      font-size: $toggle-button-icon-height;
+      line-height: $toggle-button-icon-height;
+      padding: ($sider-header-height - $toggle-button-icon-height) / 2;
+      color: $default-font-color;
+      @include x-transition(0.3s);
+      &:hover {
+        color: #000;
+        background: rgba(0, 0, 0, 0.025);
+      }
+    }
+    .right-menu {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      width: auto;
+      height: 100%;
+      float: right;
+      .right-menu-item {
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+      }
+      .user-wrapper {
+        display: inline-flex;
+        height: 100%;
+        cursor: pointer;
+        .avatar-wrapper {
+          height: 24px;
+          img,
+          span {
             display: inline-block;
-            height: $sider-header-height;
-            font-size: $toggle-button-icon-height;
-            line-height: $toggle-button-icon-height;
-            padding: ($sider-header-height - $toggle-button-icon-height) / 2;
-            color: $default-font-color;
-            @include x-transition(0.3s);
-            &:hover {
-                color: #000;
-                background: rgba(0, 0, 0, 0.025);
-            }
+            vertical-align: top;
+          }
+          img {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+          }
+          span {
+            line-height: 24px;
+          }
         }
-        .right-menu {
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            width: auto;
-            height: 100%;
-            float: right;
-            .right-menu-item {
-                display: inline-flex;
-                flex-direction: row;
-                align-items: center;
-            }
-            .user-wrapper {
-                display: inline-flex;
-                height: 100%;
-                cursor: pointer;
-                .avatar-wrapper {
-                    height: 24px;
-                    img,
-                    span {
-                        display: inline-block;
-                        vertical-align: top;
-                    }
-                    img {
-                        width: 24px;
-                        height: 24px;
-                        border-radius: 50%;
-                        overflow: hidden;
-                    }
-                    span {
-                        line-height: 24px;
-                    }
-                }
-            }
-        }
+      }
     }
-    .x-layout-main {
-        position: relative;
-        flex: auto;
-    }
+  }
+  .x-layout-main {
+    position: relative;
+    flex: auto;
+  }
 }
 
 .x-layout-sider.fixed+.x-layout-content {
-    margin-left: $sider-width;
+  margin-left: $sider-width;
 }
 
 .x-layout-sider.fixed.collapsed+.x-layout-content {
-    margin-left: $sider-width-collapsed;
+  margin-left: $sider-width-collapsed;
 }
 
 .sider-popup {
-    .el-menu {
-        @include el-menu-common;
-    }
+  .el-menu {
+    @include el-menu-common;
+  }
 }
 
 
 /* ------ x-drawer ------ */
 
 .x-drawer {
+  position: fixed;
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  &.x-drawer-open {
+    width: 100%;
+  }
+  * {
+    transition: transform 0.3s cubic-bezier(0.9, 0, 0.3, 0.7), box-shadow 0.3s cubic-bezier(0.9, 0, 0.3, 0.7);
+  }
+  .x-drawer-wrapper {
     position: fixed;
-    width: 0;
     height: 100%;
-    top: 0;
+    .x-drawer-content {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+      background-color: #fff;
+    }
+  }
+  &.x-drawer-left .x-drawer-wrapper {
     left: 0;
-    z-index: 1000;
-    &.x-drawer-open {
-        width: 100%;
-    }
-    * {
-        transition: transform 0.3s cubic-bezier(0.9, 0, 0.3, 0.7), box-shadow 0.3s cubic-bezier(0.9, 0, 0.3, 0.7);
-    }
-    .x-drawer-wrapper {
-        position: fixed;
-        height: 100%;
-        .x-drawer-content {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            z-index: 1;
-            background-color: #fff;
-        }
-    }
-    &.x-drawer-left .x-drawer-wrapper {
-        left: 0;
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-    }
-    &.x-drawer-right .x-drawer-wrapper {
-        right: 0;
-        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
-    }
-    .x-drawer-mask {
-        position: fixed;
-        width: 100%;
-        height: 0;
-        background-color: rgba(0, 0, 0, 0.65);
-        opacity: 0;
-        filter: alpha(opacity=50);
-        transition: opacity 0.3s linear, height 0s ease 0.3s;
-        cursor: pointer;
-    }
-    &.x-drawer-open .x-drawer-mask {
-        height: 100%;
-        opacity: 0.3;
-        transition: none;
-        animation: x-drawer-fade-in 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
-    }
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  }
+  &.x-drawer-right .x-drawer-wrapper {
+    right: 0;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+  }
+  .x-drawer-mask {
+    position: fixed;
+    width: 100%;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    opacity: 0;
+    filter: alpha(opacity=50);
+    transition: opacity 0.3s linear, height 0s ease 0.3s;
+    cursor: pointer;
+  }
+  &.x-drawer-open .x-drawer-mask {
+    height: 100%;
+    opacity: 0.3;
+    transition: none;
+    animation: x-drawer-fade-in 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
+  }
 }
 
 @keyframes x-drawer-fade-in {
-    0% {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.3;
-    }
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.3;
+  }
 }
 
 
@@ -355,28 +355,28 @@ $menu-item-text-color-active: $color-write;
 
 .sider-toggle-enter-active,
 .sider-toggle-leave-active {
-    @include x-transition(0.3s);
+  @include x-transition(0.3s);
 }
 
 .sider-toggle-enter,
 .sider-toggle-leave-to {
-    transform: translateX(-100%);
+  transform: translateX(-100%);
 }
 
 
 /* sider收缩展开时header标题的动画 */
 
 .sider-title-leave-active {
-    transition: opacity 0.05s;
+  transition: opacity 0.05s;
 }
 
 .sider-title-enter-active {
-    transition: opacity 2.5s ease-in-out;
+  transition: opacity 2.5s ease-in-out;
 }
 
 .sider-title-enter,
 .sider-title-leave-to {
-    opacity: 0;
+  opacity: 0;
 }
 
 
@@ -384,15 +384,15 @@ $menu-item-text-color-active: $color-write;
 
 .page-change-leave-active,
 .page-change-enter-active {
-    transition: all 0.5s;
+  transition: all 0.5s;
 }
 
 .page-change-enter {
-    opacity: 0;
-    transform: translateX(-30px);
+  opacity: 0;
+  transform: translateX(-30px);
 }
 
 .page-change-leave-to {
-    opacity: 0;
-    transform: translateX(30px);
+  opacity: 0;
+  transform: translateX(30px);
 }

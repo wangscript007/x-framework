@@ -45,8 +45,7 @@ const asyncRouterMap = [{
     }]
   },
   /* 模块路由表引入 */
-  componentsRouterMap,
-  {
+  componentsRouterMap, {
     path: '/permission',
     name: 'Permission',
     component: Layout,
@@ -59,51 +58,46 @@ const asyncRouterMap = [{
       redirectInBreadcrumb: false
     },
     children: [{
-        path: 'admin',
-        name: 'PageAdmin',
-        component: () =>
-          import ('@/views/permission/pageAdmin'),
-        meta: {
-          title: '权限控制页-Admin',
-          describe: '权限控制页，该功能只有拥有‘admin’权限的用户能访问',
-          roles: ['admin']
-        }
-      },
-      {
-        path: 'editor',
-        name: 'PageEditor',
-        component: () =>
-          import ('@/views/permission/pageEditor'),
-        meta: {
-          title: '权限控制页-Editor',
-          describe: '权限控制页，该功能只有拥有‘admin’、‘editor’权限的用户能访问',
-          roles: ['editor']
-        }
-      },
-      {
-        path: 'user',
-        name: 'PageUser',
-        component: () =>
-          import ('@/views/permission/pageUser'),
-        meta: {
-          title: '权限控制页-User',
-          describe: '权限控制页，该功能只有拥有‘admin’、‘user’权限的用户能访问',
-          roles: ['user']
-        }
-      },
-      {
-        path: 'directive',
-        name: 'DirectivePermission',
-        component: () =>
-          import ('@/views/permission/directive'),
-        meta: {
-          title: 'DirectivePermission',
-          roles: ['editor']
-        }
+      path: 'admin',
+      name: 'PageAdmin',
+      component: () =>
+        import ('@/views/permission/pageAdmin'),
+      meta: {
+        title: '权限控制页-Admin',
+        describe: '权限控制页，该功能只有拥有‘admin’权限的用户能访问',
+        roles: ['admin']
       }
-    ]
-  },
-  {
+    }, {
+      path: 'editor',
+      name: 'PageEditor',
+      component: () =>
+        import ('@/views/permission/pageEditor'),
+      meta: {
+        title: '权限控制页-Editor',
+        describe: '权限控制页，该功能只有拥有‘admin’、‘editor’权限的用户能访问',
+        roles: ['editor']
+      }
+    }, {
+      path: 'user',
+      name: 'PageUser',
+      component: () =>
+        import ('@/views/permission/pageUser'),
+      meta: {
+        title: '权限控制页-User',
+        describe: '权限控制页，该功能只有拥有‘admin’、‘user’权限的用户能访问',
+        roles: ['user']
+      }
+    }, {
+      path: 'directive',
+      name: 'DirectivePermission',
+      component: () =>
+        import ('@/views/permission/directive'),
+      meta: {
+        title: 'DirectivePermission',
+        roles: ['editor']
+      }
+    }]
+  }, {
     path: '/template',
     name: 'Template',
     component: Layout,
@@ -122,8 +116,7 @@ const asyncRouterMap = [{
         describe: '监控系统各项功能运作情况以及一些相关统计'
       }
     }]
-  },
-  {
+  }, {
     path: 'https://github.com/xustshinn/x-framework',
     name: 'Github',
     meta: {
@@ -131,8 +124,7 @@ const asyncRouterMap = [{
       icon: 'github-fill',
       external: true
     }
-  },
-  {
+  }, {
     path: 'http://183.6.175.42:2001/html/platform_visitor.html',
     name: 'sjq-it-visitor',
     meta: {
@@ -141,8 +133,7 @@ const asyncRouterMap = [{
       iconType: 'image',
       external: true
     }
-  },
-  {
+  }, {
     path: 'http://www.baidu.com/',
     name: 'baidu',
     meta: {

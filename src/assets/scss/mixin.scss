@@ -1,17 +1,17 @@
 @mixin clearfix {
-    &:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
 }
 
 @mixin ellipsis() {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @mixin x-transition($duration) {
-    transition: all $duration cubic-bezier(0.9, 0, 0.3, 0.7);
+  transition: all $duration cubic-bezier(0.9, 0, 0.3, 0.7);
 }

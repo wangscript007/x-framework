@@ -1,4 +1,6 @@
-import { param2Obj } from '@/common/utils'
+import {
+  param2Obj
+} from '@/common/utils'
 
 const userList = [{
   userId: 'u01001001',
@@ -27,14 +29,18 @@ const userList = [{
 
 export default {
   login: config => {
-    const { username } = JSON.parse(config.body)
+    const {
+      username
+    } = JSON.parse(config.body)
     const matchedUser = userList.find(item => {
       return item.userName === username
     })
     return matchedUser ? matchedUser.token : null
   },
   getUserInfo: config => {
-    const { token } = param2Obj(config.url)
+    const {
+      token
+    } = param2Obj(config.url)
     return userList.find(item => {
       return item.token === token
     })

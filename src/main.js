@@ -10,9 +10,9 @@ import 'normalize.css/normalize.css'
 import '@/assets/scss/index.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
-import '@/icon/iconfont.css'
+import '@/assets/icon/iconfont.css'
 
-import '@/icon/iconfont'
+import '@/assets/icon/iconfont'
 import '@/mock'
 import '@/permission'
 
