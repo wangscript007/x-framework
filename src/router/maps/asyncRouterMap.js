@@ -8,8 +8,8 @@ import componentsRouterMap from '@/router/maps/modules/components'
     title: '',                   路由标题，用于显示在sider、breadcrumb、和pageHeader中的路由名称
     icon: '',                    该路由在sider中显示的图标，值：iconfont中的svg-name
     describe: ''                 路由相关描述，显示在Page组件中的PageHeader
-    noCache: false,              禁止缓存该路由，默认false
     hidden: false,               是否在sider中隐藏该路由
+    keepAlive: true,             是否缓存，在组件切换过程中将状态保留在内存中，防止重复渲染DOM，默认true
     alwaysShow: null,            是否一直显示该节点，用于是否嵌套路由的判断，有3个值：true、false、null
                                     true:  无论该路由下有没有子路由或有多少子路由，该路由在sider中都会显示
                                     false：无论该路由下有没有子路由，该路由在sider中都会隐藏
@@ -39,7 +39,6 @@ const asyncRouterMap = [{
       meta: {
         title: '首页',
         icon: 'dashboard',
-        noCache: true,
         describe: '监控系统各项功能运作情况以及一些相关统计'
       }
     }]
@@ -122,24 +121,6 @@ const asyncRouterMap = [{
     meta: {
       title: 'Github',
       icon: 'github-fill',
-      external: true
-    }
-  }, {
-    path: 'http://183.6.175.42:2001/html/platform_visitor.html',
-    name: 'sjq-it-visitor',
-    meta: {
-      title: '智能访客管理系统',
-      icon: 'http://183.6.175.42:2001/resources/images/frame/index1.png',
-      iconType: 'image',
-      external: true
-    }
-  }, {
-    path: 'http://www.baidu.com/',
-    name: 'baidu',
-    meta: {
-      title: '百度一下',
-      icon: 'fa fa-paw',
-      iconType: 'class',
       external: true
     }
   },

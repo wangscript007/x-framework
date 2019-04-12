@@ -1,4 +1,6 @@
-import { appTypes } from '@/store/mutation-types'
+import {
+  appTypes
+} from '@/store/mutation-types'
 
 const app = {
   state: {
@@ -10,9 +12,7 @@ const app = {
       /* 是否折叠菜单，默认false */
       siderCollapsed: false,
       /* 是否打开抽屉式菜单 */
-      siderOpened: false,
-      /* 禁用动画 */
-      disableAnimation: false
+      siderOpened: false
     }
   },
   mutations: {
@@ -27,12 +27,8 @@ const app = {
     },
     [appTypes.SET_SIDER_OPENED](state, siderOpened = false) {
       state.app.siderOpened = siderOpened
-    },
-    [appTypes.SET_DISABLE_ANIMATION](state, disableAnimation = false) {
-      state.app.disableAnimation = disableAnimation
     }
   },
-  actions: {},
   getters: {
     app: state => state.app
   }

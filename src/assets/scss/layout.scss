@@ -116,7 +116,7 @@ $menu-item-text-color-active: $color-write;
   min-width: $sider-width;
   z-index: 10;
   background: $sider-bg-color;
-  transition: all .3s cubic-bezier(.9, 0, .3, .7);
+  @include x-transition(0.3s);
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
   &.collapsed {
     width: $sider-width-collapsed;
@@ -207,7 +207,7 @@ $menu-item-text-color-active: $color-write;
   flex-direction: column;
   flex: auto;
   min-height: 100vh;
-  transition: all .3s cubic-bezier(.9, 0, .3, .7);
+  @include x-transition(0.3s);
   .x-layout-header {
     position: relative;
     width: 100%;
@@ -225,8 +225,8 @@ $menu-item-text-color-active: $color-write;
       color: $default-font-color;
       @include x-transition(0.3s);
       &:hover {
-        color: #000;
-        background: rgba(0, 0, 0, 0.025);
+        color: $theme-color-hover;
+        background: $theme-bg-hover;
       }
     }
     .right-menu {
@@ -237,16 +237,25 @@ $menu-item-text-color-active: $color-write;
       height: 100%;
       float: right;
       .right-menu-item {
+        @include x-transition(0.3s);
         display: inline-flex;
         flex-direction: row;
         align-items: center;
+        &:hover {
+          color: $theme-color-hover;
+          background: $theme-bg-hover;
+        }
       }
       .user-wrapper {
         display: inline-flex;
         height: 100%;
         cursor: pointer;
         .avatar-wrapper {
-          height: 24px;
+          padding: 0 12px;
+          height: 100%;
+          display: inline-flex;
+          flex-direction: row;
+          align-items: center;
           img,
           span {
             display: inline-block;
@@ -255,6 +264,7 @@ $menu-item-text-color-active: $color-write;
           img {
             width: 24px;
             height: 24px;
+            margin-right: 5px;
             border-radius: 50%;
             overflow: hidden;
           }
@@ -344,6 +354,36 @@ $menu-item-text-color-active: $color-write;
   }
   to {
     opacity: 0.3;
+  }
+}
+
+
+/* ------ 公共部分 ------ */
+
+.el-dropdown-menu.avatar-dropdown {
+  min-width: 160px;
+  margin-top: 4px !important;
+  .el-dropdown-menu__item {
+    @include x-transition(0.3s);
+    a {
+      display: block;
+      color: $default-font-color;
+      text-decoration: none;
+      .x-icon,
+      span {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .x-icon {
+        font-size: 16px;
+      }
+      span {
+        margin-left: 6px;
+      }
+    }
+    &:hover {
+      color: $default-font-color !important;
+    }
   }
 }
 

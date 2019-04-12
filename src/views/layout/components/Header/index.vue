@@ -3,33 +3,36 @@
     <toggle></toggle>
     <div v-if="!isXsScreen"
          class="right-menu">
-      <el-tooltip :content="'全屏显示'"
-                  effect="dark"
-                  placement="bottom">
-        <full-screen class="right-menu-item" />
-      </el-tooltip>
       <el-dropdown class="user-wrapper right-menu-item"
                    trigger="click">
         <div class="avatar-wrapper">
-          <img src="http://183.6.175.42:2001/resources/images/temp/user1.jpg"
+          <img v-if="user && user.avatar"
+               :src="user.avatar"
                class="user-avatar">
-          <span>Admin</span>
+          <span>{{user && user.realName ? user.realName : ''}}</span>
         </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/">
-            <el-dropdown-item>首页</el-dropdown-item>
-          </router-link>
-          <a target="_blank"
-             href="https://github.com/PanJiaChen/vue-element-admin/">
-            <el-dropdown-item>
-              Github
-            </el-dropdown-item>
-          </a>
+        <el-dropdown-menu slot="dropdown"
+                          class="avatar-dropdown">
+          <el-dropdown-item>
+            <a target="_blank"
+               href="javascript:void(0)">
+              <x-icon icon="user" /><span>个人中心</span>
+            </a>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <router-link to="/">
+              <x-icon icon="setting" /><span>系统设置</span>
+            </router-link>
+          </el-dropdown-item>
           <el-dropdown-item divided>
-            <span style="display:block;">退出登录</span>
+            <a @click="logout"
+               href="javascript:void(0)">
+              <x-icon icon="logout" /><span>退出登录</span>
+            </a>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
+      <full-screen class="right-menu-item" />
     </div>
   </div>
 </template>
@@ -43,9 +46,15 @@ import FullScreen from '@/components/FullScreen'
 export default {
   name: 'LayoutHeader',
   computed: {
-    ...mapGetters(['app']),
+    ...mapGetters(['app', 'user']),
     isXsScreen () {
       return this.app.screenSize === screen.xs.name
+    }
+  },
+  methods: {
+    logout: async function () {
+      await this.$store.dispatch('logout')
+      location.reload()
     }
   },
   components: {

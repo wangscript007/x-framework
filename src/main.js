@@ -7,6 +7,7 @@ import router from '@/router'
 import store from '@/store'
 
 import 'normalize.css/normalize.css'
+import 'animate.css'
 import '@/assets/scss/index.scss'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
