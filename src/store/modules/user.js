@@ -7,12 +7,16 @@ import {
 
 const user = {
   state: {
-    token: cache.getToken(),
+    token: cache.getToken().token,
+    remember: false,
     user: null
   },
   mutations: {
     [userTypes.SET_TOKEN]: (state, token) => {
       state.token = token
+    },
+    [userTypes.SET_REMEMBER]: (state, remember) => {
+      state.remember = remember
     },
     [userTypes.SET_USER]: (state, user) => {
       state.user = user
@@ -20,29 +24,30 @@ const user = {
   },
   actions: {
     login: async({
-      commit
+      commit,
+      state
     }, formData) => {
       const res = await loginApi.login(formData)
-      if (!res.data) {
+      if (!res.data || !res.data.success) {
         throw new CommonException({
-          message: '验证失败，请重新登录'
+          message: res.data && res.data.message ? res.data.message : '验证失败，请重新登录'
         })
       }
-      commit(userTypes.SET_TOKEN, res.data)
-      cache.setToken(res.data)
+      commit(userTypes.SET_TOKEN, res.data.data)
+      cache.setToken(res.data.data, state.remember)
     },
     getUserInfo: async({
       commit,
       state
     }) => {
       const res = await loginApi.getUserInfo(state.token)
-      if (!res.data) {
+      if (!res.data || !res.data.success) {
         throw new CommonException({
-          message: '用户不存在'
+          message: res.data && res.data.message ? res.data.message : '无法获取用户信息'
         })
       }
-      commit(userTypes.SET_USER, res.data)
-      return res
+      commit(userTypes.SET_USER, res.data.data)
+      return res.data
     },
     logout: async({
       commit,
@@ -51,14 +56,15 @@ const user = {
       await loginApi.logout(state.user.token)
       commit(userTypes.SET_TOKEN, '')
       commit(userTypes.SET_USER, null)
-      cache.removeToken()
+      cache.removeToken(state.remember)
     },
     fedLogout: async({
-      commit
+      commit,
+      state
     }) => {
       commit(userTypes.SET_TOKEN, '')
       commit(userTypes.SET_USER, null)
-      cache.removeToken()
+      cache.removeToken(state.remember)
     }
   },
   getters: {

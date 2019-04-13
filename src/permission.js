@@ -2,10 +2,16 @@ import router from '@/router'
 import store from '@/store'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import { Message } from 'element-ui'
-import { getToken } from '@/common/cache/user'
+import {
+  Message
+} from 'element-ui'
+import {
+  getToken
+} from '@/common/cache/user'
 
-NProgress.configure({ showSpinner: false })
+NProgress.configure({
+  showSpinner: false
+})
 
 /* 拦截白名单 */
 const whiteList = ['/login', '/auth-redirect']
@@ -26,31 +32,51 @@ function hasPermission(userRoles, toRoles) {
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
     /* 判断token是否存在 */
-  if (getToken()) {
-    /* token存在，则判断用户信息是否存在，store中的user在浏览器刷新时会丢失，所以浏览器刷新时也会重新获取用户信息并重新生成路由表 */
+  const tokenObj = getToken()
+  if (tokenObj.token) {
+    /* token存在，先更新remember状态，则判断用户信息是否存在，store中的user在浏览器刷新时会丢失，所以浏览器刷新时也会重新获取用户信息并重新生成路由表 */
+    /* 更新remember状态 */
+    store.commit('SET_REMEMBER', tokenObj.isLocal)
+      /* 获取用户信息 */
     const userInfo = store.getters.user
-      /* 用户信息不存在，则获取用户信息 */
     if (!userInfo) {
+      /* 用户信息不存在*/
       try {
-        /* 则获取用户信息、生成路由表、更新router对象、跳转 */
+        /* 获取用户信息 */
         const res = await store.dispatch('getUserInfo')
+          /* 根据获取到的用户的权限创建路由表 */
         await store.dispatch('createRouterMap', res.data.roles || [])
+          /* 将路由表同步更新到router对象中 */
         router.addRoutes(store.getters.permission.matchedRouters)
-        next({...to, replace: true })
+          /* 跳转 */
+        next({...to,
+          replace: true
+        })
       } catch (err) {
+        /* 当用户信息获取失败时，前端登出并弹出错误信息 */
         await store.dispatch('fedLogout')
         Message.error(err.message)
-        next({ path: '/' })
+        next({
+          path: '/'
+        })
       }
     } else {
       /* 用户信息存在 */
       if (to.path === '/login') {
         /* 如果前往登录，则跳转到/ */
-        next({ path: '/' })
+        next({
+          path: '/'
+        })
         NProgress.done()
       } else {
         /* 如果是去其他路由，则判断有没有许可，无许可则跳转401 */
-        hasPermission(userInfo.roles, to.meta && to.meta.roles ? to.meta.roles : null) ? next() : next({ path: '/401', replace: true, query: { noGoBack: true } })
+        hasPermission(userInfo.roles, to.meta && to.meta.roles ? to.meta.roles : null) ? next() : next({
+          path: '/401',
+          replace: true,
+          query: {
+            noGoBack: true
+          }
+        })
       }
     }
   } else {

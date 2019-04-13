@@ -55,7 +55,7 @@
               <el-row class="form-op">
                 <el-col :span="12"
                         class="remember-me">
-                  <el-checkbox v-model="remember">记住帐号</el-checkbox>
+                  <el-checkbox v-model="remember">记住我</el-checkbox>
                 </el-col>
                 <el-col :span="12"
                         class="text-right find-pwd">
@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import validateUtil from '@/common/utils/validate'
 
 export default {
@@ -127,9 +127,15 @@ export default {
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
+    },
+    remember (value) {
+      this.setRemember(value)
     }
   },
   methods: {
+    ...mapMutations({
+      setRemember: 'SET_REMEMBER'
+    }),
     usernameValidator (rule, value, callback) {
       const validateRes = validateUtil.username(value)
       !validateRes.valid ? callback(validateRes.error) : callback()

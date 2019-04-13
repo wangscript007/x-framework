@@ -7,9 +7,9 @@ export const appTypes = {
 }
 
 export const userTypes = {
-  SET_USERID: 'SET_USERID',
-  SET_USER: 'SET_USER',
-  SET_TOKEN: 'SET_TOKEN'
+  SET_TOKEN: 'SET_TOKEN',
+  SET_REMEMBER: 'SET_REMEMBER',
+  SET_USER: 'SET_USER'
 }
 
 export const permissionTypes = {
