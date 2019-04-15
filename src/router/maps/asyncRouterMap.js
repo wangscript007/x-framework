@@ -97,25 +97,6 @@ const asyncRouterMap = [{
       }
     }]
   }, {
-    path: '/template',
-    name: 'Template',
-    component: Layout,
-    redirect: '/template/index',
-    meta: {
-      showInBreadcrumb: false
-    },
-    children: [{
-      path: 'index',
-      name: 'TemplateIndex',
-      component: () =>
-        import ('@/views/template'),
-      meta: {
-        title: 'Template模板',
-        icon: 'layout',
-        describe: '监控系统各项功能运作情况以及一些相关统计'
-      }
-    }]
-  }, {
     path: 'https://github.com/xustshinn/x-framework',
     name: 'Github',
     meta: {

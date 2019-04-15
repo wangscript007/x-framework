@@ -7,9 +7,7 @@
 </template>
 
 <script>
-import plugins from '@/components/Tinymce/plugins'
-import toolbar from '@/components/Tinymce/toolbar'
-import fontFormats from '@/components/Tinymce/fonts'
+import * as options from '@/components/Tinymce/options'
 
 export default {
   name: 'Tinymce',
@@ -37,7 +35,7 @@ export default {
     },
     menubar: {
       type: String,
-      default: 'file edit insert view format table'
+      default: 'file edit insert view format table tools help'
     },
     height: {
       type: Number,
@@ -80,13 +78,14 @@ export default {
         language: 'zh_CN',
         branding: false,
         selector: `#${this.tinymceId}`,
-        font_formats: fontFormats,
+        font_formats: options.fontFormats,
+        fontsize_formats: options.fontSizeFormats,
+        toolbar: this.toolbar.length > 0 ? this.toolbar : options.toolbar,
+        plugins: options.plugins,
         height: this.height,
         body_class: 'panel-body ',
         object_resizing: false,
-        toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
         menubar: this.menubar,
-        plugins: plugins,
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         code_dialog_height: 450,
