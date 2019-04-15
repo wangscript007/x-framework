@@ -1,6 +1,6 @@
 export default {
   title: 'X-FRAMEWORK',
-  loginBg: './login.jpg',
-  logo: './logo.png',
+  loginBg: './static/img/login.jpg',
+  logo: './static/img/logo.png',
   author: 'XUST'
 }

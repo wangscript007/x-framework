@@ -4,7 +4,7 @@ const componentsRouter = {
   path: '/components',
   name: 'ComponentsDemo',
   component: Layout,
-  redirect: '/components/uploader',
+  redirect: '/components/editor',
   meta: {
     title: '组件',
     icon: 'copyright',
@@ -12,6 +12,17 @@ const componentsRouter = {
     redirectInBreadcrumb: false
   },
   children: [{
+    path: 'editor',
+    name: 'Editor',
+    component: () =>
+      import ('@/views/components-demo/editor'),
+    meta: {
+      title: '富文本编辑器',
+      describe: '富文本编辑器，是后台管理系统的核心功能之一。',
+      icon: 'fa fa-upload',
+      iconType: 'class'
+    }
+  }, {
     path: 'uploader',
     name: 'Uploader',
     component: () =>
