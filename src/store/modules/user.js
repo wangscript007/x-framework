@@ -30,7 +30,9 @@ const user = {
       const res = await loginApi.login(formData)
       if (!res.data || !res.data.success) {
         throw new CommonException({
-          message: res.data && res.data.message ? res.data.message : '验证失败，请重新登录'
+          message: res.data && res.data.message ?
+            res.data.message :
+            '验证失败，请重新登录'
         })
       }
       commit(userTypes.SET_TOKEN, res.data.data)
@@ -69,7 +71,7 @@ const user = {
   },
   getters: {
     token: state => state.token,
-    user: state => state.user,
+    user: state => state.user
   }
 }
 

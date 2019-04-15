@@ -19,7 +19,9 @@ export function getToken() {
 }
 
 export function setToken(token, isLocal = false) {
-  return isLocal ? storage.set(TOKEN_KEY, token) : storage.session.set(TOKEN_KEY, token)
+  return isLocal ?
+    storage.set(TOKEN_KEY, token) :
+    storage.session.set(TOKEN_KEY, token)
 }
 
 export function removeToken(isLocal = false) {

@@ -1,7 +1,11 @@
 import axios from 'axios'
 import store from '@/store'
-import { Message } from 'element-ui'
-import { getToken } from '@/common/cache/user'
+import {
+  Message
+} from 'element-ui'
+import {
+  getToken
+} from '@/common/cache/user'
 
 /* 创建axios对象 */
 const service = axios.create({
@@ -14,12 +18,15 @@ service.interceptors.request.use(
   config => {
     /* 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改 */
     if (store.getters.token) {
-      config.headers['X-Token'] = getToken()
+      config.headers['X-Token'] = getToken().token
     }
     return config
   },
   error => {
-    Message({ message: error.message, type: 'error' })
+    Message({
+      message: error.message,
+      type: 'error'
+    })
     Promise.reject(error)
   }
 )
