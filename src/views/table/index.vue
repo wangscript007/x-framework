@@ -1,14 +1,15 @@
 <template>
   <page>
-    <card>
-
-    </card>
+    <el-card shadow="never">
+      <div class="text item">
+        123456
+      </div>
+    </el-card>
   </page>
 </template>
 
 <script>
 import Page from '@/components/Page'
-import Card from '@/components/Card'
 export default {
   name: 'BaseTable',
   data () {
@@ -17,8 +18,7 @@ export default {
     }
   },
   components: {
-    Page,
-    Card
+    Page
   }
 }
 </script>
