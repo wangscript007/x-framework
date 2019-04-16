@@ -9,7 +9,6 @@ import store from '@/store'
 import 'normalize.css/normalize.css'
 import 'animate.css'
 import '@/assets/scss/index.scss'
-// import '@/assets/scss/element-variables.scss'
 import 'font-awesome/css/font-awesome.min.css'
 import '@/assets/icon/iconfont.css'
 

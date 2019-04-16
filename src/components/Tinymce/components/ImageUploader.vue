@@ -4,7 +4,9 @@
                size="mini"
                type="primary"
                @click="showDialog=true">上传图片</el-button>
-    <el-dialog title="图片上传"
+    <el-dialog title="上传图片"
+               width="60%"
+               custom-class="image-uploader-dialog"
                :visible.sync="showDialog"
                :modal-append-to-body='false'>
       <div class="image-wrapper">
@@ -43,10 +45,6 @@ export default {
       fileList: []
     }
   },
-  created () { },
-  mounted () { },
-  computed: {},
-  watch: {},
   methods: {
     checkAllSuccess () {
       return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
@@ -75,7 +73,10 @@ export default {
     handleSubmit () {
       const arr = Object.keys(this.listObj).map(v => this.listObj[v])
       if (!this.checkAllSuccess()) {
-        this.$message('请等待所有图片上传成功, 如果出现了网络问题，请刷新页面重新上传！')
+        this.$message({
+          showClose: true,
+          message: '请等待所有图片上传完成, 如果上传失败，请刷新后重试'
+        })
         return
       }
       this.$emit('uploaderSuccess', arr)
@@ -106,10 +107,12 @@ export default {
 @import "@/assets/scss/variables.scss";
 .uploader-wrapper {
   .image-wrapper {
-    padding: 12px 0 0 12px;
-    border: dashed 1px #c0ccda;
+    min-height: 336px;
+    padding: 12px 12px 0;
+    border: solid 2px #c0ccda;
     .image-uploader {
       /deep/ .el-upload--picture-card {
+        border-width: 2px;
         margin-bottom: 12px;
         .uploader-icon {
           display: inline-block;
@@ -125,6 +128,10 @@ export default {
         }
       }
     }
+  }
+  /deep/ .image-uploader-dialog .el-dialog__body {
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 }
 </style>

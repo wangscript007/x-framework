@@ -55,7 +55,11 @@ router.beforeEach(async(to, from, next) => {
       } catch (err) {
         /* 当用户信息获取失败时，前端登出并弹出错误信息 */
         await store.dispatch('fedLogout')
-        Message.error(err.message)
+        Message({
+          showClose: true,
+          type: 'error',
+          message: err.message
+        })
         next({
           path: '/'
         })
