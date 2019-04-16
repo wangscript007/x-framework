@@ -1,24 +1,27 @@
 <template>
-  <div></div>
+  <page>
+    <card>
+
+    </card>
+  </page>
 </template>
 
 <script>
+import Page from '@/components/Page'
+import Card from '@/components/Card'
 export default {
-  name: '',
-  props: {},
+  name: 'BaseTable',
   data () {
     return {
+
     }
   },
-  created () {},
-  mounted () {},
-  computed: {},
-  watch: {},
-  methods: {},
-  components: {}
+  components: {
+    Page,
+    Card
+  }
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-
+<style scoped>
 </style>

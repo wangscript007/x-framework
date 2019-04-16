@@ -4,6 +4,7 @@
 @import "./layout.scss";
 @import "./page.scss";
 @import "./common.scss";
+@import "./element-variables.scss";
 @font-face {
   font-family: Chinese Quote;
   src: local("PingFang SC"), local("SimSun");
@@ -34,10 +35,6 @@ body {
   overflow-x: hidden;
 }
 
-
-/* ------ element-ui ------ */
-
-$--color-primary: $theme-color;
 
 /* ------ nprogress ------ */
 

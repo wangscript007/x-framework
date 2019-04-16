@@ -12,38 +12,40 @@ const componentsRouter = {
     redirectInBreadcrumb: false
   },
   children: [{
-    path: 'editor',
-    name: 'Editor',
-    component: () =>
-      import ('@/views/components-demo/editor'),
-    meta: {
-      title: '富文本编辑器',
-      describe: '富文本编辑器，是后台管理系统的核心功能之一。常用于发布消息，编辑文章等功能。',
-      icon: 'fa fa-upload',
-      iconType: 'class'
+      path: 'editor',
+      name: 'Editor',
+      component: () =>
+        import ('@/views/components/editor'),
+      meta: {
+        title: '富文本编辑器',
+        describe: '富文本编辑器，是后台管理系统的核心功能之一。常用于发布消息，编辑文章等功能。',
+        icon: 'fa fa-upload',
+        iconType: 'class'
+      }
+    }, {
+      path: 'page',
+      name: 'Page',
+      component: () =>
+        import ('@/views/components/page'),
+      meta: {
+        title: 'Page模板页',
+        describe: 'page组件，是所有功能页的基础模板，page组件通常搭配element栅格和Card组件进行灵活布局。',
+        icon: 'layout'
+      }
     }
-  }, {
-    path: 'uploader',
-    name: 'Uploader',
-    component: () =>
-      import ('@/views/components-demo/uploader'),
-    meta: {
-      title: 'Uploader-上传组件',
-      describe: '图片上传、文件上传等。',
-      icon: 'fa fa-upload',
-      iconType: 'class'
-    }
-  }, {
-    path: 'page',
-    name: 'Page',
-    component: () =>
-      import ('@/views/components-demo/page'),
-    meta: {
-      title: 'Page模板页',
-      describe: 'page组件，是所有功能页的基础模板，page组件通常搭配element栅格和Card组件进行灵活布局。',
-      icon: 'layout'
-    }
-  }]
+    // , {
+    //   path: 'uploader',
+    //   name: 'Uploader',
+    //   component: () =>
+    //     import ('@/views/components/uploader'),
+    //   meta: {
+    //     title: 'Uploader-上传组件',
+    //     describe: '图片上传、文件上传等。',
+    //     icon: 'fa fa-upload',
+    //     iconType: 'class'
+    //   }
+    // }
+  ]
 }
 
 export default componentsRouter

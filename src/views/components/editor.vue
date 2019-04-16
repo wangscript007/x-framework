@@ -1,15 +1,11 @@
 <template>
   <page>
-    <el-row>
-      <el-col :span="24">
-        <card>
-          <tinymce ref="editor"
-                   v-model="content">
-          </tinymce>
-          <div v-html="content"></div>
-        </card>
-      </el-col>
-    </el-row>
+    <card>
+      <tinymce ref="editor"
+               v-model="content">
+      </tinymce>
+      <div v-html="content"></div>
+    </card>
   </page>
 </template>
 

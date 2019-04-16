@@ -1,5 +1,6 @@
 import Layout from '@/views/layout'
 import componentsRouterMap from '@/router/maps/modules/components'
+import tableRouterMap from '@/router/maps/modules/table'
 
 /**
 * 路由表相关参数
@@ -23,7 +24,9 @@ import componentsRouterMap from '@/router/maps/modules/components'
   }
 **/
 
-const asyncRouterMap = [{
+const asyncRouterMap = [
+  /* 主页 */
+  {
     path: '/dashboard',
     name: 'Dashboard',
     component: Layout,
@@ -44,7 +47,10 @@ const asyncRouterMap = [{
     }]
   },
   /* 模块路由表引入 */
-  componentsRouterMap, {
+  tableRouterMap,
+  componentsRouterMap,
+  /* 权限控制 */
+  {
     path: '/permission',
     name: 'Permission',
     component: Layout,
@@ -96,7 +102,9 @@ const asyncRouterMap = [{
         roles: ['editor']
       }
     }]
-  }, {
+  },
+  /* 外链 */
+  {
     path: 'https://github.com/xustshinn/x-framework',
     name: 'Github',
     meta: {
@@ -105,7 +113,7 @@ const asyncRouterMap = [{
       external: true
     }
   },
-  /* 由于路由是从上到下解析执行，所以404判断必须放最后 */
+  /* 404 */
   {
     path: '*',
     redirect: '/404',

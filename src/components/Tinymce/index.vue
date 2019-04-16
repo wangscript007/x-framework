@@ -1,13 +1,17 @@
 <template>
   <div :class="{fullscreen:fullscreen}"
-       class="tinymce-container editor-container">
+       class="editor-wrapper">
     <textarea :id="tinymceId"
-              class="tinymce-textarea" />
+              class="editor-textarea"></textarea>
+    <div class="editor-custom-wrapper">
+      <image-uploader @uploaderSuccess="uploaderSuccess"></image-uploader>
     </div>
+  </div>
 </template>
 
 <script>
 import * as options from '@/components/Tinymce/options'
+import ImageUploader from '@/components/Tinymce/components/ImageUploader'
 
 export default {
   name: 'Tinymce',
@@ -35,7 +39,7 @@ export default {
     },
     menubar: {
       type: String,
-      default: 'file edit insert view format table tools help'
+      default: options.menuBar
     },
     height: {
       type: Number,
@@ -75,27 +79,25 @@ export default {
     initTinymce () {
       const _this = this
       window.tinymce.init({
-        language: 'zh_CN',
-        branding: false,
         selector: `#${this.tinymceId}`,
-        font_formats: options.fontFormats,
-        fontsize_formats: options.fontSizeFormats,
-        toolbar: this.toolbar.length > 0 ? this.toolbar : options.toolbar,
-        plugins: options.plugins,
-        height: this.height,
-        body_class: 'panel-body ',
-        object_resizing: false,
-        menubar: this.menubar,
-        end_container_on_empty_block: true,
-        powerpaste_word_import: 'clean',
-        code_dialog_height: 450,
-        code_dialog_width: 1000,
-        advlist_bullet_styles: 'square',
-        advlist_number_styles: 'default',
+        language: 'zh_CN', /* 语言 */
+        height: this.height, /* 编辑器高度 */
+        plugins: options.plugins, /* 插件列表 */
+        menubar: this.menubar, /* 菜单设置 */
+        toolbar: this.toolbar.length > 0 ? this.toolbar : options.toolbar, /* 工具栏设置 */
+        font_formats: options.fontFormats, /* 字体选择设置 */
+        fontsize_formats: options.fontSizeFormats, /* 字体大小选择设置 */
+        body_class: 'panel-body', /* 内容编辑区为iframe嵌套一个子页面，该选项可以为子页面的body设置css类 */
+        object_resizing: true, /* 是否允许图像、媒体在编辑器中拖拽调整大小 */
+        end_container_on_empty_block: true, /* 如果在空的内部块元素中按Enter键，则此选项允许您拆分当前的容器块元素 */
+        powerpaste_word_import: 'prompt', /* 控制如何筛选从Microsoft Word粘贴的内容。 'prompt'：始终提示、'merge'：保留文档格式、'crean'：保留文档结构，清除嵌套样式*/
+        advlist_bullet_styles: 'square', /* 无序列表符号样式 */
+        advlist_number_styles: 'default', /* 有序列表符号样式 */
+        default_link_target: '_blank', /* a标签的target */
+        link_title: true, /* a标签的title */
+        nonbreaking_force_tab: true, /* 允许tab键缩进 */
+        branding: false, /* 是否显示右下角的power by ... */
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-        default_link_target: '_blank',
-        link_title: false,
-        nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
         init_instance_callback: editor => {
           if (_this.value) {
             editor.setContent(_this.value)
@@ -129,38 +131,38 @@ export default {
     getContent () {
       window.tinymce.get(this.tinymceId).getContent()
     },
-    imageSuccessCBK (arr) {
+    uploaderSuccess (arr) {
       const _this = this
       arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
+        window.tinymce.get(_this.tinymceId).insertContent(`<img class="uploader-image" src="${v.url}" >`)
       })
     }
+  },
+  components: {
+    ImageUploader
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.tinymce-container {
+.editor-wrapper {
   position: relative;
   line-height: normal;
-}
-.tinymce-container >>> .mce-fullscreen {
-  z-index: 10000;
-}
-.tinymce-textarea {
-  visibility: hidden;
-  z-index: -1;
-}
-.editor-custom-btn-container {
-  position: absolute;
-  right: 4px;
-  top: 4px;
-}
-.fullscreen .editor-custom-btn-container {
-  z-index: 10000;
-  position: fixed;
-}
-.editor-upload-btn {
-  display: inline-block;
+  .editor-textarea {
+    visibility: hidden;
+    opacity: 0;
+    z-index: -1;
+  }
+  .editor-custom-wrapper {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+  }
+  &.fullscreen {
+    .editor-custom-wrapper {
+      position: fixed;
+      z-index: 10000;
+    }
+  }
 }
 </style>

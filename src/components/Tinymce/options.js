@@ -1,12 +1,16 @@
 // Detail plugins list see https://www.tinymce.com/docs/plugins/
 // Custom builds see https://www.tinymce.com/download/custom-builds/
 const pluginList = [
-  'print',
+  'advlist',
+  'anchor',
+  'autolink',
+  'charmap',
+  'codesample',
+  'directionality',
   'preview',
+  'print',
   'fullpage',
   'searchreplace',
-  'autolink',
-  'directionality',
   'visualblocks',
   'visualchars',
   'fullscreen',
@@ -14,16 +18,12 @@ const pluginList = [
   'link',
   'media',
   'template',
-  'codesample',
   'table',
-  'charmap',
   'hr',
   'pagebreak',
   'nonbreaking',
-  'anchor',
   'toc',
   'insertdatetime',
-  'advlist',
   'lists',
   'wordcount',
   'imagetools',
@@ -125,3 +125,15 @@ const fontSize = [
   '36磅=36pt',
 ]
 export const fontSizeFormats = fontSize.join(' ')
+
+const menuBarList = [
+  'file',
+  'edit',
+  'insert',
+  'view',
+  'format',
+  'table',
+  'tools',
+  'help'
+]
+export const menuBar = menuBarList.join(' ')
