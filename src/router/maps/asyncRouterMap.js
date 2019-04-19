@@ -10,7 +10,6 @@ import tableRouterMap from '@/router/maps/modules/table'
     icon: '',                    该路由在sider中显示的图标，值：iconfont中的svg-name
     describe: ''                 路由相关描述，显示在Page组件中的PageHeader
     hidden: false,               是否在sider中隐藏该路由
-    keepAlive: true,             是否缓存，在组件切换过程中将状态保留在内存中，防止重复渲染DOM，默认true
     alwaysShow: null,            是否一直显示该节点，用于是否嵌套路由的判断，有3个值：true、false、null
                                     true:  无论该路由下有没有子路由或有多少子路由，该路由在sider中都会显示
                                     false：无论该路由下有没有子路由，该路由在sider中都会隐藏
