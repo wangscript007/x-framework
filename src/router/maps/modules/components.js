@@ -11,7 +11,9 @@ const componentsRouter = {
     alwaysShow: true,
     redirectInBreadcrumb: false
   },
-  children: [{
+  children: [
+    /* 编辑器 */
+    {
       path: 'editor',
       name: 'Editor',
       component: () =>
@@ -22,7 +24,9 @@ const componentsRouter = {
         icon: 'fa fa-upload',
         iconType: 'class'
       }
-    }, {
+    },
+    /* page模板 */
+    {
       path: 'page',
       name: 'Page',
       component: () =>
@@ -33,18 +37,6 @@ const componentsRouter = {
         icon: 'layout'
       }
     }
-    // , {
-    //   path: 'uploader',
-    //   name: 'Uploader',
-    //   component: () =>
-    //     import ('@/views/components/uploader'),
-    //   meta: {
-    //     title: 'Uploader-上传组件',
-    //     describe: '图片上传、文件上传等。',
-    //     icon: 'fa fa-upload',
-    //     iconType: 'class'
-    //   }
-    // }
   ]
 }
 

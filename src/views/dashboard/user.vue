@@ -1,13 +1,13 @@
 <template>
-  <page>
-    <div>Uploader</div>
+  <page :showHeader="false">
+    <h1 class="text-center">Dashboard-User</h1>
   </page>
 </template>
 
 <script>
 import Page from '@/components/Page'
 export default {
-  name: 'Uploader',
+  name: 'Dashboard',
   components: {
     Page
   }

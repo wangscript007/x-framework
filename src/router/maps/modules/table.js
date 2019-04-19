@@ -4,7 +4,7 @@ const tableRouter = {
   path: '/table',
   name: 'Table',
   component: Layout,
-  redirect: '/table/index',
+  redirect: '/table/complex',
   meta: {
     title: '表格',
     icon: 'table',
@@ -12,13 +12,13 @@ const tableRouter = {
     redirectInBreadcrumb: false
   },
   children: [{
-    path: 'index',
-    name: 'TableIndex',
+    path: 'complex',
+    name: 'ComplexTable',
     component: () =>
-      import ('@/views/table/index'),
+      import ('@/views/table/complex'),
     meta: {
-      title: '基础数据表格',
-      describe: '基础数据表格，是后台管理核心功能之一，包括了常用的增删查改操作。',
+      title: '综合表格',
+      describe: '综合数据表格，是后台管理核心功能之一，包括了常用的增删查改操作。',
       icon: 'fa fa-table',
       iconType: 'class'
     }

@@ -1,6 +1,6 @@
 <template>
   <page :showHeader="false">
-    <h1 class="text-center">Dashboard</h1>
+    <h1 class="text-center">Dashboard-Admin</h1>
   </page>
 </template>
 

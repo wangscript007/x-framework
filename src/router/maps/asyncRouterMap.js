@@ -3,6 +3,12 @@ import componentsRouterMap from '@/router/maps/modules/components'
 import tableRouterMap from '@/router/maps/modules/table'
 
 /**
+ * 路由表开发约定：
+ * 1、所有业务功能路由统一定义在asyncRouterMap中，且必须设置meta属性
+ * 2、外部链接不建议定义在嵌套路由下面
+ **/
+
+/**
 * 路由表相关参数
 * name:'router-name'
 * meta : {                       由于vue-router自定义属性迁移到meta中，所以每一个路由至少定义meta: {}
@@ -19,6 +25,7 @@ import tableRouterMap from '@/router/maps/modules/table'
     showInBreadcrumb: true,      面包屑中是否显示该路由，默认true
     redirectInBreadcrumb: true   面包屑中该路由是否可点击重定向，默认true
     roles: null                  路由权限，Array格式，默认null
+    absolute: false              是否绝对权限，若设置true，该路由下的子路由会进行严格筛选，包括admin用户
     external: false              是否外部链接，默认false
   }
 **/
@@ -33,17 +40,50 @@ const asyncRouterMap = [
     meta: {
       icon: 'dashboard'
     },
-    children: [{
-      path: 'index',
-      name: 'DashboardIndex',
-      component: () =>
-        import ('@/views/dashboard'),
-      meta: {
-        title: '首页',
-        icon: 'dashboard',
-        describe: '监控系统各项功能运作情况以及一些相关统计'
+    children: [
+      /* admin的首页 */
+      {
+        path: 'admin',
+        name: 'Dashboard-Admin',
+        component: () =>
+          import ('@/views/dashboard/admin'),
+        meta: {
+          title: '首页',
+          icon: 'dashboard',
+          describe: '监控系统各项功能运作情况以及一些相关统计',
+          roles: ['admin'],
+          absolute: true
+        }
+      },
+      /* editor的首页 */
+      {
+        path: 'editor',
+        name: 'Dashboard-Editor',
+        component: () =>
+          import ('@/views/dashboard/editor'),
+        meta: {
+          title: '首页',
+          icon: 'dashboard',
+          describe: '监控系统各项功能运作情况以及一些相关统计',
+          roles: ['editor'],
+          absolute: true
+        }
+      },
+      /* user的首页 */
+      {
+        path: 'user',
+        name: 'Dashboard-User',
+        component: () =>
+          import ('@/views/dashboard/user'),
+        meta: {
+          title: '首页',
+          icon: 'dashboard',
+          describe: '监控系统各项功能运作情况以及一些相关统计',
+          roles: ['user'],
+          absolute: true
+        }
       }
-    }]
+    ]
   },
   /* 模块路由表引入 */
   tableRouterMap,
@@ -90,15 +130,6 @@ const asyncRouterMap = [
         title: '权限控制页-User',
         describe: '权限控制页，该功能只有拥有‘admin’、‘user’权限的用户能访问',
         roles: ['user']
-      }
-    }, {
-      path: 'directive',
-      name: 'DirectivePermission',
-      component: () =>
-        import ('@/views/permission/directive'),
-      meta: {
-        title: 'DirectivePermission',
-        roles: ['editor']
       }
     }]
   },

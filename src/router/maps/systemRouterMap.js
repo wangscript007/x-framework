@@ -1,49 +1,69 @@
 import Layout from '@/views/layout'
 
-const systemRouterMap = [{
-  path: '',
-  name: 'base',
-  redirect: '/index'
-}, {
-  path: '/index',
-  name: 'index',
-  component: () =>
-    import ('@/views/index'),
-  meta: {
-    hidden: true
-  }
-}, {
-  path: '/redirect',
-  component: Layout,
-  meta: {
-    hidden: true
+const systemRouterMap = [
+  /* 根路由 */
+  {
+    path: '',
+    name: 'Base',
+    redirect: '/index',
+    meta: {
+      hidden: true
+    }
   },
-  children: [{
-    path: '/redirect/:path*',
+  /* 首页，只负责跳转 */
+  {
+    path: '/index',
+    name: 'Index',
     component: () =>
-      import ('@/views/redirect')
-  }]
-}, {
-  path: '/login',
-  meta: {
-    hidden: true
+      import ('@/views/index'),
+    meta: {
+      hidden: true
+    }
   },
-  component: () =>
-    import ('@/views/login')
-}, {
-  path: '/404',
-  meta: {
-    hidden: true
+  /* 登录页 */
+  {
+    path: '/login',
+    name: 'Login',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/login')
   },
-  component: () =>
-    import ('@/views/error/404')
-}, {
-  path: '/401',
-  meta: {
-    hidden: true
+  /* 404 */
+  {
+    path: '/404',
+    name: '404',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/error/404')
   },
-  component: () =>
-    import ('@/views/error/401')
-}]
+  /* 401 */
+  {
+    path: '/401',
+    name: '401',
+    meta: {
+      hidden: true
+    },
+    component: () =>
+      import ('@/views/error/401')
+  },
+  /* 重定向 */
+  {
+    path: '/redirect',
+    name: 'Redirect',
+    component: Layout,
+    meta: {
+      hidden: true
+    },
+    children: [{
+      path: '/redirect/:path*',
+      component: () =>
+        import ('@/views/redirect')
+    }]
+  }
+]
 
 export default systemRouterMap
