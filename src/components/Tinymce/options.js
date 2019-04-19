@@ -60,7 +60,7 @@ const toolbarList = [
   'image',
   'media',
   'insertdatetime',
-  'pageembed',
+  'table',
   '|',
   'alignleft',
   'aligncenter',
@@ -132,8 +132,8 @@ const menuBarList = [
   'insert',
   'view',
   'format',
-  'table',
-  'tools',
-  'help'
+  // 'table',
+  // 'tools',
+  // 'help'
 ]
 export const menuBar = menuBarList.join(' ')

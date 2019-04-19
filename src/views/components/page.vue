@@ -1,8 +1,9 @@
 <template>
   <page>
-    <el-row class="layout-row">
+    <el-row>
       <el-col :span="24">
-        <el-card shadow="never">
+        <el-card shadow="never"
+                 class="layout-card-mg-b">
           <div slot="header"
                class="clearfix">
             <strong>卡片名称</strong>
@@ -15,10 +16,11 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row class="layout-row"
-            :gutter="20">
-      <el-col :span="12">
-        <el-card shadow="never">
+    <el-row :gutter="20">
+      <el-col :md="{span:12}"
+              :sm="{span:24}">
+        <el-card shadow="never"
+                 class="layout-card-mg-b">
           <div slot="header"
                class="clearfix">
             <strong>卡片名称</strong>
@@ -30,8 +32,10 @@
           </div>
         </el-card>
       </el-col>
-      <el-col :span="12">
-        <el-card shadow="never">
+      <el-col :md="{span:12}"
+              :sm="{span:24}">
+        <el-card shadow="never"
+                 class="layout-card-mg-b">
           <div slot="header"
                class="clearfix">
             <strong>卡片名称</strong>
@@ -44,9 +48,10 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-row class="layout-row">
+    <el-row>
       <el-col :span="24">
-        <el-card shadow="never">
+        <el-card shadow="never"
+                 class="layout-card-mg-b">
           <div slot="header"
                class="clearfix">
             <strong>卡片名称</strong>
@@ -73,7 +78,7 @@ export default {
 </script>
 
 <style scoped>
-.layout-row {
+.layout-card-mg-b {
   margin-bottom: 20px;
 }
 </style>

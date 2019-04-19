@@ -3,9 +3,9 @@
     <el-button icon="el-icon-upload"
                size="mini"
                type="primary"
+               class="editor-btn"
                @click="showDialog=true">上传图片</el-button>
     <el-dialog title="上传图片"
-               width="60%"
                custom-class="image-uploader-dialog"
                :visible.sync="showDialog"
                :modal-append-to-body='false'>
@@ -37,7 +37,6 @@
 <script>
 export default {
   name: 'ImageUploader',
-  props: {},
   data () {
     return {
       showDialog: false,
@@ -106,6 +105,9 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 @import "@/assets/scss/variables.scss";
 .uploader-wrapper {
+  .editor-btn {
+    padding: 7px;
+  }
   .image-wrapper {
     min-height: 336px;
     padding: 12px 12px 0;
@@ -129,9 +131,26 @@ export default {
       }
     }
   }
-  /deep/ .image-uploader-dialog .el-dialog__body {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  /deep/ .image-uploader-dialog {
+    .el-dialog__body {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    @media screen and (max-width: 767px) {
+      & {
+        width: 90% !important;
+      }
+    }
+    @media (min-width: 768px) and (max-width: 1199px) {
+      & {
+        width: 80% !important;
+      }
+    }
+    @media screen and (min-width: 1200px) {
+      & {
+        width: 60% !important;
+      }
+    }
   }
 }
 </style>
