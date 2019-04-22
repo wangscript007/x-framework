@@ -1,8 +1,8 @@
 <template>
   <page>
     <el-card shadow="never">
-      <tinymce ref="editor"
-               v-model="content">
+      <tinymce v-model="content"
+               name="editor">
       </tinymce>
       <div v-html="content"></div>
     </el-card>
@@ -16,7 +16,7 @@ export default {
   name: 'Editor',
   data () {
     return {
-      content: 'Welcome to Use Tinymce Editor'
+      content: '<p>Welcome to Use Tinymce Editor</p>'
     }
   },
   components: {

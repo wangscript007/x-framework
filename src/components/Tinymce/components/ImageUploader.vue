@@ -1,10 +1,5 @@
 <template>
   <div class="uploader-wrapper">
-    <el-button icon="el-icon-upload"
-               size="mini"
-               type="primary"
-               class="editor-btn"
-               @click="showDialog=true">上传图片</el-button>
     <el-dialog title="上传图片"
                custom-class="image-uploader-dialog"
                :visible.sync="showDialog"
@@ -45,6 +40,9 @@ export default {
     }
   },
   methods: {
+    openUploaderDialog () {
+      this.showDialog = true
+    },
     checkAllSuccess () {
       return Object.keys(this.listObj).every(item => this.listObj[item].hasSuccess)
     },
@@ -105,9 +103,6 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
 @import "@/assets/scss/variables.scss";
 .uploader-wrapper {
-  .editor-btn {
-    padding: 7px;
-  }
   .image-wrapper {
     min-height: 336px;
     padding: 12px 12px 0;

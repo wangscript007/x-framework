@@ -1,15 +1,22 @@
 <template>
-  <div :class="{fullscreen:fullscreen}"
-       class="editor-wrapper">
-    <textarea :id="tinymceId"
-              class="editor-textarea"></textarea>
+  <div class="editor-wrapper">
+    <editor :id="id"
+            :name="name"
+            v-model="value"
+            :init="init"
+            :disabled="disabled"></editor>
     <div class="editor-custom-wrapper">
-      <image-uploader @uploaderSuccess="uploaderSuccess"></image-uploader>
+      <image-uploader ref="imageUploader"
+                      @uploaderSuccess="uploaderSuccess"></image-uploader>
     </div>
   </div>
 </template>
 
 <script>
+import tinymce from 'tinymce/tinymce'
+import Editor from '@tinymce/tinymce-vue'
+import 'tinymce/themes/silver'
+import '@/components/Tinymce/plugins'
 import * as options from '@/components/Tinymce/options'
 import ImageUploader from '@/components/Tinymce/components/ImageUploader'
 
@@ -22,7 +29,11 @@ export default {
         return 'vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '')
       }
     },
-    value: {
+    name: {
+      type: String,
+      default: ''
+    },
+    content: {
       type: String,
       default: ''
     },
@@ -47,39 +58,17 @@ export default {
       default: 360
     }
   },
+  model: {
+    prop: 'content',
+    event: 'contentChange'
+  },
   data () {
     return {
-      hasChange: false,
-      hasInit: false,
-      tinymceId: this.id,
-      fullscreen: false
-    }
-  },
-  watch: {
-    value (val) {
-      if (!this.hasChange && this.hasInit) {
-        this.$nextTick(() =>
-          window.tinymce.get(this.tinymceId).setContent(val || ''))
-      }
-    }
-  },
-  mounted () {
-    this.initTinymce()
-  },
-  activated () {
-    this.initTinymce()
-  },
-  deactivated () {
-    this.destroyTinymce()
-  },
-  destroyed () {
-    this.destroyTinymce()
-  },
-  methods: {
-    initTinymce () {
-      const _this = this
-      window.tinymce.init({
-        selector: `#${this.tinymceId}`,
+      init: {
+        selector: `#${this.id}`,
+        language_url: '/static/libs/tinymce/langs/zh_CN.js',
+        skin_url: '/static/libs/tinymce/skins/ui/oxide',
+        content_css: '/static/libs/tinymce/skins/content/default/content.min.css',
         language: 'zh_CN', /* 语言 */
         height: this.height, /* 编辑器高度 */
         plugins: options.plugins, /* 插件列表 */
@@ -97,48 +86,39 @@ export default {
         link_title: true, /* a标签的title */
         nonbreaking_force_tab: true, /* 允许tab键缩进 */
         branding: false, /* 是否显示右下角的power by ... */
-        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-        init_instance_callback: editor => {
-          if (_this.value) {
-            editor.setContent(_this.value)
-          }
-          _this.hasInit = true
-          editor.on('NodeChange Change KeyUp SetContent', () => {
-            this.hasChange = true
-            this.$emit('input', editor.getContent())
-          })
-        },
-        setup (editor) {
-          editor.on('FullscreenStateChanged', (e) => {
-            _this.fullscreen = e.state
+        setup: (editor) => {
+          editor.ui.registry.addButton('imageUploader', {
+            tooltip: '插入图片',
+            icon: 'image',
+            onAction: () => {
+              this.$refs['imageUploader'].openUploaderDialog()
+            }
           })
         }
-      })
-    },
-    destroyTinymce () {
-      const tinymce = window.tinymce.get(this.tinymceId)
-      if (this.fullscreen) {
-        tinymce.execCommand('mceFullScreen')
-      }
-
-      if (tinymce) {
-        tinymce.destroy()
-      }
-    },
-    setContent (value) {
-      window.tinymce.get(this.tinymceId).setContent(value)
-    },
-    getContent () {
-      window.tinymce.get(this.tinymceId).getContent()
-    },
+      },
+      value: this.content
+    }
+  },
+  mounted () {
+    tinymce.init({})
+  },
+  methods: {
     uploaderSuccess (arr) {
-      const _this = this
       arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="uploader-image" src="${v.url}" >`)
+        tinymce.activeEditor.insertContent(`<img class="uploader-image" src="${v.url}" >`)
       })
     }
   },
+  watch: {
+    content (newValue) {
+      this.value = newValue
+    },
+    value (newValue) {
+      this.$emit('contentChange', newValue)
+    }
+  },
   components: {
+    Editor,
     ImageUploader
   }
 }
@@ -148,20 +128,19 @@ export default {
 .editor-wrapper {
   position: relative;
   line-height: normal;
-  .editor-textarea {
+  textarea {
     visibility: hidden;
     opacity: 0;
     z-index: -1;
+    display: none;
   }
   .editor-custom-wrapper {
     position: absolute;
-    right: 5px;
-    top: 5px;
+    right: 0;
   }
-  &.fullscreen {
-    .editor-custom-wrapper {
-      position: fixed;
-      z-index: 10000;
+  /deep/ .tox-tinymce.tox-fullscreen {
+    iframe.tox-edit-area__iframe {
+      height: 100% !important;
     }
   }
 }

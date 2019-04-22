@@ -22,10 +22,15 @@ function routerFilter(routerMap, userRoles, parentPath = '') {
     if (!hasPermission(route, userRoles)) {
       return false
     }
-    if (route.children && route.children.length > 0) {
+    if (route.children && route.children.length) {
       const matchedChildren = routerFilter(route.children, userRoles)
-      if (matchedChildren.length > 0 && matchedChildren[0].meta && !matchedChildren[0].meta.external) {
-        route.redirect = path.resolve(parentPath, route.path, matchedChildren[0].path)
+      if (matchedChildren && matchedChildren.length) {
+        const firstChild = matchedChildren.find(item => {
+          return item.meta && !item.meta.external
+        })
+        if (firstChild) {
+          route.redirect = path.resolve(parentPath, route.path, firstChild.path)
+        }
       }
       route.children = matchedChildren
     }
