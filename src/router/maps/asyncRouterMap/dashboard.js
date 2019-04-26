@@ -13,8 +13,7 @@ const dashboard = {
     {
       path: 'admin',
       name: 'Dashboard-Admin',
-      component: () =>
-        import ('@/views/dashboard/admin'),
+      component: () => import('@/views/dashboard/admin'),
       meta: {
         title: '首页',
         icon: 'dashboard',
@@ -27,8 +26,7 @@ const dashboard = {
     {
       path: 'editor',
       name: 'Dashboard-Editor',
-      component: () =>
-        import ('@/views/dashboard/editor'),
+      component: () => import('@/views/dashboard/editor'),
       meta: {
         title: '首页',
         icon: 'dashboard',
@@ -41,8 +39,7 @@ const dashboard = {
     {
       path: 'user',
       name: 'Dashboard-User',
-      component: () =>
-        import ('@/views/dashboard/user'),
+      component: () => import('@/views/dashboard/user'),
       meta: {
         title: '首页',
         icon: 'dashboard',

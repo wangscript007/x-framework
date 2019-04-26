@@ -95,13 +95,12 @@ export default {
         resolve(true)
       })
     }
-  },
-  components: {}
+  }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import "@/assets/scss/variables.scss";
+@import "~@/assets/scss/variables.scss";
 .uploader-wrapper {
   .image-wrapper {
     min-height: 336px;

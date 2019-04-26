@@ -1,11 +1,15 @@
 <template>
   <div>
-    <div class="x-drawer"
-         :class="drawerClasses">
-      <div class="x-drawer-mask"
-           @click.stop="maskClick()"></div>
-      <div class="x-drawer-wrapper"
-           :style="wrapperStyles">
+    <div
+      class="x-drawer"
+      :class="drawerClasses"
+    >
+      <div
+        class="x-drawer-mask"
+        @click.stop="maskClick()"></div>
+      <div
+        class="x-drawer-wrapper"
+        :style="wrapperStyles">
         <div class="x-drawer-content">
           <slot></slot>
         </div>
@@ -18,7 +22,7 @@
 import { hasScrollBar, getScrollbarWidth } from '@/common/utils'
 
 export default {
-  name: 'drawer',
+  name: 'Drawer',
   props: {
     type: {
       type: String,
@@ -44,25 +48,13 @@ export default {
     wrapperStyles () {
       return {
         width: `${this.width}px`,
-        transform: `translateX(${
-          this.opened
-            ? '0'
-            : this.type === 'left'
-              ? '-100'
-              : this.type === 'right'
-                ? '100'
-                : '0'
-        }%)`
+        transform: `translateX(${this.opened ? '0' : this.type === 'left' ? '-100' : this.type === 'right' ? '100' : '0'}%)`
       }
     }
   },
   watch: {
     opened (value) {
-      document.body.style.cssText = `${
-        value && hasScrollBar()
-          ? `margin-right: ${getScrollbarWidth()}px; `
-          : ''
-      }overflow-y: ${value ? 'hidden' : 'auto'}`
+      document.body.style.cssText = `${value && hasScrollBar() ? `margin-right: ${getScrollbarWidth()}px; ` : ''}overflow-y: ${value ? 'hidden' : 'auto'}`
     }
   },
   methods: {

@@ -1,12 +1,10 @@
 import path from 'path'
-import {
-  permissionTypes
-} from '@/store/mutation-types'
+import { permissionTypes } from '@/store/mutation-types'
 import systemRouterMap from '@/router/maps/systemRouterMap'
 import asyncRouterMap from '@/router/maps/asyncRouterMap'
 
 /* 判断用户权限是否与路由权限匹配 */
-function hasPermission(route, userRoles) {
+function hasPermission (route, userRoles) {
   if (!route.meta || !route.meta.roles) {
     return true
   }
@@ -17,7 +15,7 @@ function hasPermission(route, userRoles) {
 }
 
 /* 根据用户权限过滤路由表 */
-function routerFilter(routerMap, userRoles, parentPath = '') {
+function routerFilter (routerMap, userRoles, parentPath = '') {
   return routerMap.filter(route => {
     if (!hasPermission(route, userRoles)) {
       return false
@@ -39,7 +37,7 @@ function routerFilter(routerMap, userRoles, parentPath = '') {
 }
 
 /* 查找默认路由 */
-function findDefaultPath(routerMap, res = '') {
+function findDefaultPath (routerMap, res = '') {
   routerMap.find(route => {
     if (!route.meta || route.meta.hidden || route.meta.external) {
       return false
@@ -76,9 +74,7 @@ const permission = {
   },
   actions: {
     /* 创建路由表 */
-    createRouterMap: async({
-      commit
-    }, userRoles) => {
+    createRouterMap: async ({ commit }, userRoles) => {
       const matchedRouters = routerFilter(asyncRouterMap, userRoles)
       const defaultPath = findDefaultPath(matchedRouters)
       commit(permissionTypes.SET_ROUTERS, {

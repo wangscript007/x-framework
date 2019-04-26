@@ -6,7 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <link rel="icon" href="<%= BASE_URL %>static/img/favicon.ico" />
-  <title>X-FRAMEWORK</title>
+  <title>
+    <%= webpackConfig.name %>
+  </title>
   <style>
     .app-loading {
       position: fixed;
@@ -39,7 +41,10 @@
     <div class="app-loading">
       <div class="wrapper">
         <img src="<%= BASE_URL %>static/img/loading.gif" />
-        <h3>正在加载X-FRAMEWORK，请稍候...</h3>
+        <h3>
+          正在加载
+          <%= webpackConfig.name %>， 请稍候...
+        </h3>
       </div>
     </div>
   </div>

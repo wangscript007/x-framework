@@ -15,8 +15,7 @@ const permission = {
   children: [{
     path: 'admin',
     name: 'PageAdmin',
-    component: () =>
-      import ('@/views/permission/pageAdmin'),
+    component: () => import('@/views/permission/pageAdmin'),
     meta: {
       title: '权限控制页-Admin',
       describe: '权限控制页，该功能只有拥有‘admin’权限的用户能访问',
@@ -25,8 +24,7 @@ const permission = {
   }, {
     path: 'editor',
     name: 'PageEditor',
-    component: () =>
-      import ('@/views/permission/pageEditor'),
+    component: () => import('@/views/permission/pageEditor'),
     meta: {
       title: '权限控制页-Editor',
       describe: '权限控制页，该功能只有拥有‘admin’、‘editor’权限的用户能访问',
@@ -35,8 +33,7 @@ const permission = {
   }, {
     path: 'user',
     name: 'PageUser',
-    component: () =>
-      import ('@/views/permission/pageUser'),
+    component: () => import('@/views/permission/pageUser'),
     meta: {
       title: '权限控制页-User',
       describe: '权限控制页，该功能只有拥有‘admin’、‘user’权限的用户能访问',

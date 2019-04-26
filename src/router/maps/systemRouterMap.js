@@ -14,8 +14,7 @@ const systemRouterMap = [
   {
     path: '/index',
     name: 'Index',
-    component: () =>
-      import ('@/views/index'),
+    component: () => import('@/views/index'),
     meta: {
       hidden: true
     }
@@ -27,8 +26,7 @@ const systemRouterMap = [
     meta: {
       hidden: true
     },
-    component: () =>
-      import ('@/views/login')
+    component: () => import('@/views/login')
   },
   /* 404 */
   {
@@ -37,8 +35,7 @@ const systemRouterMap = [
     meta: {
       hidden: true
     },
-    component: () =>
-      import ('@/views/error/404')
+    component: () => import('@/views/error/404')
   },
   /* 401 */
   {
@@ -47,8 +44,7 @@ const systemRouterMap = [
     meta: {
       hidden: true
     },
-    component: () =>
-      import ('@/views/error/401')
+    component: () => import('@/views/error/401')
   },
   /* 重定向 */
   {
@@ -60,8 +56,7 @@ const systemRouterMap = [
     },
     children: [{
       path: '/redirect/:path*',
-      component: () =>
-        import ('@/views/redirect')
+      component: () => import('@/views/redirect')
     }]
   }
 ]

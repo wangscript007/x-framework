@@ -13,8 +13,9 @@
            style="height: 16px; width: 16px;">
         <title></title>
         <g>
-          <path d="M12.036 15.59c0 .55-.453.995-.997.995H5.032c-.55 0-.997-.445-.997-.996V8.584H1.03c-1.1 0-1.36-.633-.578-1.416L7.33.29c.39-.39 1.026-.385 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.004z"
-                fill-rule="evenodd" />
+          <path
+            d="M12.036 15.59c0 .55-.453.995-.997.995H5.032c-.55 0-.997-.445-.997-.996V8.584H1.03c-1.1 0-1.36-.633-.578-1.416L7.33.29c.39-.39 1.026-.385 1.412 0l6.878 6.88c.782.78.523 1.415-.58 1.415h-3.004v7.004z"
+            fill-rule="evenodd"/>
         </g>
       </svg>
     </div>
@@ -36,14 +37,14 @@ export default {
     customStyle: {
       type: Object,
       default: () => ({
-          right: '15px',
-          bottom: '15px',
-          width: '40px',
-          height: '40px',
-          'border-radius': '50%',
-          'z-index': '10',
-          'line-height': '45px'
-        })
+        right: '15px',
+        bottom: '15px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '50%',
+        'z-index': '10',
+        'line-height': '45px'
+      })
     },
     transitionName: {
       type: String,
@@ -52,25 +53,25 @@ export default {
   },
   data () {
     return {
-        visible: false,
-        interval: null,
-        isMoving: false
+      visible: false,
+      interval: null,
+      isMoving: false
     }
   },
-  mounted() {
+  mounted () {
     window.addEventListener('scroll', this.handleScroll)
   },
-  beforeDestroy() {
+  beforeDestroy () {
     window.removeEventListener('scroll', this.handleScroll)
     if (this.interval) {
       clearInterval(this.interval)
     }
   },
   methods: {
-    handleScroll() {
+    handleScroll () {
       this.visible = window.pageYOffset > this.visibilityHeight
     },
-    backToTop() {
+    backToTop () {
       if (this.isMoving) return
       const start = window.pageYOffset
       let i = 0
@@ -87,15 +88,15 @@ export default {
         i++
       }, 16.7)
     },
-    easeInOutQuad(t, b, c, d) {
-        return (t /= d / 2) < 1 ? (c / 2 * t * t + b) : (-c / 2 * (--t * (t - 2) - 1) + b)
+    easeInOutQuad (t, b, c, d) {
+      return (t /= d / 2) < 1 ? (c / 2 * t * t + b) : (-c / 2 * (--t * (t - 2) - 1) + b)
     }
   }
 }
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-  @import '@/assets/scss/variables.scss';
+  @import '~@/assets/scss/variables.scss';
 
   .back-to-ceiling {
     position: fixed;
@@ -105,12 +106,14 @@ export default {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     background-color: $theme-color;
     opacity: 0.6;
+
     .Icon {
-        fill: #fff;
-        background: none;
+      fill: #fff;
+      background: none;
     }
+
     &:hover {
-        opacity: 1;
+      opacity: 1;
     }
   }
 

@@ -1,10 +1,14 @@
 <template>
-  <el-tooltip :content="tipTitle"
-              effect="dark"
-              placement="bottom">
-    <a @click="click"
-       class="full-screen-btn"
-       href="javascript:void(0)">
+  <el-tooltip
+    :content="tipTitle"
+    effect="dark"
+    placement="bottom"
+  >
+    <a
+      @click="click"
+      class="full-screen-btn"
+      href="javascript:void(0)"
+    >
       <x-icon :icon="iconClass" />
     </a>
   </el-tooltip>
@@ -53,10 +57,10 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.full-screen-btn {
-  padding: 0 12px;
-  color: rgba(0, 0, 0, 0.65);
-  font-size: 20px;
-  line-height: 20px;
-}
+  .full-screen-btn {
+    padding: 0 12px;
+    color: rgba(0, 0, 0, 0.65);
+    font-size: 20px;
+    line-height: 20px;
+  }
 </style>

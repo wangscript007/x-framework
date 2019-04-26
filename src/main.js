@@ -13,7 +13,6 @@ import 'font-awesome/css/font-awesome.min.css'
 import '@/assets/icon/iconfont.css'
 
 import '@/assets/icon/iconfont'
-import '@/mock'
 import '@/permission'
 
 Vue.config.productionTip = false
@@ -27,5 +26,5 @@ Vue.use(Element, {
 new Vue({
   router,
   store,
-  render: h => h(App),
+  render: h => h(App)
 }).$mount('#app')

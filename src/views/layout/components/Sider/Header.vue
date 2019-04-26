@@ -1,12 +1,12 @@
 <template>
   <div class="sider-header">
     <a href="/"
-       :title="webside.title">
-      <img :src="webside.logo"
-           :alt="webside.title" />
+       :title="app.name">
+      <img :src="app.logo"
+           :alt="app.name" />
       <transition name="sider-title">
         <h1 v-if="!collapsed"
-            key="0">{{webside.title}}</h1>
+            key="0">{{app.name}}</h1>
       </transition>
     </a>
   </div>
@@ -24,7 +24,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['webside'])
+    ...mapGetters(['app'])
   }
 }
 </script>
