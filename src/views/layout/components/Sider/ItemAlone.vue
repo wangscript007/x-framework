@@ -1,11 +1,15 @@
 <template>
   <el-menu-item :index="matchedRoutePath">
-    <item-link :external="matchedRoute.meta && matchedRoute.meta.external"
-               :path="matchedRoutePath">
-      <x-icon v-if="showIcon && matchedRoute.meta && matchedRoute.meta.icon"
-              :icon="matchedRoute.meta.icon"
-              :type="matchedRoute.meta.iconType" />
-      <span>{{ matchedRoute.meta && matchedRoute.meta.title ? matchedRoute.meta.title : '-'}}</span>
+    <item-link
+      :external="matchedRoute.meta && matchedRoute.meta.external"
+      :path="matchedRoutePath"
+    >
+      <x-icon
+        v-if="showIcon && matchedRoute.meta && matchedRoute.meta.icon"
+        :icon="matchedRoute.meta.icon"
+        :type="matchedRoute.meta.iconType"
+      />
+      <span>{{ matchedRoute.meta && matchedRoute.meta.title ? matchedRoute.meta.title : '-' }}</span>
     </item-link>
   </el-menu-item>
 </template>
@@ -16,6 +20,9 @@ import ItemLink from '@/views/layout/components/Sider/ItemLink'
 
 export default {
   name: 'ItemAlone',
+  components: {
+    ItemLink
+  },
   props: {
     route: {
       type: Object,
@@ -58,9 +65,6 @@ export default {
     resolvePath (routePath) {
       return path.resolve(this.basePath, routePath)
     }
-  },
-  components: {
-    ItemLink
   }
 }
 </script>

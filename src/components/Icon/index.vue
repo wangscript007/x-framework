@@ -5,6 +5,11 @@ import ClassIcon from '@/components/Icon/ClassIcon'
 
 export default {
   name: 'Icon',
+  components: {
+    ImageIcon,
+    SvgIcon,
+    ClassIcon
+  },
   props: {
     type: {
       type: String,
@@ -19,14 +24,9 @@ export default {
       default: null
     }
   },
-  components: {
-    ImageIcon,
-    SvgIcon,
-    ClassIcon
-  },
   // eslint-disable-next-line
   render: function (h) {
-    return (this.type === 'class' ? <class-icon class="x-icon" icon={this.icon} styles={this.styles} /> : this.type === 'image' ? <image-icon class="x-icon" icon={this.icon} styles={this.styles} /> : <svg-icon class="x-icon" icon={this.icon} styles={this.styles} />)
+    return (this.type === 'class' ? <class-icon class='x-icon' icon={this.icon} styles={this.styles} /> : this.type === 'image' ? <image-icon class='x-icon' icon={this.icon} styles={this.styles} /> : <svg-icon class='x-icon' icon={this.icon} styles={this.styles} />)
   }
 }
 </script>

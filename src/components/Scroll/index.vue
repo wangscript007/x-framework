@@ -8,6 +8,9 @@
 import Scroll from 'vuescroll'
 
 export default {
+  components: {
+    Scroll
+  },
   props: {
     mode: {
       type: String,
@@ -45,11 +48,11 @@ export default {
   data () {
     return {
       ops: {
-      vuescroll: {},
-      scrollPanel: {},
-      rail: {},
-      bar: {}
-    }
+        vuescroll: {},
+        scrollPanel: {},
+        rail: {},
+        bar: {}
+      }
     }
   },
   created () {
@@ -63,9 +66,6 @@ export default {
     this.ops.bar.background = this.background
     this.ops.bar.opacity = this.opacity
     this.ops.bar.onlyShowBarOnScroll = this.onlyShowBarOnScroll
-  },
-  components: {
-    Scroll
   }
 }
 </script>

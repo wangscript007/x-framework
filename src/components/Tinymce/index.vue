@@ -1,13 +1,17 @@
 <template>
   <div class="editor-wrapper">
-    <editor :id="id"
-            :name="name"
-            v-model="value"
-            :init="init"
-            :disabled="disabled"></editor>
+    <editor
+      :id="id"
+      v-model="value"
+      :name="name"
+      :init="init"
+      :disabled="disabled"
+    ></editor>
     <div class="editor-custom-wrapper">
-      <image-uploader ref="imageUploader"
-                      @uploaderSuccess="uploaderSuccess"></image-uploader>
+      <image-uploader
+        ref="imageUploader"
+        @uploaderSuccess="uploaderSuccess"
+      ></image-uploader>
     </div>
   </div>
 </template>
@@ -22,6 +26,14 @@ import ImageUploader from '@/components/Tinymce/components/ImageUploader'
 
 export default {
   name: 'Tinymce',
+  components: {
+    Editor,
+    ImageUploader
+  },
+  model: {
+    prop: 'content',
+    event: 'contentChange'
+  },
   props: {
     id: {
       type: String,
@@ -57,10 +69,6 @@ export default {
       required: false,
       default: 360
     }
-  },
-  model: {
-    prop: 'content',
-    event: 'contentChange'
   },
   data () {
     return {
@@ -99,6 +107,14 @@ export default {
       value: this.content
     }
   },
+  watch: {
+    content (newValue) {
+      this.value = newValue
+    },
+    value (newValue) {
+      this.$emit('contentChange', newValue)
+    }
+  },
   mounted () {
     tinymce.init({})
   },
@@ -108,18 +124,6 @@ export default {
         tinymce.activeEditor.insertContent(`<img class="uploader-image" src="${v.url}" >`)
       })
     }
-  },
-  watch: {
-    content (newValue) {
-      this.value = newValue
-    },
-    value (newValue) {
-      this.$emit('contentChange', newValue)
-    }
-  },
-  components: {
-    Editor,
-    ImageUploader
   }
 }
 </script>

@@ -1,11 +1,17 @@
 <template>
   <div class="x-layout-page">
-    <div class="x-layout-page-header"
-         v-if="showHeader">
+    <div
+      v-if="showHeader"
+      class="x-layout-page-header"
+    >
       <breadcrumb></breadcrumb>
-      <h1 class="page-header-title">{{$route.meta.title||''}}</h1>
-      <div v-if="showDescribe"
-           class="page-header-describe">{{$route.meta.describe||''}}</div>
+      <h1 class="page-header-title">{{ $route.meta.title||'' }}</h1>
+      <div
+        v-if="showDescribe"
+        class="page-header-describe"
+      >
+        {{ $route.meta.describe || '' }}
+      </div>
       <slot name="page-header"></slot>
     </div>
     <div class="x-layout-page-content">
@@ -18,7 +24,10 @@
 import Breadcrumb from '@/components/Breadcrumb'
 
 export default {
-  name: 'page',
+  name: 'Page',
+  components: {
+    Breadcrumb
+  },
   props: {
     showHeader: {
       type: Boolean,
@@ -28,9 +37,6 @@ export default {
       type: Boolean,
       default: true
     }
-  },
-  components: {
-    Breadcrumb
   }
 }
 </script>

@@ -1,21 +1,34 @@
 <template>
-  <div class="x-layout-header">
+  <div
+    class="x-layout-header"
+    :class="{'header-fixed':fixed}"
+  >
     <toggle></toggle>
-    <div v-if="!isXsScreen"
-         class="right-menu">
-      <el-dropdown class="user-wrapper right-menu-item"
-                   trigger="click">
+    <div
+      v-if="!isXsScreen"
+      class="right-menu"
+    >
+      <el-dropdown
+        class="user-wrapper right-menu-item"
+        trigger="click"
+      >
         <div class="avatar-wrapper">
-          <img v-if="user && user.avatar"
-               :src="user.avatar"
-               class="user-avatar">
-          <span>{{user && user.realName ? user.realName : ''}}</span>
+          <img
+            v-if="user && user.avatar"
+            :src="user.avatar"
+            class="user-avatar"
+          >
+          <span>{{ user && user.realName ? user.realName : '' }}</span>
         </div>
-        <el-dropdown-menu slot="dropdown"
-                          class="avatar-dropdown">
+        <el-dropdown-menu
+          slot="dropdown"
+          class="avatar-dropdown"
+        >
           <el-dropdown-item>
-            <a target="_blank"
-               href="javascript:void(0)">
+            <a
+              target="_blank"
+              href="javascript:void(0)"
+            >
               <x-icon icon="user" /><span>个人中心</span>
             </a>
           </el-dropdown-item>
@@ -25,8 +38,10 @@
             </router-link>
           </el-dropdown-item>
           <el-dropdown-item divided>
-            <a @click="logout"
-               href="javascript:void(0)">
+            <a
+              href="javascript:void(0)"
+              @click="logout"
+            >
               <x-icon icon="logout" /><span>退出登录</span>
             </a>
           </el-dropdown-item>
@@ -45,6 +60,16 @@ import FullScreen from '@/components/FullScreen'
 
 export default {
   name: 'LayoutHeader',
+  components: {
+    Toggle,
+    FullScreen
+  },
+  props: {
+    fixed: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
     ...mapGetters(['app', 'user']),
     isXsScreen () {
@@ -56,10 +81,6 @@ export default {
       await this.$store.dispatch('logout')
       location.reload()
     }
-  },
-  components: {
-    Toggle,
-    FullScreen
   }
 }
 </script>

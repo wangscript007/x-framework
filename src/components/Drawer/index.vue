@@ -6,10 +6,12 @@
     >
       <div
         class="x-drawer-mask"
-        @click.stop="maskClick()"></div>
+        @click.stop="maskClick()"
+      ></div>
       <div
         class="x-drawer-wrapper"
-        :style="wrapperStyles">
+        :style="wrapperStyles"
+      >
         <div class="x-drawer-content">
           <slot></slot>
         </div>

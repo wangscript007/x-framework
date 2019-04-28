@@ -46,7 +46,7 @@ module.exports = [
         username,
         password
       } = config.body
-      let res = {
+      const res = {
         success: true,
         message: 'success',
         data: ''
@@ -78,7 +78,7 @@ module.exports = [
       const {
         token
       } = config.query
-      let res = {
+      const res = {
         success: true,
         message: 'success',
         data: null

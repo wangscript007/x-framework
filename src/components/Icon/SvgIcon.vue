@@ -1,14 +1,16 @@
 <template>
-  <svg :style="styles"
-       class="svg-icon"
-       aria-hidden="true">
-    <use :xlink:href="`#icon-${icon}`"></use>
+  <svg
+    class="svg-icon"
+    :style="styles"
+    aria-hidden="true"
+  >
+    <use :xlink:href="`#icon-${icon}`" />
   </svg>
 </template>
 
 <script>
 export default {
-  name: 'icon-svg',
+  name: 'SvgIcon',
   props: {
     icon: {
       type: String,
@@ -23,10 +25,10 @@ export default {
 </script>
 
 <style>
-.svg-icon {
-  width: 1em;
-  height: 1em;
-  fill: currentColor;
-  overflow: hidden;
-}
+  .svg-icon {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+    overflow: hidden;
+  }
 </style>

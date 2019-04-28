@@ -1,12 +1,18 @@
 <template>
   <div class="sider-header">
-    <a href="/"
-       :title="app.name">
-      <img :src="app.logo"
-           :alt="app.name" />
+    <a
+      href="/"
+      :title="app.name"
+    >
+      <img
+        :src="app.logo"
+        :alt="app.name"
+      >
       <transition name="sider-title">
-        <h1 v-if="!collapsed"
-            key="0">{{app.name}}</h1>
+        <h1
+          v-if="!collapsed"
+          key="0"
+        >{{ app.name }}</h1>
       </transition>
     </a>
   </div>

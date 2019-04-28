@@ -1,5 +1,5 @@
 <template>
-  <page :showHeader="false">
+  <page :show-header="false">
     <h1 class="text-center">Dashboard-Admin</h1>
   </page>
 </template>

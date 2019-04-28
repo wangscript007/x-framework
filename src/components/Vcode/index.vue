@@ -1,8 +1,10 @@
 <template>
   <div class="s-canvas">
-    <canvas id="s-canvas"
-            :width="contentWidth"
-            :height="contentHeight"></canvas>
+    <canvas
+      id="s-canvas"
+      :width="contentWidth"
+      :height="contentHeight"
+    ></canvas>
   </div>
 </template>
 
@@ -63,13 +65,13 @@ export default {
       default: 38
     }
   },
-  mounted () {
-    this.drawPic()
-  },
   watch: {
     identifyCode () {
       this.drawPic()
     }
+  },
+  mounted () {
+    this.drawPic()
   },
   methods: {
     drawPic () {

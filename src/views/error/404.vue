@@ -2,25 +2,35 @@
   <div class="page-404">
     <div class="wrapper">
       <div class="pic">
-        <img class="pic-bg"
-             src="@/assets/images/404.png"
-             alt="404">
-        <img class="pic-cloud cloud-left"
-             src="@/assets/images/404_cloud.png"
-             alt="404">
-        <img class="pic-cloud cloud-middle"
-             src="@/assets/images/404_cloud.png"
-             alt="404">
-        <img class="pic-cloud cloud-right"
-             src="@/assets/images/404_cloud.png"
-             alt="404">
+        <img
+          class="pic-bg"
+          src="@/assets/images/404.png"
+          alt="404"
+        >
+        <img
+          class="pic-cloud cloud-left"
+          src="@/assets/images/404_cloud.png"
+          alt="404"
+        >
+        <img
+          class="pic-cloud cloud-middle"
+          src="@/assets/images/404_cloud.png"
+          alt="404"
+        >
+        <img
+          class="pic-cloud cloud-right"
+          src="@/assets/images/404_cloud.png"
+          alt="404"
+        >
       </div>
       <div class="tips">
         <div class="tips-oops">OOPS!</div>
         <div class="tips-message">{{ message }}</div>
         <div class="tips-info">请检查输入的网址是否正确，请点击以下按钮返回主页或者联系管理员</div>
-        <router-link to="/"
-                     class="tips-return-home">返回首页</router-link>
+        <router-link
+          to="/"
+          class="tips-return-home"
+        >返回首页</router-link>
       </div>
     </div>
   </div>

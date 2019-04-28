@@ -2,15 +2,19 @@
   <div class="page-error">
     <div class="wrapper">
       <div class="pic">
-        <img src="@/assets/images/error.png"
-             width="100%">
+        <img
+          src="@/assets/images/error.png"
+          width="100%"
+        >
       </div>
       <div class="tips">
         <h1 class="tips-oops">Oops!</h1>
         <div class="tips-message">抱歉，您没有权限访问该功能</div>
         <div class="tips-info">请联系管理员为您添加该功能的访问权限</div>
-        <router-link to="/"
-                     class="tips-return-home">返回首页</router-link>
+        <router-link
+          to="/"
+          class="tips-return-home"
+        >返回首页</router-link>
       </div>
     </div>
   </div>

@@ -5,9 +5,9 @@
     placement="bottom"
   >
     <a
-      @click="click"
       class="full-screen-btn"
       href="javascript:void(0)"
+      @click="click"
     >
       <x-icon :icon="iconClass" />
     </a>
@@ -36,7 +36,7 @@ export default {
     if (!screenfull.enabled) {
       return
     }
-    let _this = this
+    const _this = this
     screenfull.on('change', () => {
       _this.isFullScreen = screenfull.isFullscreen
     })

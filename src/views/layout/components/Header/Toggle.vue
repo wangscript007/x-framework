@@ -1,7 +1,9 @@
 <template>
-  <a @click.stop="toggle"
-     class="sider-toggle-button"
-     href="javascript:void(0);">
+  <a
+    class="sider-toggle-button"
+    href="javascript:void(0);"
+    @click.stop="toggle"
+  >
     <x-icon :icon="icon" />
   </a>
 </template>
@@ -16,6 +18,12 @@ export default {
     return {
       clickReady: true,
       clickDelay: 500
+    }
+  },
+  computed: {
+    ...mapGetters(['app']),
+    icon () {
+      return this.app.siderCollapsed ? 'indent' : 'outdent'
     }
   },
   methods: {
@@ -33,17 +41,11 @@ export default {
       } else {
         this.setSiderCollapsed(!this.app.siderCollapsed)
       }
-      let _this = this
-      let timer = setTimeout(() => {
+      const _this = this
+      const timer = setTimeout(() => {
         _this.clickReady = true
         clearTimeout(timer)
       }, this.clickDelay)
-    }
-  },
-  computed: {
-    ...mapGetters(['app']),
-    icon () {
-      return this.app.siderCollapsed ? 'indent' : 'outdent'
     }
   }
 }

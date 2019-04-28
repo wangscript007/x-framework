@@ -1,8 +1,10 @@
 <template>
   <page>
     <el-card shadow="never">
-      <tinymce v-model="content"
-               name="editor">
+      <tinymce
+        v-model="content"
+        name="editor"
+      >
       </tinymce>
       <div v-html="content"></div>
     </el-card>
@@ -14,14 +16,14 @@ import Page from '@/components/Page'
 import Tinymce from '@/components/Tinymce'
 export default {
   name: 'Editor',
+  components: {
+    Page,
+    Tinymce
+  },
   data () {
     return {
       content: '<p>Welcome to Use Tinymce Editor</p>'
     }
-  },
-  components: {
-    Page,
-    Tinymce
   }
 }
 </script>

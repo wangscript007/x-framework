@@ -1,6 +1,8 @@
 <template>
-  <component v-bind="linkProps"
-             :is="linkType">
+  <component
+    :is="linkType"
+    v-bind="linkProps"
+  >
     <slot />
   </component>
 </template>
@@ -19,11 +21,11 @@ export default {
     }
   },
   computed: {
-    linkType() {
+    linkType () {
       return this.external ? 'a' : 'router-link'
     },
-    linkProps() {
-      return this.external ? {href: this.path, target: '_blank'} : {to: this.path, tag: 'a'}
+    linkProps () {
+      return this.external ? { href: this.path, target: '_blank' } : { to: this.path, tag: 'a' }
     }
   }
 }

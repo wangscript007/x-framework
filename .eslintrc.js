@@ -19,7 +19,7 @@ module.exports = {
   rules: {
     'vue/script-indent': ['error', 2, {'baseIndent': 0}],
     "vue/max-attributes-per-line": [2, {
-      "singleline": 10,
+      "singleline": 1,
       "multiline": {
         "max": 1,
         "allowFirstLine": false
@@ -210,7 +210,7 @@ module.exports = {
     'prefer-const': 2,
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'object-curly-spacing': [2, 'always', {
-      objectsInObjects: false
+      objectsInObjects: true
     }],
     'array-bracket-spacing': [2, 'never']
   },

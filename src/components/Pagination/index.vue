@@ -1,16 +1,20 @@
 <template>
-  <div v-show="!hidden"
-       :calss='alignClass'
-       class="pagination-wrapper">
-    <el-pagination :background="background"
-                   :current-page.sync="currentPage"
-                   :page-size.sync="pageSize"
-                   :layout="layout"
-                   :page-sizes="pageSizes"
-                   :total="total"
-                   v-bind="$attrs"
-                   @size-change="handleSizeChange"
-                   @current-change="handleCurrentChange" />
+  <div
+    v-show="!hidden"
+    :calss="alignClass"
+    class="pagination-wrapper"
+  >
+    <el-pagination
+      :background="background"
+      :current-page.sync="currentPage"
+      :page-size.sync="pageSize"
+      :layout="layout"
+      :page-sizes="pageSizes"
+      :total="total"
+      v-bind="$attrs"
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
@@ -47,7 +51,7 @@ export default {
     align: {
       type: String,
       default: 'left'
-    },
+    }
   },
   computed: {
     currentPage: {

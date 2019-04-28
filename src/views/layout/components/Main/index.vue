@@ -1,7 +1,9 @@
 <template>
   <div class="x-layout-main">
-    <transition name="page-change"
-                mode="out-in">
+    <transition
+      name="page-change"
+      mode="out-in"
+    >
       <router-view :key="key" />
     </transition>
   </div>

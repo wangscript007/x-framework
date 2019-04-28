@@ -2,13 +2,19 @@
   <page>
     <el-row>
       <el-col :span="24">
-        <el-card shadow="never"
-                 class="layout-card-mg-b">
-          <div slot="header"
-               class="clearfix">
+        <el-card
+          shadow="never"
+          class="layout-card-mg-b"
+        >
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <strong>卡片名称</strong>
-            <el-button style="float: right; padding: 3px 0"
-                       type="text">操作按钮</el-button>
+            <el-button
+              style="float: right; padding: 3px 0"
+              type="text"
+            >操作按钮</el-button>
           </div>
           <div class="text item">
             这里是内容
@@ -17,30 +23,46 @@
       </el-col>
     </el-row>
     <el-row :gutter="20">
-      <el-col :md="{span:12}"
-              :sm="{span:24}">
-        <el-card shadow="never"
-                 class="layout-card-mg-b">
-          <div slot="header"
-               class="clearfix">
+      <el-col
+        :md="{span:12}"
+        :sm="{span:24}"
+      >
+        <el-card
+          shadow="never"
+          class="layout-card-mg-b"
+        >
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <strong>卡片名称</strong>
-            <el-button style="float: right; padding: 3px 0"
-                       type="text">操作按钮</el-button>
+            <el-button
+              style="float: right; padding: 3px 0"
+              type="text"
+            >操作按钮</el-button>
           </div>
           <div class="text item">
             这里是内容
           </div>
         </el-card>
       </el-col>
-      <el-col :md="{span:12}"
-              :sm="{span:24}">
-        <el-card shadow="never"
-                 class="layout-card-mg-b">
-          <div slot="header"
-               class="clearfix">
+      <el-col
+        :md="{span:12}"
+        :sm="{span:24}"
+      >
+        <el-card
+          shadow="never"
+          class="layout-card-mg-b"
+        >
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <strong>卡片名称</strong>
-            <el-button style="float: right; padding: 3px 0"
-                       type="text">操作按钮</el-button>
+            <el-button
+              style="float: right; padding: 3px 0"
+              type="text"
+            >操作按钮</el-button>
           </div>
           <div class="text item">
             这里是内容
@@ -50,13 +72,19 @@
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-card shadow="never"
-                 class="layout-card-mg-b">
-          <div slot="header"
-               class="clearfix">
+        <el-card
+          shadow="never"
+          class="layout-card-mg-b"
+        >
+          <div
+            slot="header"
+            class="clearfix"
+          >
             <strong>卡片名称</strong>
-            <el-button style="float: right; padding: 3px 0"
-                       type="text">操作按钮</el-button>
+            <el-button
+              style="float: right; padding: 3px 0"
+              type="text"
+            >操作按钮</el-button>
           </div>
           <div class="text item">
             这里是内容
