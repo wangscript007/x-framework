@@ -254,14 +254,9 @@ $menu-item-text-color-active: $color-write;
   overflow: hidden;
   @include x-transition(0.3s);
 
-  &.have-no-sider {
-    .x-layout-header.header-fixed {
-      width: 100% !important;
-    }
-  }
-
   .x-layout-header {
     position: relative;
+    width: 100%;
     height: $layout-header-height;
     z-index: 1;
     flex: 0 0 auto;

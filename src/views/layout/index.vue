@@ -12,10 +12,7 @@
           :fixed="app.siderFixed"
         ></layout-sider>
       </transition>
-      <div
-        class="x-layout-content"
-        :class="{'have-no-sider': smallScreen}"
-      >
+      <div class="x-layout-content">
         <layout-header :fixed="app.headerFixed"></layout-header>
         <layout-main></layout-main>
         <layout-footer></layout-footer>
