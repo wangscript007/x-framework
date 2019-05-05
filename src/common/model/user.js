@@ -1,5 +1,5 @@
 export default class User {
-  constructor ({userId, account, realName, userType, phone, email, sex, iconPath, orgId, orgName, deptId, deptName, roleSet, permissionSet, appInfo = {}}) {
+  constructor ({ userId, account, realName, userType, phone, email, sex, iconPath, orgId, orgName, deptId, deptName, roleSet, permissionSet, appInfo = {} }) {
     this.userId = userId
     this.account = account
     this.realName = realName
@@ -17,3 +17,4 @@ export default class User {
     this.appInfo = appInfo
   }
 }
+

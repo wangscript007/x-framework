@@ -4,3 +4,4 @@ export default {
   logo: './static/img/logo.png',
   author: 'XUST'
 }
+

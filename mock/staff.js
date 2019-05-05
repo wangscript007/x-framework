@@ -7,7 +7,7 @@ for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
     staffId: '@guid',
     staffName: '@cname',
-    staffNo: '2019' + '@increment(1)', /* 员工号 */
+    staffNo: '2019000' + '@increment(1)', /* 员工号 */
     cerNo: '@id', /* 身份证 */
     'sex|1': ['1', '2'], /* 1：男，2：女 */
     native: '@county(true)', /* 籍贯 */

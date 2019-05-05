@@ -5,3 +5,4 @@ export default {
   sm: { name: 'screen-sm', minSize: 576, maxSize: 767 },
   xs: { name: 'screen-xs', minSize: 0, maxSize: 575 }
 }
+

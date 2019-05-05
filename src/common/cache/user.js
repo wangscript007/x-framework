@@ -2,8 +2,8 @@ import storage from 'good-storage'
 
 const TOKEN_KEY = 'X_FRAMEWORK_TOKEN'
 
-export function getToken() {
-  let res = {
+export function getToken () {
+  const res = {
     token: '',
     isLocal: false
   }
@@ -18,12 +18,10 @@ export function getToken() {
   return res
 }
 
-export function setToken(token, isLocal = false) {
-  return isLocal ?
-    storage.set(TOKEN_KEY, token) :
-    storage.session.set(TOKEN_KEY, token)
+export function setToken (token, isLocal = false) {
+  return isLocal ? storage.set(TOKEN_KEY, token) : storage.session.set(TOKEN_KEY, token)
 }
 
-export function removeToken(isLocal = false) {
+export function removeToken (isLocal = false) {
   return isLocal ? storage.remove(TOKEN_KEY) : storage.session.remove(TOKEN_KEY)
 }

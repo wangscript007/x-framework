@@ -1,5 +1,5 @@
 function isEmpty (value, name) {
-  let res = {
+  const res = {
     valid: true,
     error: null
   }
@@ -32,3 +32,4 @@ const validateUtil = {
 }
 
 export default validateUtil
+
