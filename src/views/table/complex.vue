@@ -4,27 +4,128 @@
       <el-col :span="24">
         <el-card shadow="never">
           <el-table
+            :key="tableId"
             v-loading="tableLoading"
-            :data="tableData"
+            :data="staffList"
             style="width: 100%"
             stripe
             border
             fit
+            highlight-current-row
           >
             <el-table-column
-              prop="date"
-              label="日期"
+              type="index"
+              width="50"
+              align="center"
+              fixed
             >
             </el-table-column>
             <el-table-column
-              prop="name"
+              prop="staffName"
               label="姓名"
+              width="80"
+              align="center"
+              fixed
+            >
+            </el-table-column>
+            <el-table-column
+              prop="staffNo"
+              label="工号"
+              width="130"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="cerNo"
+              label="身份证号"
+              width="160"
+              align="center"
+            >
+            </el-table-column>
+            <el-table-column
+              label="性别"
+              width="50"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <span>{{ scope.row.sex === '1' ? '男' : '女' }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="native"
+              label="籍贯"
+            >
+            </el-table-column>
+            <el-table-column
+              prop="entryTime"
+              label="入职时间"
+              width="100"
+              align="center"
             >
             </el-table-column>
             <el-table-column
               prop="address"
-              label="地址"
+              label="联系地址"
             >
+            </el-table-column>
+            <el-table-column
+              label="状态"
+              width="60"
+              align="center"
+            >
+              <template slot-scope="scope">
+                <strong v-if="scope.row.state === '1'">
+                  在职
+                </strong>
+                <strong
+                  v-else
+                  style="color: #F56C6C;"
+                >
+                  离职
+                </strong>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="操作"
+              width="160"
+              align="center"
+            >
+              <template slot-scope="{row}">
+                <el-button
+                  type="warning"
+                  size="mini"
+                  @click="editStaff(row)"
+                >
+                  编辑
+                </el-button>
+                &nbsp;
+                <el-popover
+                  placement="top"
+                  width="160"
+                >
+                  <p>确定删除该员工？</p>
+                  <div class="text-right">
+                    <el-button
+                      size="mini"
+                      type="text"
+                      @click="deleteTips = false"
+                    >取消</el-button>
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="deleteStaff(row)"
+                    >确定</el-button>
+                  </div>
+                  <el-button
+                    slot="reference"
+                    type="danger"
+                    size="mini"
+                    @click="deleteTips = true"
+                  >
+                    删除
+                  </el-button>
+                </el-popover>
+              </template>
             </el-table-column>
           </el-table>
         </el-card>
@@ -34,46 +135,60 @@
 </template>
 
 <script>
+import { staffList } from '@/api/staff'
 import Page from '@/components/Page'
 
 export default {
-  name: 'BaseTable',
+  name: 'ComplexTable',
   components: {
     Page
   },
   data () {
     return {
-      tableLoading: true,
-      tableData: []
+      tableId: 0,
+      tableLoading: false,
+      total: 0,
+      staffList: [],
+      query: {
+        staffName: '',
+        cerNo: '',
+        sex: '',
+        state: '',
+        pageNo: 1,
+        pageSize: 10
+      }
     }
   },
   created () {
-    this.getTableData()
+    this.getStaff()
   },
   methods: {
-    getTableData () {
-      setTimeout(() => {
+    getStaff: async function () {
+      try {
+        this.tableLoading = true
+        const res = await staffList(this.query)
+        if (res.data) {
+          this.staffList = res.data.data || []
+          this.total = res.data.total || 0
+        }
+        this.$nextTick(() => {
+          this.tableLoading = false
+        })
+      } catch (error) {
         this.tableLoading = false
-        this.tableData = this.tableData.concat([
-          {
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }
-        ])
-      }, 1000)
+        this.$message({
+          showClose: true,
+          type: 'error',
+          message: error.message
+        })
+      }
+    },
+    editStaff (row) {
+      console.log(row)
+    },
+    deleteStaff (row) {
+      console.log(row)
+      this.deleteTips = false
     }
   }
 }

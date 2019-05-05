@@ -91,7 +91,7 @@ module.exports = [
         return res
       }
 
-      let user = lodash.cloneDeep(data)
+      const user = lodash.cloneDeep(data)
       delete user.password
       res.data = user
 

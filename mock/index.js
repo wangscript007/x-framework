@@ -1,8 +1,9 @@
 const Mock = require('mockjs')
 
 const user = require('./user')
+const staff = require('./staff')
 
-const mocks = [...user]
+const mocks = [...user, ...staff]
 
 const responseFake = (url, type, respond) => {
   return {
