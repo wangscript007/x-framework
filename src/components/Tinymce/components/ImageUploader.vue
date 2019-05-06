@@ -5,6 +5,7 @@
       custom-class="image-uploader-dialog"
       :visible.sync="showDialog"
       :modal-append-to-body="false"
+      :lock-scroll="false"
     >
       <div class="image-wrapper">
         <el-upload

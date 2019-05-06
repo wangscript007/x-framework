@@ -127,7 +127,7 @@
               width="80"
             >
               <template slot-scope="scope">
-                <badge :status="scope.row.state === '1'? 'success' : 'error'">
+                <badge :status="scope.row.state === '1'? 'success' : 'danger'">
                   {{ scope.row.state === '1'? '在职' : '离职' }}
                 </badge>
               </template>
@@ -145,12 +145,33 @@
                   编辑
                 </el-link>
                 &nbsp;
-                <el-link
-                  type="primary"
-                  @click="deleteStaff(row)"
+                <el-popover
+                  :ref="row.staffId"
+                  placement="top"
+                  width="220"
                 >
-                  删除
-                </el-link>
+                  <p>确定删除员工“<strong class="text-danger">{{ row.staffName }}</strong>”吗？</p>
+                  <div class="text-right">
+                    <el-button
+                      size="mini"
+                      type="text"
+                      @click="cancelDelete(row.staffId)"
+                    >取消
+                    </el-button>
+                    <el-button
+                      type="primary"
+                      size="mini"
+                      @click="deleteStaff(row.staffId)"
+                    >确定
+                    </el-button>
+                  </div>
+                  <el-link
+                    slot="reference"
+                    type="primary"
+                  >
+                    删除
+                  </el-link>
+                </el-popover>
               </template>
             </el-table-column>
           </el-table>
@@ -188,6 +209,7 @@ export default {
       tableLoading: false,
       total: 0,
       staffList: [],
+      popoverList: [],
       query: {
         key: '',
         sex: '',
@@ -205,9 +227,9 @@ export default {
       try {
         this.tableLoading = true
         const res = await staffList(this.query)
-        if (res.data) {
-          this.staffList = res.data.data || []
-          this.total = res.data.total || 0
+        if (res.data && res.data.data && res.data.data.length > 0) {
+          this.staffList = res.data.data
+          this.total = res.data.total
         }
         this.$nextTick(() => {
           this.tableLoading = false
@@ -230,8 +252,12 @@ export default {
     editStaff (row) {
       console.log(row)
     },
-    deleteStaff (row) {
-      console.log(row)
+    cancelDelete (id) {
+      this.$refs[id].doClose()
+    },
+    deleteStaff (id) {
+      this.cancelDelete(id)
+      console.log(id)
     }
   }
 }

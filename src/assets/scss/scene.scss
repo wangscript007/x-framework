@@ -2,8 +2,8 @@
 .x-layout-page {
   .x-layout-page-header {
     padding: x-space(2) x-space(4) 0;
-    background: #fff;
-    border-bottom: 1px solid #e8e8e8;
+    background: $color-gray-1;
+    border-bottom: 1px solid $color-gray-6;
     .el-breadcrumb {
       margin-bottom: x-space(2);
       line-height: 1.5;
@@ -12,7 +12,7 @@
       margin-bottom: x-space(2);
       font-weight: 600;
       font-size: 20px;
-      color: rgba(0, 0, 0, 0.85);
+      color: $color-title;
     }
     .page-header-describe {
       margin-bottom: x-space(2);
@@ -87,8 +87,8 @@
       &.status-warning{
         background-color: $color-warning;
       }
-      &.status-error {
-        background-color: $color-error;
+      &.status-danger {
+        background-color: $color-danger;
       }
     }
     .x-badge-status-text {
