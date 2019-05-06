@@ -1,30 +1,92 @@
 <template>
   <page>
-    <el-row>
-      <el-col :span="24">
-        <el-card shadow="never">
+    <el-card shadow="never">
+      <div class="complex-table">
+        <div class="filter-wrap">
+          <span class="filter-item">
+            <el-input
+              v-model="query.key"
+              placeholder="姓名/工号/身份证号"
+            />
+          </span>
+          <span class="filter-item">
+            <el-select
+              v-model="query.sex"
+              placeholder="性别"
+              clearable
+              style="width: 90px;"
+              @change="searchStaff"
+            >
+              <el-option
+                label="男"
+                value="1"
+              />
+              <el-option
+                label="女"
+                value="2"
+              />
+            </el-select>
+          </span>
+          <span class="filter-item">
+            <el-select
+              v-model="query.state"
+              placeholder="状态"
+              clearable
+              style="width: 90px;"
+              @change="searchStaff"
+            >
+              <el-option
+                label="在职"
+                value="1"
+              />
+              <el-option
+                label="离职"
+                value="2"
+              />
+            </el-select>
+          </span>
+          <span class="filter-item">
+            <el-button
+              type="default"
+              icon="el-icon-search"
+              @click="searchStaff"
+            >
+              查询
+            </el-button>
+          </span>
+          <span class="filter-item">
+            <el-button
+              type="primary"
+              icon="iconfont icon-plus"
+              @click="addStaff"
+            >
+              添加
+            </el-button>
+          </span>
+        </div>
+        <div class="table-wrap">
           <el-table
             :key="tableId"
             v-loading="tableLoading"
             :data="staffList"
             style="width: 100%"
             stripe
-            border
             fit
             highlight-current-row
           >
             <el-table-column
-              type="index"
+              label="#"
               width="50"
-              align="center"
               fixed
             >
+              <template slot-scope="scope">
+                <span>{{ (query.pageNo - 1) * query.pageSize + 1 + scope.$index }}</span>
+              </template>
             </el-table-column>
             <el-table-column
               prop="staffName"
               label="姓名"
               width="80"
-              align="center"
               fixed
             >
             </el-table-column>
@@ -32,14 +94,12 @@
               prop="staffNo"
               label="工号"
               width="130"
-              align="center"
             >
             </el-table-column>
             <el-table-column
               prop="cerNo"
               label="身份证号"
               width="160"
-              align="center"
             >
             </el-table-column>
             <el-table-column
@@ -60,88 +120,67 @@
               prop="entryTime"
               label="入职时间"
               width="100"
-              align="center"
-            >
-            </el-table-column>
-            <el-table-column
-              prop="address"
-              label="联系地址"
             >
             </el-table-column>
             <el-table-column
               label="状态"
-              width="60"
-              align="center"
+              width="80"
             >
               <template slot-scope="scope">
-                <strong v-if="scope.row.state === '1'">
-                  在职
-                </strong>
-                <strong
-                  v-else
-                  style="color: #F56C6C;"
-                >
-                  离职
-                </strong>
+                <badge :status="scope.row.state === '1'? 'success' : 'error'">
+                  {{ scope.row.state === '1'? '在职' : '离职' }}
+                </badge>
               </template>
             </el-table-column>
             <el-table-column
               label="操作"
-              width="160"
-              align="center"
+              width="100"
+              fixed="right"
             >
               <template slot-scope="{row}">
-                <el-button
-                  type="warning"
-                  size="mini"
+                <el-link
+                  type="primary"
                   @click="editStaff(row)"
                 >
                   编辑
-                </el-button>
+                </el-link>
                 &nbsp;
-                <el-popover
-                  placement="top"
-                  width="160"
+                <el-link
+                  type="primary"
+                  @click="deleteStaff(row)"
                 >
-                  <p>确定删除该员工？</p>
-                  <div class="text-right">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click="deleteTips = false"
-                    >取消</el-button>
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click="deleteStaff(row)"
-                    >确定</el-button>
-                  </div>
-                  <el-button
-                    slot="reference"
-                    type="danger"
-                    size="mini"
-                    @click="deleteTips = true"
-                  >
-                    删除
-                  </el-button>
-                </el-popover>
+                  删除
+                </el-link>
               </template>
             </el-table-column>
           </el-table>
-        </el-card>
-      </el-col>
-    </el-row>
+        </div>
+        <div class="pagination-wrap">
+          <pagination
+            v-show="total>0"
+            :total="total"
+            :page.sync="query.pageNo"
+            :limit.sync="query.pageSize"
+            @pagination="getStaff"
+          />
+        </div>
+      </div>
+    </el-card>
   </page>
 </template>
 
 <script>
 import { staffList } from '@/api/staff'
 import Page from '@/components/Page'
+import Badge from '@/components/Badge'
+import Pagination from '@/components/Pagination'
 
 export default {
   name: 'ComplexTable',
   components: {
-    Page
+    Page,
+    Badge,
+    Pagination
   },
   data () {
     return {
@@ -150,8 +189,7 @@ export default {
       total: 0,
       staffList: [],
       query: {
-        staffName: '',
-        cerNo: '',
+        key: '',
         sex: '',
         state: '',
         pageNo: 1,
@@ -183,16 +221,21 @@ export default {
         })
       }
     },
+    searchStaff () {
+      this.query.pageNo = 1
+      this.getStaff()
+    },
+    addStaff () {
+    },
     editStaff (row) {
       console.log(row)
     },
     deleteStaff (row) {
       console.log(row)
-      this.deleteTips = false
     }
   }
 }
 </script>
 
-<style scoped>
+<style rel="stylesheet/scss" lang="scss" scoped>
 </style>

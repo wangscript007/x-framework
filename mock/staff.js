@@ -23,7 +23,7 @@ module.exports = [
     url: '/staff/list',
     type: 'get',
     response: config => {
-      const { staffName, cerNo, sex, state, pageNo = 1, pageSize = 10 } = config.query
+      const { key, sex, state, pageNo = 1, pageSize = 10 } = config.query
       const res = {
         success: true,
         message: 'success',
@@ -34,8 +34,7 @@ module.exports = [
       }
 
       const mockList = List.filter(item => {
-        if (staffName && !item.staffName.includes(staffName)) return false
-        if (cerNo && !item.cerNo.includes(cerNo)) return false
+        if (key && !item.staffName.includes(key) && !item.staffNo.includes(key) && !item.cerNo.includes(key)) return false
         if (sex && item.sex !== sex) return false
         if (state && item.state !== state) return false
         return true

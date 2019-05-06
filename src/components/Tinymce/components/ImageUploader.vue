@@ -135,7 +135,7 @@ export default {
           &:hover,
           &:focus {
             .uploader-icon {
-              color: $theme-color;
+              color: $color-theme-6;
             }
           }
         }

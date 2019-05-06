@@ -12,7 +12,7 @@
   .img-wrap {
     width: 40%;
     flex-basis: 40%;
-    background-color: $color-write-2;
+    background-color: $color-secondary-text-dark;
     background-size: cover;
     background-position: center center;
     box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
@@ -39,7 +39,7 @@
         font-size: 26px;
         line-height: 40px;
         font-weight: bold;
-        color: $theme-color-hover;
+        color: $color-gray-12;
       }
     }
     .login-form {
@@ -61,11 +61,11 @@
       }
       .find-pwd {
         a {
-          color: $default-font-color;
+          color: $color-primary-text;
           text-decoration: none;
           transition: all 0.3s;
           &:hover {
-            color: $theme-color-hover;
+            color: $color-gray-12;
             text-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
           }
         }
@@ -92,7 +92,7 @@
           position: relative;
           display: inline-block;
           padding: 0 15px;
-          background-color: $color-write;
+          background-color: $color-gray-1;
           z-index: 2;
         }
       }

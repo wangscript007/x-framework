@@ -9,17 +9,17 @@ $layout-header-height: 64px;
 
 /* ------ layout color options ------ */
 
-$layout-bg-color: $color-write-1;
-$layout-header-bg-color: $color-write;
-$sider-bg-color: $theme-color-deputy;
-$sider-header-bg-color: $theme-color-deputy-light;
-$sider-header-text-color: $color-write;
+$layout-bg-color: $color-gray-4;
+$layout-header-bg-color: $color-gray-1;
+$sider-bg-color: $color-theme-12;
+$sider-header-bg-color: $color-theme-11;
+$sider-header-text-color: $color-gray-1;
 $menu-bg-color: $sider-bg-color;
-$sub-menu-bg-color: $theme-color-deputy-dark;
+$sub-menu-bg-color: $color-theme-13;
 $sub-menu-item-bg-color: transparent;
-$menu-item-bg-color-active: $theme-color;
-$menu-item-text-color: $color-write-2;
-$menu-item-text-color-active: $color-write;
+$menu-item-bg-color-active: $color-theme-6;
+$menu-item-text-color: $color-secondary-text-dark;
+$menu-item-text-color-active: $color-gray-1;
 
 /* ------ layout ------ */
 
@@ -281,12 +281,12 @@ $menu-item-text-color-active: $color-write;
       font-size: $toggle-button-icon-height;
       line-height: $toggle-button-icon-height;
       padding: ($sider-header-height - $toggle-button-icon-height) / 2;
-      color: $default-font-color;
+      color: $color-primary-text;
       @include x-transition(0.3s);
 
       &:hover {
-        color: $theme-color-hover;
-        background: $theme-bg-hover;
+        color: $color-gray-12;
+        background: $color-background;
       }
     }
 
@@ -297,16 +297,18 @@ $menu-item-text-color-active: $color-write;
       width: auto;
       height: 100%;
       float: right;
+      padding-right: x-space(1);
 
       .right-menu-item {
         @include x-transition(0.3s);
         display: inline-flex;
         flex-direction: row;
         align-items: center;
+        padding: 0 x-space();
 
         &:hover {
-          color: $theme-color-hover;
-          background: $theme-bg-hover;
+          color: $color-gray-12;
+          background: $color-background;
         }
       }
 
@@ -316,7 +318,6 @@ $menu-item-text-color-active: $color-write;
         cursor: pointer;
 
         .avatar-wrapper {
-          padding: 0 12px;
           height: 100%;
           display: inline-flex;
           flex-direction: row;
@@ -363,12 +364,12 @@ $menu-item-text-color-active: $color-write;
         a {
           display: inline-block;
           margin-right: 40px;
-          color: $default-font-color-light;
+          color: $color-secondary-text;
           transition: all 0.3s;
           text-decoration: none;
 
           &:hover {
-            color: $default-font-color;
+            color: $color-primary-text;
           }
 
           &:last-child {
@@ -378,7 +379,7 @@ $menu-item-text-color-active: $color-write;
       }
 
       .footer-copy {
-        color: $default-font-color-light;
+        color: $color-secondary-text;
       }
     }
   }
@@ -472,7 +473,7 @@ $menu-item-text-color-active: $color-write;
 
     a {
       display: block;
-      color: $default-font-color;
+      color: $color-primary-text;
       text-decoration: none;
 
       .x-icon,
@@ -491,7 +492,7 @@ $menu-item-text-color-active: $color-write;
     }
 
     &:hover {
-      color: $default-font-color !important;
+      color: $color-primary-text !important;
     }
   }
 }

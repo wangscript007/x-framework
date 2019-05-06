@@ -1,4 +1,4 @@
-@mixin clearfix {
+@mixin x-fix {
   &:after {
     content: "";
     display: table;
@@ -6,7 +6,7 @@
   }
 }
 
-@mixin ellipsis() {
+@mixin x-ellipsis() {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -14,4 +14,8 @@
 
 @mixin x-transition($duration) {
   transition: all $duration cubic-bezier(0.9, 0, 0.3, 0.7);
+}
+
+@function x-space($multiple:1) {
+  @return $multiple * $base-space
 }

@@ -1,17 +1,59 @@
-/* constants-color */
+/* 中性色板 */
+$color-gray-1: #ffffff;
+$color-gray-2: #fafafa;
+$color-gray-3: #f5f5f5;
+$color-gray-4: #f0f2f5;
+$color-gray-5: #ecf5ff;
+$color-gray-6: #e8e8e8;
+$color-gray-7: #d9d9d9;
+$color-gray-8: #bfbfbf;
+$color-gray-9: #8c8c8c;
+$color-gray-10: #595959;
+$color-gray-11: #262626;
+$color-gray-12: #000000;
 
-$default-font-color-light: rgba(0, 0, 0, .45);
-$default-font-color: rgba(0, 0, 0, .65);
-$color-write: #fff;
-$color-write-1: #f0f2f5;
-$color-write-2: hsla(0, 0%, 100%, 0.65);
 
-/* theme-color */
+/* 主题色板 */
+$color-theme-1: #e6f7ff;
+$color-theme-2: #bae7ff;
+$color-theme-3: #91d5ff;
+$color-theme-4: #69c0ff;
+$color-theme-5: #40a9ff;
+$color-theme-6: #1890ff;
+$color-theme-7: #096dd9;
+$color-theme-8: #0050b3;
+$color-theme-9: #003a8c;
+$color-theme-10: #002766;
+$color-theme-11: #002140;
+$color-theme-12: #001529;
+$color-theme-13: #000c17;
 
-$theme-color: #1890ff;
-$theme-color-light: #ecf5ff;
-$theme-color-deputy: #001529;
-$theme-color-deputy-light: #002140;
-$theme-color-deputy-dark: #000c17;
-$theme-color-hover: #000;
-$theme-bg-hover: rgba(0, 0, 0, 0.04);
+/* 中性色-浅色背景 */
+$color-title: rgba(0, 0, 0, .85);
+$color-primary-text: rgba(0, 0, 0, .65);
+$color-secondary-text: rgba(0, 0, 0, .45);
+$color-disable: rgba(0, 0, 0, .25);
+$color-border: rgba(0, 0, 0, .15);
+$color-dividers: rgba(0, 0, 0, .09);
+$color-background: rgba(0, 0, 0, .04);
+$color-table-header: rgba(0, 0, 0, .02);
+
+/* 中性色-深色背景 */
+$color-title-dark: rgba(255, 255, 255, 1);
+$color-primary-text-dark: rgba(255, 255, 255, .85);
+$color-secondary-text-dark: rgba(255, 255, 255, .65);
+$color-disable-dark: rgba(255, 255, 255, .45);
+$color-border-dark: rgba(255, 255, 255, .25);
+$color-dividers-dark: rgba(255, 255, 255, .15);
+$color-background-dark: rgba(255, 255, 255, .09);
+$color-table-header-dark: rgba(255, 255, 255, .04);
+
+/* 功能色 */
+$color-link: $color-theme-6;
+$color-success: #52c41c;
+$color-warning: #faad14;
+$color-error: #f5222d;
+
+
+/* base-spase */
+$base-space: 8px;

@@ -2,9 +2,9 @@
 @import "./mixin.scss";
 @import "./transition.scss";
 @import "./layout.scss";
-@import "./page.scss";
+@import "./scene.scss";
 @import "./common.scss";
-@import "./element-variables.scss";
+@import "./element.scss";
 @font-face {
   font-family: Chinese Quote;
   src: local("PingFang SC"), local("SimSun");
@@ -30,8 +30,8 @@ body {
   font-size: 14px;
   font-variant: tabular-nums;
   line-height: 1.5;
-  color: $default-font-color;
-  background-color: $color-write;
+  color: $color-primary-text;
+  background-color: $color-gray-1;
   overflow-x: hidden;
 }
 
@@ -40,9 +40,9 @@ body {
 
 #nprogress {
   .bar {
-    background: $theme-color !important;
+    background: $color-theme-6 !important;
   }
   .peg {
-    box-shadow: 0 0 10px $theme-color, 0 0 5px $theme-color !important;
+    box-shadow: 0 0 10px $color-theme-6, 0 0 5px $color-theme-6 !important;
   }
 }

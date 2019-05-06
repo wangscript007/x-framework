@@ -42,27 +42,4 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.x-layout-page {
-  .x-layout-page-header {
-    padding: 16px 32px 0;
-    background: #fff;
-    border-bottom: 1px solid #e8e8e8;
-    .el-breadcrumb {
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-    .page-header-title {
-      margin-bottom: 16px;
-      font-weight: 600;
-      font-size: 20px;
-      color: rgba(0, 0, 0, 0.85);
-    }
-    .page-header-describe {
-      margin-bottom: 16px;
-    }
-  }
-  .x-layout-page-content {
-    margin: 24px;
-  }
-}
 </style>

@@ -58,7 +58,6 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
   .full-screen-btn {
-    padding: 0 12px;
     color: rgba(0, 0, 0, 0.65);
     font-size: 20px;
     line-height: 20px;

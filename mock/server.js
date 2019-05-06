@@ -5,7 +5,7 @@ const chalk = require('chalk')
 
 const mockDir = path.join(process.cwd(), 'mock')
 
-function registerRoutes(app) {
+function registerRoutes (app) {
   let mockLastIndex
   const mocks = require('./index.js')
   for (const mock of mocks) {
@@ -19,7 +19,7 @@ function registerRoutes(app) {
   }
 }
 
-function unregisterRoutes() {
+function unregisterRoutes () {
   Object.keys(require.cache).forEach(i => {
     if (i.includes(mockDir)) {
       delete require.cache[require.resolve(i)]
@@ -49,7 +49,7 @@ module.exports = app => {
     })
     .on('all', (event, path) => {
       if (event === 'change' || event === 'add') {
-        // remove mock routes stack
+      // remove mock routes stack
         app._router.stack.splice(mockStartIndex, mockRoutesLength)
 
         // clear routes cache

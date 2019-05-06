@@ -1,0 +1,100 @@
+/* Page */
+.x-layout-page {
+  .x-layout-page-header {
+    padding: x-space(2) x-space(4) 0;
+    background: #fff;
+    border-bottom: 1px solid #e8e8e8;
+    .el-breadcrumb {
+      margin-bottom: x-space(2);
+      line-height: 1.5;
+    }
+    .page-header-title {
+      margin-bottom: x-space(2);
+      font-weight: 600;
+      font-size: 20px;
+      color: rgba(0, 0, 0, 0.85);
+    }
+    .page-header-describe {
+      margin-bottom: x-space(2);
+    }
+  }
+  .x-layout-page-content {
+    margin: 24px;
+    .el-card {
+      .el-card__body {
+        padding: x-space(3);
+      }
+    }
+  }
+}
+
+/* complex-table */
+.complex-table {
+  .filter-wrap,.table-wrap,.pagination-wrap {
+    margin-bottom: x-space(3);
+  }
+  .filter-wrap {
+    .filter-item {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: x-space();
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  .table-wrap {
+    .el-table {
+      color: $color-primary-text;
+      thead {
+        color: $color-title;
+      }
+    }
+  }
+  .pagination-wrap {
+    text-align: center;
+  }
+}
+
+/* badge */
+.x-badge {
+  display: inline-block;
+  position: relative;
+  color: unset;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  &.x-badge-status {
+    line-height: inherit;
+    vertical-align: baseline;
+    .x-badge-status-dot {
+      display: block;
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      &.status-default {
+        background-color: $color-gray-7;
+      }
+      &.status-processing {
+        background-color: $color-link;
+      }
+      &.status-success{
+        background-color: $color-success;
+      }
+      &.status-warning{
+        background-color: $color-warning;
+      }
+      &.status-error {
+        background-color: $color-error;
+      }
+    }
+    .x-badge-status-text {
+      display: inline-block;
+      color: $color-primary-text;
+      margin-left: 14px;
+    }
+  }
+}

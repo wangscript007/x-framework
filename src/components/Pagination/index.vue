@@ -5,13 +5,13 @@
     class="pagination-wrapper"
   >
     <el-pagination
-      :background="background"
       :current-page.sync="currentPage"
       :page-size.sync="pageSize"
       :layout="layout"
       :page-sizes="pageSizes"
       :total="total"
       v-bind="$attrs"
+      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
