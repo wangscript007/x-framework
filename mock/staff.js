@@ -1,7 +1,7 @@
 const Mock = require('mockjs')
 
 const List = []
-const count = 150
+const count = 100
 
 for (let i = 0; i < count; i++) {
   List.push(Mock.mock({
@@ -23,13 +23,13 @@ module.exports = [
     url: '/staff/list',
     type: 'get',
     response: config => {
-      const { key, sex, state, pageNo = 1, pageSize = 10 } = config.query
+      const { key, sex, state, page = 1, limit = 10 } = config.query
       const res = {
         success: true,
         message: 'success',
         total: 0,
-        pageNo: pageNo,
-        pageSize: pageSize,
+        page,
+        limit,
         data: []
       }
 
@@ -41,9 +41,34 @@ module.exports = [
       })
 
       res.data = mockList.filter((item, index) => {
-        return pageSize * (pageNo - 1) <= index && index < pageSize * pageNo
+        return limit * (page - 1) <= index && index < limit * page
       })
       res.total = mockList.length
+
+      return res
+    }
+  },
+  {
+    url: '/staff/delete',
+    type: 'post',
+    response: config => {
+      const { staffId } = config.body
+      const res = {
+        success: true,
+        message: 'success',
+        data: null
+      }
+
+      const matchedIndex = List.findIndex(item => {
+        return staffId === item.staffId
+      })
+
+      if (matchedIndex > -1) {
+        List.splice(matchedIndex, 1)
+      } else {
+        res.success = false
+        res.message = '员工不存在，无法删除'
+      }
 
       return res
     }

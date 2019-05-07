@@ -56,11 +56,20 @@
           </span>
           <span class="filter-item">
             <el-button
+              type="default"
+              icon="el-icon-refresh"
+              @click="resetSearch"
+            >
+              重置
+            </el-button>
+          </span>
+          <span class="filter-item">
+            <el-button
               type="primary"
               icon="iconfont icon-plus"
               @click="addStaff"
             >
-              添加
+              新增
             </el-button>
           </span>
         </div>
@@ -80,7 +89,7 @@
               fixed
             >
               <template slot-scope="scope">
-                <span>{{ (query.pageNo - 1) * query.pageSize + 1 + scope.$index }}</span>
+                <span>{{ (query.page - 1) * query.limit + 1 + scope.$index }}</span>
               </template>
             </el-table-column>
             <el-table-column
@@ -140,7 +149,7 @@
               <template slot-scope="{row}">
                 <el-link
                   type="primary"
-                  @click="editStaff(row)"
+                  @click.stop="editStaff(row)"
                 >
                   编辑
                 </el-link>
@@ -155,13 +164,13 @@
                     <el-button
                       size="mini"
                       type="text"
-                      @click="cancelDelete(row.staffId)"
+                      @click.stop="closePopover(row.staffId)"
                     >取消
                     </el-button>
                     <el-button
                       type="primary"
                       size="mini"
-                      @click="deleteStaff(row.staffId)"
+                      @click.stop="deleteStaff(row.staffId)"
                     >确定
                     </el-button>
                   </div>
@@ -180,8 +189,8 @@
           <pagination
             v-show="total>0"
             :total="total"
-            :page.sync="query.pageNo"
-            :limit.sync="query.pageSize"
+            :page.sync="query.page"
+            :limit.sync="query.limit"
             @pagination="getStaff"
           />
         </div>
@@ -191,7 +200,7 @@
 </template>
 
 <script>
-import { staffList } from '@/api/staff'
+import * as api from '@/api/staff'
 import Page from '@/components/Page'
 import Badge from '@/components/Badge'
 import Pagination from '@/components/Pagination'
@@ -209,13 +218,13 @@ export default {
       tableLoading: false,
       total: 0,
       staffList: [],
-      popoverList: [],
       query: {
         key: '',
         sex: '',
         state: '',
-        pageNo: 1,
-        pageSize: 10
+        page: 1,
+        limit: 10,
+        sort: {}
       }
     }
   },
@@ -226,38 +235,66 @@ export default {
     getStaff: async function () {
       try {
         this.tableLoading = true
-        const res = await staffList(this.query)
-        if (res.data && res.data.data && res.data.data.length > 0) {
-          this.staffList = res.data.data
-          this.total = res.data.total
-        }
-        this.$nextTick(() => {
-          this.tableLoading = false
-        })
-      } catch (error) {
-        this.tableLoading = false
+        const data = await api.staffList(this.query)
+        this.staffList = data.data || []
+        this.total = data.total || 0
+      } catch (e) {
         this.$message({
           showClose: true,
           type: 'error',
-          message: error.message
+          message: e.message
+        })
+      } finally {
+        this.$nextTick(() => {
+          this.tableLoading = false
         })
       }
     },
-    searchStaff () {
-      this.query.pageNo = 1
-      this.getStaff()
-    },
     addStaff () {
+    },
+    deleteStaff: async function (staffId) {
+      const loading = this.$loading({
+        lock: true,
+        text: '正在删除',
+        spinner: 'fa fa-spinner fa-spin fa-2x',
+        background: 'rgba(255, 255, 255, 0.5)'
+      })
+      try {
+        await api.deleteStaff(staffId)
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '删除成功'
+        })
+        this.searchStaff(this.query.page)
+      } catch (e) {
+        this.$message({
+          showClose: true,
+          type: 'error',
+          message: e.message
+        })
+      } finally {
+        this.closePopover(staffId)
+        this.$nextTick(() => {
+          loading.close()
+        })
+      }
     },
     editStaff (row) {
       console.log(row)
     },
-    cancelDelete (id) {
-      this.$refs[id].doClose()
+    searchStaff (pageNo) {
+      this.query.page = Number.isInteger(pageNo) ? pageNo : 1
+      this.getStaff()
     },
-    deleteStaff (id) {
-      this.cancelDelete(id)
-      console.log(id)
+    resetSearch () {
+      this.query.key = ''
+      this.query.sex = ''
+      this.query.state = ''
+      this.searchStaff()
+    },
+    closePopover (id) {
+      this.$refs[id].doClose()
     }
   }
 }

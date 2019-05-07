@@ -173,8 +173,12 @@ export default {
             this.loading = true
             await this.$store.dispatch('login', this.form)
             this.$router.push({ path: this.redirect || '/' })
-          } catch (err) {
-            this.$message.error(err.message)
+          } catch (e) {
+            this.$message.error({
+              showClose: true,
+              type: 'error',
+              message: e.message
+            })
           } finally {
             this.loading = false
           }

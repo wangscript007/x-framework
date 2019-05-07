@@ -37,20 +37,20 @@ router.beforeEach(async (to, from, next) => {
       /* 用户信息不存在*/
       try {
         /* 获取用户信息 */
-        const res = await store.dispatch('getUserInfo')
+        const data = await store.dispatch('getUserInfo')
         /* 根据获取到的用户的权限创建路由表 */
-        await store.dispatch('createRouterMap', res.data.roles || [])
+        await store.dispatch('createRouterMap', data.roles || [])
         /* 将路由表同步更新到router对象中 */
         router.addRoutes(store.getters.permission.matchedRouters)
         /* 跳转 */
         next({ ...to, replace: true })
-      } catch (err) {
+      } catch (e) {
         /* 当用户信息获取失败时，重置user并弹出错误信息 */
         await store.dispatch('resetUser')
         Message({
           showClose: true,
           type: 'error',
-          message: err.message
+          message: e.message
         })
         next({ path: '/' })
         NProgress.done()

@@ -26,6 +26,7 @@ service.interceptors.request.use(
   },
   error => {
     Message({
+      showClose: true,
       message: error.message,
       type: 'error'
     })
@@ -38,6 +39,7 @@ service.interceptors.response.use(
   response => response,
   error => {
     Message({
+      showClose: true,
       message: error.message,
       type: 'error'
     })

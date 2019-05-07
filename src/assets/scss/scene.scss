@@ -31,13 +31,14 @@
 /* complex-table */
 .complex-table {
   .filter-wrap,.table-wrap,.pagination-wrap {
-    margin-bottom: x-space(3);
+    margin-bottom: x-space(2);
   }
   .filter-wrap {
     .filter-item {
       display: inline-block;
       vertical-align: middle;
       margin-right: x-space();
+      margin-bottom: x-space();
       &:last-child {
         margin-right: 0;
       }

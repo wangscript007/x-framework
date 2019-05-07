@@ -22,29 +22,32 @@ const user = {
   },
   actions: {
     login: async ({ commit, state }, formData) => {
-      const res = await userApi.login(formData)
-      if (!res.data || !res.data.success) {
+      const { data } = await userApi.login(formData)
+      if (!data || !data.success) {
         throw new CommonException({
-          message: res.data && res.data.message
-            ? res.data.message
-            : '验证失败，请重新登录'
+          message: data && data.message ? data.message : '验证失败，请重试'
         })
       }
-      commit(userTypes.SET_TOKEN, res.data.data)
-      cache.setToken(res.data.data, state.remember)
+      commit(userTypes.SET_TOKEN, data.data)
+      cache.setToken(data.data, state.remember)
     },
     getUserInfo: async ({ commit, state }) => {
-      const res = await userApi.getUserInfo(state.token)
-      if (!res.data || !res.data.success) {
+      const { data } = await userApi.getUserInfo(state.token)
+      if (!data || !data.success) {
         throw new CommonException({
-          message: res.data && res.data.message ? res.data.message : '无法获取用户信息'
+          message: data && data.message ? data.message : '获取用户信息失败，请刷新重试'
         })
       }
-      commit(userTypes.SET_USER, res.data.data)
-      return res.data
+      commit(userTypes.SET_USER, data.data)
+      return data.data
     },
     logout: async ({ commit, state }) => {
-      await userApi.logout(state.user.token)
+      const { data } = await userApi.logout(state.user.token)
+      if (!data || !data.success) {
+        throw new CommonException({
+          message: data && data.message ? data.message : '操作失败，请重试'
+        })
+      }
       commit(userTypes.SET_TOKEN, '')
       commit(userTypes.SET_USER, null)
       cache.removeToken(state.remember)

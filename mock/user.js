@@ -42,10 +42,7 @@ module.exports = [
     url: '/user/login',
     type: 'post',
     response: config => {
-      const {
-        username,
-        password
-      } = config.body
+      const { username, password } = config.body
       const res = {
         success: true,
         message: 'success',
@@ -75,9 +72,7 @@ module.exports = [
     url: '/user/info.*',
     type: 'get',
     response: config => {
-      const {
-        token
-      } = config.query
+      const { token } = config.query
       const res = {
         success: true,
         message: 'success',

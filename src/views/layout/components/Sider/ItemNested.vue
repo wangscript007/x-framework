@@ -1,7 +1,7 @@
 <template>
   <el-submenu
     :index="route.path"
-    :popper-class="'sider-popup'"
+    popper-class="sider-popup"
   >
     <template slot="title">
       <x-icon
@@ -12,19 +12,21 @@
       <span slot="title">{{ route.meta && route.meta.title ? route.meta.title : '-' }}</span>
     </template>
     <template v-for="item in route.children">
-      <item-alone
-        v-if="isAloneRoute(item) && item.meta && !item.meta.alwaysShow"
-        :key="item.path"
-        :route="item"
-        :show-icon="false"
-        :base-path="route.path"
-      ></item-alone>
-      <item-nested
-        v-else
-        :key="item.path"
-        :route="item"
-        :show-icon="false"
-      ></item-nested>
+      <template v-if="item.meta && !item.meta.hidden">
+        <item-alone
+          v-if="isAloneRoute(item) && item.meta && !item.meta.alwaysShow"
+          :key="item.path"
+          :route="item"
+          :show-icon="false"
+          :base-path="route.path"
+        ></item-alone>
+        <item-nested
+          v-else
+          :key="item.path"
+          :route="item"
+          :show-icon="false"
+        ></item-nested>
+      </template>
     </template>
   </el-submenu>
 </template>
