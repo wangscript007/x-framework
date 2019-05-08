@@ -21,7 +21,6 @@ export default {
           res = child.children && child.children.length > 0 ? this.isAloneRoute(child, res) : true
         }
       }
-      console.log(route.name,res)
       return res
     }
   },

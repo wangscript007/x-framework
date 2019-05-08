@@ -4,7 +4,6 @@ const dashboard = {
   path: '/dashboard',
   name: 'Dashboard',
   component: Layout,
-  redirect: '/dashboard',
   meta: {
     icon: 'dashboard'
   },

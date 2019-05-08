@@ -4,7 +4,6 @@ const componentsRouter = {
   path: '/components',
   name: 'ComponentsDemo',
   component: Layout,
-  redirect: '/components/editor',
   meta: {
     title: '组件',
     icon: 'copyright',

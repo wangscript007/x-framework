@@ -8,7 +8,7 @@ const tableRouter = {
     title: '表格',
     icon: 'table',
     alwaysShow: true,
-    redirectInBreadcrumb: false
+    redirectInBreadcrumb: true
   },
   children: [
     /* 基本数据表格 */
@@ -20,7 +20,8 @@ const tableRouter = {
         title: '基础数据表格',
         icon: 'fa fa-table',
         iconType: 'class',
-        alwaysShow: true
+        alwaysShow: true,
+        redirectInBreadcrumb: true
       },
       children: [
         /* 列表 */
@@ -42,8 +43,7 @@ const tableRouter = {
           component: () => import('@/views/table/base/update'),
           meta: {
             title: '新增员工',
-            describe: '',
-            hidden: true
+            describe: ''
           }
         }
       ]

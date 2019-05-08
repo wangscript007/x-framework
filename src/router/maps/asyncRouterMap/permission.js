@@ -4,7 +4,6 @@ const permission = {
   path: '/permission',
   name: 'Permission',
   component: Layout,
-  redirect: '/permission/admin',
   meta: {
     title: '权限',
     icon: 'lock',
