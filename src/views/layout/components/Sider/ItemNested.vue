@@ -14,17 +14,18 @@
     <template v-for="item in route.children">
       <template v-if="item.meta && !item.meta.hidden">
         <item-alone
-          v-if="isAloneRoute(item) && item.meta && !item.meta.alwaysShow"
+          v-if="isAloneRoute(item) && !item.meta.alwaysShow"
           :key="item.path"
           :route="item"
           :show-icon="false"
-          :base-path="route.path"
+          :base-path="basePath"
         ></item-alone>
         <item-nested
           v-else
           :key="item.path"
           :route="item"
           :show-icon="false"
+          :base-path="resolvePath(item.path)"
         ></item-nested>
       </template>
     </template>
@@ -32,7 +33,9 @@
 </template>
 
 <script>
+import path from 'path'
 import siderMixin from '@/views/layout/mixin/Sider'
+
 export default {
   name: 'ItemNested',
   mixins: [siderMixin],
@@ -44,6 +47,16 @@ export default {
     showIcon: {
       type: Boolean,
       default: true
+    },
+    basePath: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    /* 拼接路由path */
+    resolvePath (routePath) {
+      return path.resolve(this.basePath, routePath)
     }
   }
 }

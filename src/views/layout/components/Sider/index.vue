@@ -15,7 +15,7 @@
           <template v-for="item in routers">
             <template v-if="item.meta && !item.meta.hidden">
               <item-alone
-                v-if="isAloneRoute(item) && item.meta && !item.meta.alwaysShow"
+                v-if="isAloneRoute(item) && !item.meta.alwaysShow"
                 :key="item.path"
                 :route="item"
                 :base-path="item.path"
@@ -24,6 +24,7 @@
                 v-else
                 :key="item.path"
                 :route="item"
+                :base-path="item.path"
               ></item-nested>
             </template>
           </template>

@@ -21,7 +21,7 @@ function routerFilter (routerMap, userRoles, parentPath = '') {
       return false
     }
     if (route.children && route.children.length) {
-      const matchedChildren = routerFilter(route.children, userRoles)
+      const matchedChildren = routerFilter(route.children, userRoles, route.path)
       if (matchedChildren && matchedChildren.length) {
         const firstChild = matchedChildren.find(item => {
           return item.meta && !item.meta.external

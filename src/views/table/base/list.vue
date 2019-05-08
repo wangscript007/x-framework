@@ -254,7 +254,6 @@ export default {
     },
     deleteStaff: async function (staffId) {
       const loading = this.$loading({
-        lock: true,
         text: '正在删除',
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
