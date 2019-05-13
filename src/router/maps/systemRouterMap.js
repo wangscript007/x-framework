@@ -10,7 +10,7 @@ const systemRouterMap = [
       hidden: true
     }
   },
-  /* 首页，只负责跳转 */
+  /* 入口页 */
   {
     path: '/index',
     name: 'Index',

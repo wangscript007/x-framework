@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb
     class="app-breadcrumb"
-    separator="/"
+    separator-class="el-icon-arrow-right"
   >
     <transition-group name="breadcrumb">
       <el-breadcrumb-item
@@ -53,7 +53,7 @@ export default {
     },
     pathCompile (path) {
       const { params } = this.$route
-      var toPath = pathToRegexp.compile(path)
+      const toPath = pathToRegexp.compile(path)
       return toPath(params)
     },
     handleLink (item) {

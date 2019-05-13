@@ -45,6 +45,18 @@ const tableRouter = {
             title: '新增员工',
             describe: ''
           }
+        },
+        /* 编辑 */
+        {
+          path: 'edit',
+          name: 'EditStaff',
+          component: () => import('@/views/table/base/update'),
+          meta: {
+            title: '编辑员工',
+            describe: '',
+            hidden: true,
+            activePath: '/table/base/list'
+          }
         }
       ]
     }

@@ -191,7 +191,7 @@
             :total="total"
             :page.sync="query.page"
             :limit.sync="query.limit"
-            @pagination="getStaff"
+            @pagination="getStaffList"
           />
         </div>
       </div>
@@ -229,10 +229,10 @@ export default {
     }
   },
   created () {
-    this.getStaff()
+    this.getStaffList()
   },
   methods: {
-    getStaff: async function () {
+    getStaffList: async function () {
       try {
         this.tableLoading = true
         const data = await api.staffList(this.query)
@@ -251,6 +251,7 @@ export default {
       }
     },
     addStaff () {
+      this.$router.push({ path: '/table/base/add' })
     },
     deleteStaff: async function (staffId) {
       const loading = this.$loading({
@@ -280,11 +281,11 @@ export default {
       }
     },
     editStaff (row) {
-      console.log(row)
+      this.$router.push({ path: `/table/base/edit` })
     },
     searchStaff (pageNo) {
       this.query.page = Number.isInteger(pageNo) ? pageNo : 1
-      this.getStaff()
+      this.getStaffList()
     },
     resetSearch () {
       this.query.key = ''

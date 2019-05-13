@@ -72,5 +72,62 @@ module.exports = [
 
       return res
     }
+  },
+  {
+    url: '/staff/info',
+    type: 'get',
+    response: config => {
+      const { staffId } = config.query
+      const res = {
+        success: true,
+        message: 'success',
+        data: null
+      }
+
+      const matched = List.find(item => {
+        return item.staffId === staffId
+      })
+
+      if (matched) {
+        res.data = matched
+      } else {
+        res.success = false
+        res.message = `ID为‘${staffId}’的员工不存在`
+      }
+
+      return res
+    }
+  },
+  {
+    url: '/staff/update',
+    type: 'post',
+    response: config => {
+      const { staffId } = config.body
+      const res = {
+        success: true,
+        message: 'success',
+        data: null
+      }
+
+      if (!staffId) {
+        /* 没有id，则新增 */
+        const staff = config.body
+        staff.staffId = Mock.mock('@guid')
+        List.unshift(staff)
+      } else {
+        /* 有id，则更新 */
+        const matchedIndex = List.findIndex(item => {
+          return item.staffId === staffId
+        })
+        if (matchedIndex > -1) {
+          Object.assign(List[matchedIndex], config.body)
+        } else {
+          res.success = false
+          res.message = `ID为‘${staffId}’的员工不存在`
+        }
+      }
+
+      return res
+    }
   }
 ]

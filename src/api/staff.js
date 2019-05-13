@@ -15,6 +15,22 @@ export async function staffList (query) {
   return data
 }
 
+export async function getStaff (staffId) {
+  const { data } = await request({
+    url: '/staff/info',
+    method: 'get',
+    params: {
+      staffId
+    }
+  })
+  if (!data || !data.success) {
+    throw new CommonException({
+      message: data && data.message ? data.message : `员工Id为‘${staffId}’的员工不存在`
+    })
+  }
+  return data
+}
+
 export async function deleteStaff (staffId) {
   const { data } = await request({
     url: '/staff/delete',

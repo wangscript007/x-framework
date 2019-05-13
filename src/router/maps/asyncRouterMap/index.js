@@ -17,20 +17,22 @@ import externalRouterMap from '@/router/maps/asyncRouterMap/external'
 * redirect: null,                路由重定向，可以不必设置，在生成路由表系统会根据权限自动添加
 * meta : {                       由于vue-router自定义属性迁移到meta中，所以每一个路由至少定义meta: {}
     title: '',                   路由标题，用于显示在sider、breadcrumb、和pageHeader中的路由名称
-    icon: '',                    该路由在sider中显示的图标，值：iconfont中的svg-name
+    icon: '',                    当前路由在sider中显示的图标，值：iconfont中的svg-name
     describe: ''                 路由相关描述，显示在Page组件中的PageHeader
-    hidden: false,               是否在sider中隐藏该路由
-    alwaysShow: null,            是否一直显示该节点，用于是否嵌套路由的判断，有3个值：true、false、null
+    hidden: false,               是否在sider中隐藏当前路由
+    activePath: '',              强制sider高亮指定的路由，当当前路由处于hidden:true时，sider并不会显示当前路由，所以sider会处于没有高亮路由的状态，
+                                 所以需要该属性来指定。一般用于curd中的编辑和详情页面，用来指定sider高亮list路由。
+    alwaysShow: null,            在sider中是否一直显示当前路由，用于是否嵌套路由的判断，有3个值：true、false、null
                                  注意：如果是多层路由嵌套，只有当嵌套根路由设置了alwaysShow为true的时候，子路由设置alwaysShow：true才会生效
-                                    true:  无论该路由下有没有子路由或有多少子路由，该路由在sider中都会显示
-                                    false：无论该路由下有没有子路由，该路由在sider中都会隐藏
-                                    null： 如果该路由有且只有一个子路由，则该子路由会代替该路由显示在sider
-                                           如果该路由下没有子路由，则该路由会显示在sider
-                                           如果该路由下有多个子路由（一个以上），则该路由和子路由会以嵌套方式显示
-    showInBreadcrumb: true,      面包屑中是否显示该路由，默认true
-    redirectInBreadcrumb: true   面包屑中该路由是否可点击重定向，默认true
+                                    true:  无论当前路由下有没有子路由或有多少子路由，当前路由在sider中都会以嵌套模式显示
+                                    false：无论当前路由下有没有子路由，当前路由在sider中都会隐藏，只显示当前路由下的子路由
+                                    null： 如果当前路由有且只有一个子路由，则该子路由会代替当前路由显示在sider
+                                           如果当前路由下没有子路由，则当前路由会显示在sider
+                                           如果当前路由下有多个子路由（一个以上），则当前路由和子路由会以嵌套方式显示
+    showInBreadcrumb: true,      面包屑中是否显示当前路由，默认true
+    redirectInBreadcrumb: true   面包屑中当前路由是否可点击重定向，默认true
     roles: null                  路由权限，Array格式，默认null
-    absolute: false              是否绝对权限，若设置true，该路由下的子路由会进行严格筛选，包括admin
+    absolute: false              是否绝对权限，若设置true，当前路由下的子路由会进行严格筛选，包括admin
     external: false              是否外部链接，默认false
   }
 **/

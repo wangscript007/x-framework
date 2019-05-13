@@ -7,7 +7,7 @@
     <div class="sider-nav">
       <scroll>
         <el-menu
-          :default-active="$route.path"
+          :default-active="activePath"
           :collapse="collapsed"
           :collapse-transition="true"
           :router="false"
@@ -60,6 +60,12 @@ export default {
     fixed: {
       type: Boolean,
       default: false
+    }
+  },
+  computed: {
+    activePath () {
+      const { meta, path } = this.$route
+      return meta && meta.activePath ? meta.activePath : path
     }
   }
 }
