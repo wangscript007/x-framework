@@ -2,7 +2,7 @@ import Layout from '@/views/layout'
 
 const componentsRouter = {
   path: '/components',
-  name: 'ComponentsDemo',
+  name: 'Components',
   component: Layout,
   meta: {
     title: '组件',

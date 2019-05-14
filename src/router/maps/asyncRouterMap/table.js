@@ -39,7 +39,7 @@ const tableRouter = {
         /* 新增 */
         {
           path: 'add',
-          name: 'AddStaff',
+          name: 'BaseTableAdd',
           component: () => import('@/views/table/base/update'),
           meta: {
             title: '新增员工',
@@ -48,8 +48,8 @@ const tableRouter = {
         },
         /* 编辑 */
         {
-          path: 'edit',
-          name: 'EditStaff',
+          path: 'edit/:staffId',
+          name: 'BaseTableEdit',
           component: () => import('@/views/table/base/update'),
           meta: {
             title: '编辑员工',

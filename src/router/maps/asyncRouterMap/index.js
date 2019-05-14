@@ -13,7 +13,7 @@ import externalRouterMap from '@/router/maps/asyncRouterMap/external'
 /**
 * 路由表相关参数
 * path: '/xxx',
-* name:'router-name',
+* name:'RouterName',             必须设置route的name值，用于页面跳转传参，且必须保证唯一性，命名方式统一使用pascal命名法，如："BaseTable"
 * redirect: null,                路由重定向，可以不必设置，在生成路由表系统会根据权限自动添加
 * meta : {                       由于vue-router自定义属性迁移到meta中，所以每一个路由至少定义meta: {}
     title: '',                   路由标题，用于显示在sider、breadcrumb、和pageHeader中的路由名称

@@ -5,8 +5,11 @@
         <div class="filter-wrap">
           <span class="filter-item">
             <el-input
-              v-model="query.key"
+              v-model.trim="query.key"
+              clearable
+              maxlength="20"
               placeholder="姓名/工号/身份证号"
+              @clear="queryStaff(1)"
             />
           </span>
           <span class="filter-item">
@@ -15,7 +18,7 @@
               placeholder="性别"
               clearable
               style="width: 90px;"
-              @change="searchStaff"
+              @change="queryStaff(1)"
             >
               <el-option
                 label="男"
@@ -33,7 +36,7 @@
               placeholder="状态"
               clearable
               style="width: 90px;"
-              @change="searchStaff"
+              @change="queryStaff(1)"
             >
               <el-option
                 label="在职"
@@ -49,7 +52,7 @@
             <el-button
               type="default"
               icon="el-icon-search"
-              @click="searchStaff"
+              @click="queryStaff(1)"
             >
               查询
             </el-button>
@@ -58,7 +61,7 @@
             <el-button
               type="default"
               icon="el-icon-refresh"
-              @click="resetSearch"
+              @click="resetQuery"
             >
               重置
             </el-button>
@@ -191,7 +194,7 @@
             :total="total"
             :page.sync="query.page"
             :limit.sync="query.limit"
-            @pagination="getStaffList"
+            @pagination="queryStaff"
           />
         </div>
       </div>
@@ -223,16 +226,60 @@ export default {
         sex: '',
         state: '',
         page: 1,
-        limit: 10,
-        sort: {}
+        limit: 10
       }
     }
   },
   created () {
-    this.getStaffList()
+    const { params } = this.$route
+    if (params) {
+      Object.assign(this.query, params)
+    }
+    this.queryStaff()
   },
   methods: {
-    getStaffList: async function () {
+    addStaff () {
+      this.$router.push({ path: '/table/base/add' })
+    },
+    deleteStaff: async function (staffId) {
+      const loading = this.$loading({
+        text: '正在删除',
+        spinner: 'fa fa-spinner fa-spin fa-2x',
+        background: 'rgba(255, 255, 255, 0.5)'
+      })
+      try {
+        await api.deleteStaff(staffId)
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '删除成功'
+        })
+        this.queryStaff(this.query.page)
+      } catch (e) {
+        this.$message({
+          showClose: true,
+          type: 'error',
+          message: e.message
+        })
+      } finally {
+        this.closePopover(staffId)
+        this.$nextTick(() => {
+          loading.close()
+        })
+      }
+    },
+    editStaff (row) {
+      const query = {}
+      for (const k in this.query) {
+        if (!this.query[k]) continue
+        query[k] = this.query[k]
+      }
+      this.$router.push({ path: `/table/base/edit/${row.staffId}`, query })
+    },
+    queryStaff: async function (pageNo) {
+      if (Number.isInteger(pageNo)) {
+        this.query.page = pageNo
+      }
       try {
         this.tableLoading = true
         const data = await api.staffList(this.query)
@@ -250,48 +297,11 @@ export default {
         })
       }
     },
-    addStaff () {
-      this.$router.push({ path: '/table/base/add' })
-    },
-    deleteStaff: async function (staffId) {
-      const loading = this.$loading({
-        text: '正在删除',
-        spinner: 'fa fa-spinner fa-spin fa-2x',
-        background: 'rgba(255, 255, 255, 0.5)'
-      })
-      try {
-        await api.deleteStaff(staffId)
-        this.$message({
-          showClose: true,
-          type: 'success',
-          message: '删除成功'
-        })
-        this.searchStaff(this.query.page)
-      } catch (e) {
-        this.$message({
-          showClose: true,
-          type: 'error',
-          message: e.message
-        })
-      } finally {
-        this.closePopover(staffId)
-        this.$nextTick(() => {
-          loading.close()
-        })
-      }
-    },
-    editStaff (row) {
-      this.$router.push({ path: `/table/base/edit` })
-    },
-    searchStaff (pageNo) {
-      this.query.page = Number.isInteger(pageNo) ? pageNo : 1
-      this.getStaffList()
-    },
-    resetSearch () {
+    resetQuery () {
       this.query.key = ''
       this.query.sex = ''
       this.query.state = ''
-      this.searchStaff()
+      this.queryStaff(1)
     },
     closePopover (id) {
       this.$refs[id].doClose()

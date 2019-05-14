@@ -4,7 +4,7 @@ const systemRouterMap = [
   /* 根路由 */
   {
     path: '',
-    name: 'Base',
+    name: 'BasePath',
     redirect: '/index',
     meta: {
       hidden: true

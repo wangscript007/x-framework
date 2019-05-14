@@ -11,7 +11,7 @@ const dashboard = {
     /* admin的首页 */
     {
       path: 'admin',
-      name: 'Dashboard-Admin',
+      name: 'DashboardAdmin',
       component: () => import('@/views/dashboard/admin'),
       meta: {
         title: '首页',
@@ -24,7 +24,7 @@ const dashboard = {
     /* editor的首页 */
     {
       path: 'editor',
-      name: 'Dashboard-Editor',
+      name: 'DashboardEditor',
       component: () => import('@/views/dashboard/editor'),
       meta: {
         title: '首页',
@@ -37,7 +37,7 @@ const dashboard = {
     /* user的首页 */
     {
       path: 'user',
-      name: 'Dashboard-User',
+      name: 'DashboardUser',
       component: () => import('@/views/dashboard/user'),
       meta: {
         title: '首页',
