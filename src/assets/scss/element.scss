@@ -6,3 +6,39 @@ $--color-primary: $color-theme-6;
 
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
+
+/* 重置样式 */
+.el-form {
+  .el-form-item {
+    margin-bottom: x-space(2);
+
+    .el-form-item__label-wrap .el-form-item__label {
+      color: $color-title;
+    }
+
+    .el-form-item__content {
+      font-size: inherit;
+    }
+  }
+}
+
+.el-checkbox-group {
+  font-size: inherit;
+}
+
+.el-checkbox .el-checkbox__input {
+  line-height: 1.2;
+}
+
+.el-radio-group {
+  display: block;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+.el-radio {
+  line-height: inherit;
+  .el-radio__input {
+    line-height: 1.2;
+  }
+}

@@ -111,7 +111,7 @@
             <el-table-column
               prop="cerNo"
               label="身份证号"
-              width="160"
+              width="180"
             >
             </el-table-column>
             <el-table-column

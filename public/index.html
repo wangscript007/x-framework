@@ -16,8 +16,8 @@
       height: 100%;
       z-index: 9999;
     }
-    
-    .app-loading>.wrapper {
+
+    .app-loading > .wrapper {
       position: absolute;
       width: auto;
       height: auto;
@@ -26,8 +26,8 @@
       transform: translate(-50%, -50%);
       text-align: center;
     }
-    
-    .app-loading>.wrapper>img {
+
+    .app-loading > .wrapper > img {
       max-width: 100px;
       width: 100%;
     }
@@ -36,18 +36,17 @@
 </head>
 
 <body>
-  <noscript><strong></strong></noscript>
-  <div id="app">
-    <div class="app-loading">
-      <div class="wrapper">
-        <img src="<%= BASE_URL %>static/img/loading.gif" />
-        <h3>
-          正在加载
-          <%= webpackConfig.name %>， 请稍候...
-        </h3>
-      </div>
+<noscript><strong></strong></noscript>
+<div id="app">
+  <div class="app-loading">
+    <div class="wrapper">
+      <img src="<%= BASE_URL %>static/img/loading.gif" />
+      <h3>
+        正在加载 <%= webpackConfig.name %>， 请稍候...
+      </h3>
     </div>
   </div>
+</div>
 </body>
 
 </html>
