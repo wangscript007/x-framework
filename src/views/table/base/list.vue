@@ -129,6 +129,12 @@
             >
             </el-table-column>
             <el-table-column
+              prop="phone"
+              label="手机"
+              width="120"
+            >
+            </el-table-column>
+            <el-table-column
               prop="entryTime"
               label="入职时间"
               width="100"

@@ -11,10 +11,11 @@ for (let i = 0; i < count; i++) {
     cerNo: '@id', /* 身份证 */
     'sex|1': ['1', '2'], /* 1：男，2：女 */
     native: '@county(true)', /* 籍贯 */
+    phone: /^1(3|4|5|7|8)\d{9}$/,
     entryTime: '@date', /* 入职时间 */
     address: '广州市天河区', /* 联系地址 */
     'state|1': ['1', '2'], /* 1：在职，2：离职 */
-    remark: '@cparagraph' /* 备注 */
+    remark: '' /* 备注 */
   }))
 }
 

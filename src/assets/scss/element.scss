@@ -10,14 +10,8 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 /* 重置样式 */
 .el-form {
   .el-form-item {
-    margin-bottom: x-space(2);
-
     .el-form-item__label-wrap .el-form-item__label {
       color: $color-title;
-    }
-
-    .el-form-item__content {
-      font-size: inherit;
     }
   }
 }

@@ -1,105 +1,103 @@
 <template>
   <page>
     <el-card shadow="never">
-      <el-form
-        ref="form"
-        :model="form"
-        label-width="auto"
+      <el-col
+        :md="{span: 12, offset: 6}"
+        :sm="{span: 24}"
       >
-        <el-form-item label="活动名称">
-          <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select
-            v-model="form.region"
-            placeholder="请选择活动区域"
+        <el-form
+          ref="staffForm"
+          :model="form"
+          :rules="rules"
+          label-width="auto"
+          status-icon
+        >
+          <input
+            v-model="form.staffId"
+            type="hidden"
           >
-            <el-option
-              label="区域一"
-              value="shanghai"
-            ></el-option>
-            <el-option
-              label="区域二"
-              value="beijing"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="活动时间">
-          <el-col :span="11">
+          <input
+            v-model="form.native"
+            type="hidden"
+          >
+          <el-form-item
+            label="员工姓名"
+            prop="staffName"
+          >
+            <el-input v-model="form.staffName"></el-input>
+          </el-form-item>
+          <el-form-item
+            label="工号"
+            prop="staffNo"
+          >
+            <el-input v-model="form.staffNo"></el-input>
+          </el-form-item>
+          <el-form-item
+            label="身份证号"
+            prop="cerNo"
+          >
+            <el-input v-model="form.cerNo"></el-input>
+          </el-form-item>
+          <el-form-item
+            label="手机号码"
+            prop="phone"
+          >
+            <el-input v-model="form.phone"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-radio-group v-model="form.sex">
+              <el-radio label="1">男</el-radio>
+              <el-radio label="2">女</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="籍贯">
+            <el-cascader
+              v-model="regionSelect"
+              :options="regionOptions"
+              :props="regionProps"
+              :clearable="true"
+              style="width: 100%;"
+              separator=" "
+            >
+            </el-cascader>
+          </el-form-item>
+          <el-form-item label="入职时间">
             <el-date-picker
-              v-model="form.date1"
+              v-model="form.entryTime"
               type="date"
               placeholder="选择日期"
               style="width: 100%;"
             ></el-date-picker>
-          </el-col>
-          <el-col
-            class="line text-center"
-            :span="2"
-          >
-            -
-          </el-col>
-          <el-col :span="11">
-            <el-time-picker
-              v-model="form.date2"
-              placeholder="选择时间"
-              style="width: 100%;"
-            ></el-time-picker>
-          </el-col>
-        </el-form-item>
-        <el-form-item label="即时配送">
-          <el-switch v-model="form.delivery"></el-switch>
-        </el-form-item>
-        <el-form-item label="活动性质">
-          <el-checkbox-group v-model="form.type">
-            <el-checkbox
-              label="美食/餐厅线上活动"
-              name="type"
-            ></el-checkbox>
-            <el-checkbox
-              label="地推活动"
-              name="type"
-            ></el-checkbox>
-            <el-checkbox
-              label="线下主题活动"
-              name="type"
-            ></el-checkbox>
-            <el-checkbox
-              label="单纯品牌曝光"
-              name="type"
-            ></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="特殊资源">
-          <el-radio-group v-model="form.resource">
-            <el-radio label="线上品牌商赞助"></el-radio>
-            <el-radio label="线下场地免费"></el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="活动形式">
-          <el-input
-            v-model="form.desc"
-            type="textarea"
-          ></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >提交
-          </el-button>
-          <el-button @click="handleBack">返回</el-button>
-        </el-form-item>
-      </el-form>
-      <el-checkbox
-        label="单纯品牌曝光"
-      ></el-checkbox>
-      <el-radio label="线上品牌商赞助"></el-radio>
+          </el-form-item>
+          <el-form-item label="状态">
+            <el-radio-group v-model="form.state">
+              <el-radio label="1">在职</el-radio>
+              <el-radio label="2">离职</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input
+              v-model="form.remark"
+              type="textarea"
+              :rows="5"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              type="primary"
+              @click="handleSubmit"
+            >提交
+            </el-button>
+            <el-button @click="handleBack">返回</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
     </el-card>
   </page>
 </template>
 
 <script>
+import { regionData } from 'element-china-area-data'
 import Page from '@/components/Page'
 import { getStaff } from '@/api/staff'
 
@@ -111,20 +109,46 @@ export default {
   data () {
     return {
       form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      }
+        staffId: '',
+        staffName: '',
+        staffNo: '',
+        cerNo: '',
+        sex: '1',
+        native: '',
+        phone: '',
+        entryTime: '',
+        address: '',
+        state: '1',
+        remark: ''
+      },
+      rules: {
+        staffName: [
+          { required: true, message: '请输入员工姓名', trigger: 'blur' }
+        ],
+        staffNo: [
+          { required: true, message: '请输入工号', trigger: 'blur' }
+        ],
+        cerNo: [
+          { required: true, message: '请输入身份证号', trigger: 'blur' }
+        ],
+        phone: [
+          { required: true, message: '请输入手机号码', trigger: 'blur' }
+        ]
+      },
+      regionOptions: regionData,
+      regionProps: {
+        value: 'label'
+      },
+      regionSelect: []
+    }
+  },
+  watch: {
+    regionSelect (value) {
+      this.form.native = value.length ? value.join(' ') : ''
     }
   },
   created () {
     /* 如果是编辑，则在$route的query中会存在staffId */
-    console.log(this.$route)
     const { params } = this.$route
     if (params && params.staffId) {
       this.getStaffInfo(params.staffId)
@@ -139,21 +163,31 @@ export default {
       })
       try {
         const res = await getStaff(staffId)
-        console.log(res)
+        Object.assign(this.form, res.data)
+        if (res.data.native) {
+          this.regionSelect = res.data.native.split(' ')
+        }
       } catch (e) {
         this.$message({
           showClose: true,
           type: 'error',
           message: e.message
         })
+        this.handleBack()
       } finally {
         this.$nextTick(() => {
           loading.close()
         })
       }
     },
-    onSubmit () {
-      console.log('submit!')
+    handleSubmit () {
+      this.$refs.staffForm.validate((valid) => {
+        if (valid) {
+          console.log(valid)
+        } else {
+          return false
+        }
+      })
     },
     handleBack () {
       const { query } = this.$route
