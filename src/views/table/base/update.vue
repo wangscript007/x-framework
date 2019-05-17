@@ -98,8 +98,9 @@
 
 <script>
 import { regionData } from 'element-china-area-data'
-import Page from '@/components/Page'
 import { getStaff } from '@/api/staff'
+import validateUtil from '@/common/utils/validate'
+import Page from '@/components/Page'
 
 export default {
   name: 'UpdateStaff',
@@ -129,10 +130,12 @@ export default {
           { required: true, message: '请输入工号', trigger: 'blur' }
         ],
         cerNo: [
-          { required: true, message: '请输入身份证号', trigger: 'blur' }
+          { required: true, message: '请输入身份证号', trigger: 'blur' },
+          { validator: validateUtil.handler('idCardNo'), trigger: 'blur' }
         ],
         phone: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' }
+          { required: true, message: '请输入手机号码', trigger: 'blur' },
+          { validator: validateUtil.handler('phoneNo'), trigger: 'blur' }
         ]
       },
       regionOptions: regionData,
