@@ -128,11 +128,12 @@ export default {
         username: [
           { required: true, trigger: 'blur', message: '请输入用户名' },
           { min: 4, max: 30, message: '用户名长度应在4到30为之间' },
-          { validator: this.usernameValidator, trigger: 'blur' }
+          { validator: validateUtil.validator('username', '用户名'), trigger: 'blur' }
         ],
         password: [
           { required: true, trigger: 'blur', message: '请输入密码' },
-          { min: 6, max: 30, message: '密码长度应在6到30为之间' }
+          { min: 6, max: 30, message: '密码长度应在6到30为之间' },
+          { validator: validateUtil.validator('password', '密码'), trigger: 'blur' }
         ]
       },
       showPassword: false,
@@ -162,10 +163,6 @@ export default {
     ...mapMutations({
       setRemember: 'SET_REMEMBER'
     }),
-    usernameValidator (rule, value, callback) {
-      const validateRes = validateUtil.username(value)
-      !validateRes.valid ? callback(validateRes.error) : callback()
-    },
     loginHandler () {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {

@@ -36,3 +36,17 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     line-height: 1.2;
   }
 }
+
+/* card */
+.el-card {
+  .el-card__header {
+    padding: x-space(2);
+    .el-card__header-title {
+      display: inline-block;
+      line-height: 22px;
+    }
+    .el-card__header-btn {
+      padding: 3px 0;
+    }
+  }
+}

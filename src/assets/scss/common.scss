@@ -10,3 +10,21 @@
 .text-right {
   text-align: right !important;
 }
+
+/* 浮动 */
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
+
+.fix {
+  zoom: 1;
+  &:after {
+    content: "";
+    display: block;
+    clear: both
+  }
+}

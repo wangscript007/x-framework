@@ -46,3 +46,17 @@ export async function deleteStaff (staffId) {
   }
   return data
 }
+
+export async function updateStaff (form) {
+  const { data } = await request({
+    url: '/staff/update',
+    method: 'post',
+    data: form
+  })
+  if (!data || !data.success) {
+    throw new CommonException({
+      message: data && data.message ? data.message : '操作失败，请重试'
+    })
+  }
+  return data
+}

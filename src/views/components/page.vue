@@ -8,13 +8,15 @@
         >
           <div
             slot="header"
-            class="clearfix"
+            class="fix"
           >
-            <strong>卡片名称</strong>
+            <strong class="el-card__header-title">卡片名称</strong>
             <el-button
-              style="float: right; padding: 3px 0"
+              class="el-card__header-btn float-right"
               type="text"
-            >操作按钮</el-button>
+            >
+              操作按钮
+            </el-button>
           </div>
           <div class="text item">
             这里是内容
@@ -33,13 +35,15 @@
         >
           <div
             slot="header"
-            class="clearfix"
+            class="fix"
           >
-            <strong>卡片名称</strong>
+            <strong class="el-card__header-title">卡片名称</strong>
             <el-button
-              style="float: right; padding: 3px 0"
+              class="el-card__header-btn float-right"
               type="text"
-            >操作按钮</el-button>
+            >
+              操作按钮
+            </el-button>
           </div>
           <div class="text item">
             这里是内容
@@ -56,13 +60,15 @@
         >
           <div
             slot="header"
-            class="clearfix"
+            class="fix"
           >
-            <strong>卡片名称</strong>
+            <strong class="el-card__header-title">卡片名称</strong>
             <el-button
-              style="float: right; padding: 3px 0"
+              class="el-card__header-btn float-right"
               type="text"
-            >操作按钮</el-button>
+            >
+              操作按钮
+            </el-button>
           </div>
           <div class="text item">
             这里是内容
@@ -78,13 +84,15 @@
         >
           <div
             slot="header"
-            class="clearfix"
+            class="fix"
           >
-            <strong>卡片名称</strong>
+            <strong class="el-card__header-title">卡片名称</strong>
             <el-button
-              style="float: right; padding: 3px 0"
+              class="el-card__header-btn float-right"
               type="text"
-            >操作按钮</el-button>
+            >
+              操作按钮
+            </el-button>
           </div>
           <div class="text item">
             这里是内容

@@ -1,6 +1,19 @@
 <template>
   <page>
     <el-card shadow="never">
+      <div
+        slot="header"
+        class="fix"
+      >
+        <strong class="el-card__header-title">员工信息</strong>
+        <el-button
+          class="float-right el-card__header-btn"
+          type="text"
+          @click="handleBack"
+        >
+          员工管理
+        </el-button>
+      </div>
       <el-col
         :md="{span: 12, offset: 6}"
         :sm="{span: 24}"
@@ -13,36 +26,36 @@
           status-icon
         >
           <input
-            v-model="form.staffId"
+            v-model.trim="form.staffId"
             type="hidden"
           >
           <input
-            v-model="form.native"
+            v-model.trim="form.native"
             type="hidden"
           >
           <el-form-item
             label="员工姓名"
             prop="staffName"
           >
-            <el-input v-model="form.staffName"></el-input>
+            <el-input v-model.trim="form.staffName"></el-input>
           </el-form-item>
           <el-form-item
             label="工号"
             prop="staffNo"
           >
-            <el-input v-model="form.staffNo"></el-input>
+            <el-input v-model.trim="form.staffNo"></el-input>
           </el-form-item>
           <el-form-item
             label="身份证号"
             prop="cerNo"
           >
-            <el-input v-model="form.cerNo"></el-input>
+            <el-input v-model.trim="form.cerNo"></el-input>
           </el-form-item>
           <el-form-item
             label="手机号码"
             prop="phone"
           >
-            <el-input v-model="form.phone"></el-input>
+            <el-input v-model.trim="form.phone"></el-input>
           </el-form-item>
           <el-form-item label="性别">
             <el-radio-group v-model="form.sex">
@@ -65,6 +78,8 @@
             <el-date-picker
               v-model="form.entryTime"
               type="date"
+              format="yyyy年M月d日"
+              value-format="yyyy-MM-dd"
               placeholder="选择日期"
               style="width: 100%;"
             ></el-date-picker>
@@ -77,7 +92,7 @@
           </el-form-item>
           <el-form-item label="备注">
             <el-input
-              v-model="form.remark"
+              v-model.trim="form.remark"
               type="textarea"
               :rows="5"
             ></el-input>
@@ -88,7 +103,6 @@
               @click="handleSubmit"
             >提交
             </el-button>
-            <el-button @click="handleBack">返回</el-button>
           </el-form-item>
         </el-form>
       </el-col>
@@ -97,8 +111,9 @@
 </template>
 
 <script>
+import moment from 'moment'
 import { regionData } from 'element-china-area-data'
-import { getStaff } from '@/api/staff'
+import { getStaff, updateStaff } from '@/api/staff'
 import validateUtil from '@/common/utils/validate'
 import Page from '@/components/Page'
 
@@ -117,7 +132,7 @@ export default {
         sex: '1',
         native: '',
         phone: '',
-        entryTime: '',
+        entryTime: moment().format('YYYY-MM-DD'),
         address: '',
         state: '1',
         remark: ''
@@ -131,11 +146,11 @@ export default {
         ],
         cerNo: [
           { required: true, message: '请输入身份证号', trigger: 'blur' },
-          { validator: validateUtil.handler('idCardNo'), trigger: 'blur' }
+          { validator: validateUtil.validator('idCardNo'), trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机号码', trigger: 'blur' },
-          { validator: validateUtil.handler('phoneNo'), trigger: 'blur' }
+          { validator: validateUtil.validator('mobileNo'), trigger: 'blur' }
         ]
       },
       regionOptions: regionData,
@@ -184,9 +199,32 @@ export default {
       }
     },
     handleSubmit () {
-      this.$refs.staffForm.validate((valid) => {
+      this.$refs.staffForm.validate(async (valid) => {
         if (valid) {
-          console.log(valid)
+          const loading = this.$loading({
+            text: '正在处理',
+            spinner: 'fa fa-spinner fa-spin fa-2x',
+            background: 'rgba(255, 255, 255, 0.5)'
+          })
+          try {
+            await updateStaff(this.form)
+            this.$message({
+              showClose: true,
+              type: 'success',
+              message: '操作成功'
+            })
+            this.handleBack()
+          } catch (e) {
+            this.$message.error({
+              showClose: true,
+              type: 'error',
+              message: e.message
+            })
+          } finally {
+            this.$nextTick(() => {
+              loading.close()
+            })
+          }
         } else {
           return false
         }

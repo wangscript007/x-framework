@@ -1,19 +1,45 @@
+/* 正则 */
+const patterns = {
+  username: /^\w+$/, /* 数字、英文字母或者下划线 */
+  passwordS: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-强（字母+数字+特殊字符） */
+  passwordM: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-中（字母+数字，字母+特殊字符，数字+特殊字符） */
+  passwordW: /^\w+$/, /* 密码-弱（数字，字母，下划线） */
+  idCardCode: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/, /* 身份证校验码 */
+  idCardDate: /^(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)$/, /* 身份证日期码 */
+  idCardProv: /^[1-9][0-9]/, /* 身份证地区码 */
+  mobileNo: /^1([34578])\d{9}$/, /* 手机号码 */
+  telNo: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, /* 固定电话、传真 */
+  qqNo: /^[1-9][0-9]{4,10}$/, /* qq号 5至11位数字*/
+  wxNo: /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/, /* 微信号 6至20位，以字母开头，字母，数字，减号，下划线*/
+  cCarNo: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/, /* 普通汽车 */
+  xCarNo: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/ /* 新能源汽车 */
+}
+
 /* 用户名 */
-function username (value, name) {
-  const valid = /^\w+$/.test(value)
+function username (value, name = '') {
+  const valid = patterns.username.test(value)
   return {
     valid,
     error: valid ? null : new Error(`${name || '用户名'}只能由数字、英文字母或者下划线组成`)
   }
 }
 
+/* 密码 */
+function password (value, name = '', intensity = 'W') {
+  const valid = patterns[`password${intensity}`].test(value)
+  const tips = intensity === 'S' ? '必须由字母、数字和特殊字符组成' : intensity === 'M' ? '必须包含字母、数字、特殊字符中2种字符' : '只能由数字、字母、下划线组成'
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '密码'}${tips}`)
+  }
+}
+
 /* 检验身份证校验码 */
 function _checkCode (val) {
-  const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
   const factor = ['7', '9', '10', '5', '8', '4', '2', '1', '6', '3', '7', '9', '10', '5', '8', '4', '2']
   const parity = ['1', '0', 'X', '9', '8', '7', '6', '5', '4', '3', '2']
   const code = val.substring(17)
-  if (p.test(val)) {
+  if (patterns.idCardCode.test(val)) {
     let sum = 0
     for (let i = 0; i < 17; i++) {
       sum += val[i] * factor[i]
@@ -27,8 +53,7 @@ function _checkCode (val) {
 
 /* 检验身份证日期码 */
 function _checkBirthday (val) {
-  const pattern = /^(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)$/
-  if (pattern.test(val)) {
+  if (patterns.idCardDate.test(val)) {
     const year = val.substring(0, 4)
     const month = val.substring(4, 6)
     const date = val.substring(6, 8)
@@ -42,7 +67,6 @@ function _checkBirthday (val) {
 
 /* 检验身份证地区码 */
 function _checkProvince (val) {
-  const pattern = /^[1-9][0-9]/
   const provinceMap = {
     11: '北京',
     12: '天津',
@@ -79,8 +103,7 @@ function _checkProvince (val) {
     81: '香港',
     82: '澳门'
   }
-
-  if (pattern.test(val)) {
+  if (patterns.idCardProv.test(val)) {
     if (provinceMap[val]) {
       return true
     }
@@ -89,7 +112,7 @@ function _checkProvince (val) {
 }
 
 /* 身份证格式校验 */
-function idCardNo (value, name) {
+function idCardNo (value, name = '') {
   const valid = _checkCode(value) && _checkBirthday(value.substring(6, 14)) && _checkProvince(value.substring(0, 2))
   return {
     valid,
@@ -98,26 +121,78 @@ function idCardNo (value, name) {
 }
 
 /* 手机号码 */
-function phoneNo (value, name) {
-  const valid = /^1([34578])\d{9}$/.test(value)
+function mobileNo (value, name = '') {
+  const valid = patterns.mobileNo.test(value)
   return {
     valid,
     error: valid ? null : new Error(`${name || '手机号码'}格式错误`)
   }
 }
 
-function handler (type) {
+/* 座机、传真 */
+function telNo (value, name = '') {
+  const valid = patterns.telNo.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '号码'}格式错误`)
+  }
+}
+
+/* 联系方式 */
+function contactNo (value, name = '') {
+  const valid = patterns.mobileNo.test(value) || patterns.telNo.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '号码'}格式错误`)
+  }
+}
+
+/* qq */
+function qqNo (value, name = '') {
+  const valid = patterns.qqNo.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || 'QQ号'}格式错误`)
+  }
+}
+
+/* 微信号*/
+function wxNo (value, name = '') {
+  const valid = patterns.wxNo.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '微信号'}格式错误`)
+  }
+}
+
+/* 车牌号 */
+function carNo (value, name = '') {
+  const valid = patterns.cCarNo.test(value) || patterns.xCarNo.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '车牌号'}格式错误`)
+  }
+}
+
+/* 生成验证器 */
+function validator (type, name = '') {
   return (rule, value, callback) => {
-    const res = validateUtil[type](value)
-    !res.valid ? callback(res.error) : callback()
+    const res = validateUtil[type](value, name)
+    res.valid ? callback() : callback(res.error)
   }
 }
 
 const validateUtil = {
   username,
+  password,
   idCardNo,
-  phoneNo,
-  handler
+  mobileNo,
+  telNo,
+  contactNo,
+  qqNo,
+  wxNo,
+  carNo,
+  validator
 }
 
 export default validateUtil
