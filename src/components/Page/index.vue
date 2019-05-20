@@ -5,7 +5,7 @@
       class="x-layout-page-header"
     >
       <breadcrumb></breadcrumb>
-      <h1 class="page-header-title">{{ $route.meta.title||'' }}</h1>
+      <h1 class="page-header-title">{{ pageHeaderTitle }}</h1>
       <div
         v-if="showDescribe"
         class="page-header-describe"
@@ -36,6 +36,12 @@ export default {
     showDescribe: {
       type: Boolean,
       default: true
+    }
+  },
+  computed: {
+    pageHeaderTitle () {
+      const { meta } = this.$route
+      return meta ? meta.headerTitle ? meta.headerTitle : meta.title ? meta.title : '' : ''
     }
   }
 }

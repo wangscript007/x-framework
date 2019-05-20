@@ -9,7 +9,7 @@
         <el-button
           class="float-right el-card__header-btn"
           type="text"
-          @click="backHandler"
+          @click="handleBack"
         >
           员工管理
         </el-button>
@@ -20,45 +20,45 @@
       >
         <el-form
           ref="staffForm"
-          :model="staff"
+          :model="form"
           :rules="rules"
           label-width="auto"
           status-icon
         >
           <input
-            v-model.trim="staff.staffId"
+            v-model.trim="form.staffId"
             type="hidden"
           >
           <input
-            v-model.trim="staff.native"
+            v-model.trim="form.native"
             type="hidden"
           >
           <el-form-item
             label="员工姓名"
             prop="staffName"
           >
-            <el-input v-model.trim="staff.staffName"></el-input>
+            <el-input v-model.trim="form.staffName"></el-input>
           </el-form-item>
           <el-form-item
             label="工号"
             prop="staffNo"
           >
-            <el-input v-model.trim="staff.staffNo"></el-input>
+            <el-input v-model.trim="form.staffNo"></el-input>
           </el-form-item>
           <el-form-item
             label="身份证号"
             prop="cerNo"
           >
-            <el-input v-model.trim="staff.cerNo"></el-input>
+            <el-input v-model.trim="form.cerNo"></el-input>
           </el-form-item>
           <el-form-item
             label="手机号码"
             prop="phone"
           >
-            <el-input v-model.trim="staff.phone"></el-input>
+            <el-input v-model.trim="form.phone"></el-input>
           </el-form-item>
           <el-form-item label="性别">
-            <el-radio-group v-model="staff.sex">
+            <el-radio-group v-model="form.sex">
               <el-radio label="1">男</el-radio>
               <el-radio label="2">女</el-radio>
             </el-radio-group>
@@ -76,7 +76,7 @@
           </el-form-item>
           <el-form-item label="入职时间">
             <el-date-picker
-              v-model="staff.entryTime"
+              v-model="form.entryTime"
               type="date"
               format="yyyy年M月d日"
               value-format="yyyy-MM-dd"
@@ -85,14 +85,14 @@
             ></el-date-picker>
           </el-form-item>
           <el-form-item label="状态">
-            <el-radio-group v-model="staff.state">
+            <el-radio-group v-model="form.state">
               <el-radio label="1">在职</el-radio>
               <el-radio label="2">离职</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="备注">
             <el-input
-              v-model.trim="staff.remark"
+              v-model.trim="form.remark"
               type="textarea"
               :rows="5"
             ></el-input>
@@ -100,19 +100,8 @@
           <el-form-item>
             <el-button
               type="primary"
-              @click="submitHandler()"
+              @click="handleSubmit"
             >提交
-            </el-button>
-            <el-button
-              v-if="isAdd"
-              type="warning"
-              @click="submitHandler(true)"
-            >提交并继续添加
-            </el-button>
-            <el-button
-              v-else
-              @click="backHandler"
-            >返回
             </el-button>
           </el-form-item>
         </el-form>
@@ -135,7 +124,19 @@ export default {
   },
   data () {
     return {
-      staff: {},
+      form: {
+        staffId: '',
+        staffName: '',
+        staffNo: '',
+        cerNo: '',
+        sex: '1',
+        native: '',
+        phone: '',
+        entryTime: moment().format('YYYY-MM-DD'),
+        address: '',
+        state: '1',
+        remark: ''
+      },
       rules: {
         staffName: [
           { required: true, message: '请输入员工姓名', trigger: 'blur' }
@@ -156,39 +157,22 @@ export default {
       regionProps: {
         value: 'label'
       },
-      regionSelect: [],
-      isAdd: true
+      regionSelect: []
     }
   },
   watch: {
     regionSelect (value) {
-      this.staff.native = value.length ? value.join(' ') : ''
+      this.form.native = value.length ? value.join(' ') : ''
     }
   },
   created () {
-    this.initStaffInfo()
+    /* 如果是编辑，则在$route的query中会存在staffId */
     const { params } = this.$route
     if (params && params.staffId) {
-      this.isAdd = false
       this.getStaffInfo(params.staffId)
     }
   },
   methods: {
-    initStaffInfo () {
-      this.staff = {
-        staffId: '',
-        staffName: '',
-        staffNo: '',
-        cerNo: '',
-        sex: '1',
-        native: '',
-        phone: '',
-        entryTime: moment().format('YYYY-MM-DD'),
-        address: '',
-        state: '1',
-        remark: ''
-      }
-    },
     getStaffInfo: async function (staffId) {
       const loading = this.$loading({
         text: '正在获取员工信息',
@@ -197,7 +181,7 @@ export default {
       })
       try {
         const res = await getStaff(staffId)
-        Object.assign(this.staff, res.data)
+        Object.assign(this.form, res.data)
         if (res.data.native) {
           this.regionSelect = res.data.native.split(' ')
         }
@@ -207,14 +191,14 @@ export default {
           type: 'error',
           message: e.message
         })
-        this.backHandler()
+        this.handleBack()
       } finally {
         this.$nextTick(() => {
           loading.close()
         })
       }
     },
-    submitHandler (isContinue = false) {
+    handleSubmit () {
       this.$refs.staffForm.validate(async (valid) => {
         if (valid) {
           const loading = this.$loading({
@@ -223,18 +207,13 @@ export default {
             background: 'rgba(255, 255, 255, 0.5)'
           })
           try {
-            await updateStaff(this.staff)
+            await updateStaff(this.form)
             this.$message({
               showClose: true,
               type: 'success',
               message: '操作成功'
             })
-            if (isContinue) {
-              this.initStaffInfo()
-              this.$refs.staffForm.resetFields()
-            } else {
-              this.backHandler()
-            }
+            this.handleBack()
           } catch (e) {
             this.$message.error({
               showClose: true,
@@ -251,9 +230,14 @@ export default {
         }
       })
     },
-    backHandler () {
+    handleBack () {
       const { query } = this.$route
-      this.$router.push(query ? { name: 'BaseTableList', params: query } : '/table/base/list')
+      if (query) {
+        /* 这里使用name和params的方式返回是因为当list页面重新刷新后，params将会消失，list可以回到初始状态 */
+        this.$router.push({ name: 'BaseTableList', params: query })
+      } else {
+        this.$router.push('/table/base/list')
+      }
     }
   }
 }
