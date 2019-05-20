@@ -101,6 +101,14 @@
               width="80"
               fixed
             >
+              <template slot-scope="{row}">
+                <el-link
+                  type="primary"
+                  @click.stop="staffDetail(row.staffId)"
+                >
+                  {{ row.staffName }}
+                </el-link>
+              </template>
             </el-table-column>
             <el-table-column
               prop="staffNo"
@@ -158,7 +166,7 @@
               <template slot-scope="{row}">
                 <el-link
                   type="primary"
-                  @click.stop="editStaff(row)"
+                  @click.stop="editStaff(row.staffId)"
                 >
                   编辑
                 </el-link>
@@ -274,13 +282,8 @@ export default {
         })
       }
     },
-    editStaff (row) {
-      const query = {}
-      for (const k in this.query) {
-        if (!this.query[k]) continue
-        query[k] = this.query[k]
-      }
-      this.$router.push({ path: `/table/base/edit/${row.staffId}`, query })
+    editStaff (staffId) {
+      this.$router.push({ path: `/table/base/edit/${staffId}`, query: this.queryParamFilter() })
     },
     queryStaff: async function (pageNo) {
       if (Number.isInteger(pageNo)) {
@@ -303,6 +306,9 @@ export default {
         })
       }
     },
+    staffDetail (staffId) {
+      this.$router.push({ path: `/table/base/detail/${staffId}`, query: this.queryParamFilter() })
+    },
     resetQuery () {
       this.query.key = ''
       this.query.sex = ''
@@ -311,6 +317,14 @@ export default {
     },
     closePopover (id) {
       this.$refs[id].doClose()
+    },
+    queryParamFilter () {
+      const query = {}
+      for (const k in this.query) {
+        if (!this.query[k]) continue
+        query[k] = this.query[k]
+      }
+      return query
     }
   }
 }

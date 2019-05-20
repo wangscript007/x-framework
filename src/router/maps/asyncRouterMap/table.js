@@ -11,7 +11,7 @@ const tableRouter = {
     redirectInBreadcrumb: true
   },
   children: [
-    /* 基本数据表格 */
+    /* 基础数据表格 */
     {
       path: 'base',
       name: 'BaseTable',
@@ -57,6 +57,19 @@ const tableRouter = {
             title: '编辑员工',
             headerTitle: '基础数据表格-编辑员工',
             describe: '包含了常用的form表单组件的使用及表单验证功能，框架约定新增和编辑使用同一个vue组件',
+            hidden: true,
+            activePath: '/table/base/list'
+          }
+        },
+        /* 详情 */
+        {
+          path: 'detail/:staffId',
+          name: 'BaseTableDetail',
+          component: () => import('@/views/table/base/detail'),
+          meta: {
+            title: '员工信息',
+            headerTitle: '基础数据表格-员工信息',
+            describe: '常用的详情页面',
             hidden: true,
             activePath: '/table/base/list'
           }

@@ -74,6 +74,11 @@
             >
             </el-cascader>
           </el-form-item>
+          <el-form-item
+            label="联系地址"
+          >
+            <el-input v-model.trim="staff.address"></el-input>
+          </el-form-item>
           <el-form-item label="入职时间">
             <el-date-picker
               v-model="staff.entryTime"
