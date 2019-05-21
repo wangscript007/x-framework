@@ -75,6 +75,12 @@
               新增
             </el-button>
           </span>
+          <span class="filter-item">
+            <el-checkbox v-model="showColumns.address">显示地址</el-checkbox>
+          </span>
+          <span class="filter-item">
+            <el-checkbox v-model="showColumns.remark">显示备注</el-checkbox>
+          </span>
         </div>
         <div class="table-wrap">
           <el-table
@@ -146,6 +152,18 @@
               prop="entryTime"
               label="入职时间"
               width="100"
+            >
+            </el-table-column>
+            <el-table-column
+              v-if="showColumns.address"
+              prop="address"
+              label="联系地址"
+            >
+            </el-table-column>
+            <el-table-column
+              v-if="showColumns.remark"
+              prop="remark"
+              label="备注"
             >
             </el-table-column>
             <el-table-column
@@ -241,6 +259,10 @@ export default {
         state: '',
         page: 1,
         limit: 10
+      },
+      showColumns: {
+        address: false,
+        remark: false
       }
     }
   },

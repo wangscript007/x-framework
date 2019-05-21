@@ -13,7 +13,7 @@ for (let i = 0; i < count; i++) {
     native: '@county(true)', /* 籍贯 */
     phone: /^1(3|4|5|7|8)\d{9}$/,
     entryTime: '@date', /* 入职时间 */
-    address: '广州市天河区', /* 联系地址 */
+    address: '', /* 联系地址 */
     'state|1': ['1', '2'], /* 1：在职，2：离职 */
     remark: '' /* 备注 */
   }))

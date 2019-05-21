@@ -91,7 +91,7 @@
 
 <script>
 import Page from '@/components/Page'
-import mixin from '@/views/table/base/mixin'
+import mixin from '@/views/table/selected/mixin'
 
 export default {
   name: 'StaffDetail',

@@ -8,6 +8,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
 
 /* 重置样式 */
+/* form */
 .el-form {
   .el-form-item {
     .el-form-item__label-wrap .el-form-item__label {
@@ -16,14 +17,34 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   }
 }
 
+/* detail-form */
+.el-form.detail-form {
+  .el-form-item {
+    margin-bottom: x-space(0);
+    .el-form-item__label {
+      color: $color-detail-label;
+    }
+  }
+  .detail-btn-wrap {
+    margin-top: x-space(2);
+  }
+}
+
+/* checkbox */
 .el-checkbox-group {
   font-size: inherit;
 }
 
-.el-checkbox .el-checkbox__input {
-  line-height: 1.2;
+.el-checkbox {
+  .el-checkbox__input {
+    line-height: 1;
+  }
+  .el-checkbox__label {
+    padding-left: x-space(1);
+  }
 }
 
+/* radio */
 .el-radio-group {
   display: block;
   line-height: inherit;
@@ -33,7 +54,10 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-radio {
   line-height: inherit;
   .el-radio__input {
-    line-height: 1.2;
+    line-height: 1;
+  }
+  .el-radio__label {
+    padding-left: x-space(1);
   }
 }
 

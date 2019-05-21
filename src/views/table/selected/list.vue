@@ -75,6 +75,12 @@
               新增
             </el-button>
           </span>
+          <span class="filter-item">
+            <el-checkbox v-model="showColumns.address">显示地址</el-checkbox>
+          </span>
+          <span class="filter-item">
+            <el-checkbox v-model="showColumns.remark">显示备注</el-checkbox>
+          </span>
         </div>
         <div class="table-wrap">
           <el-table
@@ -85,7 +91,14 @@
             stripe
             fit
             highlight-current-row
+            @selection-change="selectionChangeHandler"
           >
+            <el-table-column
+              type="selection"
+              width="50"
+              fixed
+            >
+            </el-table-column>
             <el-table-column
               label="#"
               width="50"
@@ -101,6 +114,14 @@
               width="80"
               fixed
             >
+              <template slot-scope="{row}">
+                <el-link
+                  type="primary"
+                  @click.stop="staffDetail(row.staffId)"
+                >
+                  {{ row.staffName }}
+                </el-link>
+              </template>
             </el-table-column>
             <el-table-column
               prop="staffNo"
@@ -141,6 +162,18 @@
             >
             </el-table-column>
             <el-table-column
+              v-if="showColumns.address"
+              prop="address"
+              label="联系地址"
+            >
+            </el-table-column>
+            <el-table-column
+              v-if="showColumns.remark"
+              prop="remark"
+              label="备注"
+            >
+            </el-table-column>
+            <el-table-column
               label="状态"
               width="80"
             >
@@ -158,7 +191,7 @@
               <template slot-scope="{row}">
                 <el-link
                   type="primary"
-                  @click.stop="editStaff(row)"
+                  @click.stop="editStaff(row.staffId)"
                 >
                   编辑
                 </el-link>
@@ -233,6 +266,10 @@ export default {
         state: '',
         page: 1,
         limit: 10
+      },
+      showColumns: {
+        address: false,
+        remark: false
       }
     }
   },
@@ -245,7 +282,7 @@ export default {
   },
   methods: {
     addStaff () {
-      this.$router.push({ path: '/table/base/add' })
+      this.$router.push({ path: '/table/selected/add' })
     },
     deleteStaff: async function (staffId) {
       const loading = this.$loading({
@@ -274,13 +311,8 @@ export default {
         })
       }
     },
-    editStaff (row) {
-      const query = {}
-      for (const k in this.query) {
-        if (!this.query[k]) continue
-        query[k] = this.query[k]
-      }
-      this.$router.push({ path: `/table/base/edit/${row.staffId}`, query })
+    editStaff (staffId) {
+      this.$router.push({ path: `/table/selected/edit/${staffId}`, query: this.queryParamFilter() })
     },
     queryStaff: async function (pageNo) {
       if (Number.isInteger(pageNo)) {
@@ -303,6 +335,9 @@ export default {
         })
       }
     },
+    staffDetail (staffId) {
+      this.$router.push({ path: `/table/selected/detail/${staffId}`, query: this.queryParamFilter() })
+    },
     resetQuery () {
       this.query.key = ''
       this.query.sex = ''
@@ -311,6 +346,17 @@ export default {
     },
     closePopover (id) {
       this.$refs[id].doClose()
+    },
+    queryParamFilter () {
+      const query = {}
+      for (const k in this.query) {
+        if (!this.query[k]) continue
+        query[k] = this.query[k]
+      }
+      return query
+    },
+    selectionChangeHandler (val) {
+      console.log(val)
     }
   }
 }

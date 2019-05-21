@@ -129,15 +129,17 @@
 <script>
 import moment from 'moment'
 import { regionData } from 'element-china-area-data'
-import { getStaff, updateStaff } from '@/api/staff'
+import { updateStaff } from '@/api/staff'
 import validateUtil from '@/common/utils/validate'
 import Page from '@/components/Page'
+import mixin from '@/views/table/base/mixin'
 
 export default {
   name: 'UpdateStaff',
   components: {
     Page
   },
+  mixins: [mixin],
   data () {
     return {
       staff: {},
@@ -171,15 +173,20 @@ export default {
     }
   },
   created () {
-    this.initStaffInfo()
+    this.initStaff()
     const { params } = this.$route
     if (params && params.staffId) {
       this.isAdd = false
-      this.getStaffInfo(params.staffId)
+      this.getStaffInfo(params.staffId, staff => {
+        Object.assign(this.staff, staff)
+        if (staff.native) {
+          this.regionSelect = staff.native.split(' ')
+        }
+      })
     }
   },
   methods: {
-    initStaffInfo () {
+    initStaff () {
       this.staff = {
         staffId: '',
         staffName: '',
@@ -192,31 +199,6 @@ export default {
         address: '',
         state: '1',
         remark: ''
-      }
-    },
-    getStaffInfo: async function (staffId) {
-      const loading = this.$loading({
-        text: '正在获取员工信息',
-        spinner: 'fa fa-spinner fa-spin fa-2x',
-        background: 'rgba(255, 255, 255, 0.5)'
-      })
-      try {
-        const res = await getStaff(staffId)
-        Object.assign(this.staff, res.data)
-        if (res.data.native) {
-          this.regionSelect = res.data.native.split(' ')
-        }
-      } catch (e) {
-        this.$message({
-          showClose: true,
-          type: 'error',
-          message: e.message
-        })
-        this.backHandler()
-      } finally {
-        this.$nextTick(() => {
-          loading.close()
-        })
       }
     },
     submitHandler (isContinue = false) {
@@ -235,7 +217,7 @@ export default {
               message: '操作成功'
             })
             if (isContinue) {
-              this.initStaffInfo()
+              this.initStaff()
               this.$refs.staffForm.resetFields()
             } else {
               this.backHandler()
@@ -255,10 +237,6 @@ export default {
           return false
         }
       })
-    },
-    backHandler () {
-      const { query } = this.$route
-      this.$router.push(query ? { name: 'BaseTableList', params: query } : '/table/base/list')
     }
   }
 }
