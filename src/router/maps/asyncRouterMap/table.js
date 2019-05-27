@@ -80,53 +80,14 @@ const tableRouter = {
     {
       path: 'selected',
       name: 'SelectedTable',
-      component: () => import('@/views/table/selected/index'),
+      component: () => import('@/views/table/selected/list'),
       meta: {
         title: '选择数据表格',
-        icon: 'fa fa-table',
-        iconType: 'class',
-        alwaysShow: true,
-        redirectInBreadcrumb: true
-      },
-      children: [
-        /* 列表 */
-        {
-          path: 'list',
-          name: 'SelectedTableList',
-          component: () => import('@/views/table/selected/list'),
-          meta: {
-            title: '员工管理',
-            headerTitle: '选择数据表格-员工管理',
-            describe: '数据表格，是后台管理系统中的核心功能之一，包括了常用的增、删、改、查等操作',
-            icon: 'fa fa-user',
-            iconType: 'class'
-          }
-        },
-        /* 新增 */
-        {
-          path: 'add',
-          name: 'SelectedTableAdd',
-          component: () => import('@/views/table/selected/update'),
-          meta: {
-            title: '新增员工',
-            headerTitle: '选择数据表格-新增员工',
-            describe: '包含了常用的form表单组件的使用及表单验证功能，框架约定新增和编辑使用同一个vue组件'
-          }
-        },
-        /* 编辑 */
-        {
-          path: 'edit/:staffId',
-          name: 'SelectedTableEdit',
-          component: () => import('@/views/table/selected/update'),
-          meta: {
-            title: '编辑员工',
-            headerTitle: '选择数据表格-编辑员工',
-            describe: '包含了常用的form表单组件的使用及表单验证功能，框架约定新增和编辑使用同一个vue组件',
-            hidden: true,
-            activePath: '/table/selected/list'
-          }
-        }
-      ]
+        headerTitle: '选择数据表格-员工管理',
+        describe: '选择数据表格，一般用于有“批量操作”需求的列表类功能中，它可以为用户提供更快捷的操作',
+        icon: 'fa fa-user',
+        iconType: 'class'
+      }
     }
   ]
 }

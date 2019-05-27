@@ -4,22 +4,27 @@
     padding: x-space(2) x-space(4) 0;
     background: $color-gray-1;
     border-bottom: 1px solid $color-gray-6;
+
     .el-breadcrumb {
       margin-bottom: x-space(2);
       line-height: 1.5;
     }
+
     .page-header-title {
       margin-bottom: x-space(2);
       font-weight: 600;
       font-size: 20px;
       color: $color-title;
     }
+
     .page-header-describe {
       margin-bottom: x-space(2);
     }
   }
+
   .x-layout-page-content {
     margin: 24px;
+
     .el-card {
       .el-card__body {
         padding: x-space(3);
@@ -30,28 +35,33 @@
 
 /* complex-table */
 .complex-table {
-  .filter-wrap,.table-wrap,.pagination-wrap {
+  .filter-wrap, .tips-wrap, .table-wrap, .pagination-wrap {
     margin-bottom: x-space(2);
   }
+
   .filter-wrap {
     .filter-item {
       display: inline-block;
       vertical-align: middle;
       margin-right: x-space();
       margin-bottom: x-space();
+
       &:last-child {
         margin-right: 0;
       }
     }
   }
+
   .table-wrap {
     .el-table {
       color: $color-primary-text;
+
       thead {
         color: $color-title;
       }
     }
   }
+
   .pagination-wrap {
     text-align: center;
   }
@@ -65,9 +75,11 @@
   line-height: 1;
   margin: 0;
   padding: 0;
+
   &.x-badge-status {
     line-height: inherit;
     vertical-align: baseline;
+
     .x-badge-status-dot {
       display: block;
       position: absolute;
@@ -76,22 +88,28 @@
       top: 50%;
       transform: translateY(-50%);
       border-radius: 50%;
+
       &.status-default {
         background-color: $color-gray-7;
       }
+
       &.status-processing {
         background-color: $color-link;
       }
-      &.status-success{
+
+      &.status-success {
         background-color: $color-success;
       }
-      &.status-warning{
+
+      &.status-warning {
         background-color: $color-warning;
       }
+
       &.status-danger {
         background-color: $color-danger;
       }
     }
+
     .x-badge-status-text {
       display: inline-block;
       color: $color-primary-text;

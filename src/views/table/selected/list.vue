@@ -66,34 +66,47 @@
               重置
             </el-button>
           </span>
-          <span class="filter-item">
-            <el-button
-              type="primary"
-              icon="iconfont icon-plus"
-              @click="addStaff"
-            >
-              新增
-            </el-button>
-          </span>
-          <span class="filter-item">
-            <el-checkbox v-model="showColumns.address">显示地址</el-checkbox>
-          </span>
-          <span class="filter-item">
-            <el-checkbox v-model="showColumns.remark">显示备注</el-checkbox>
+          <span
+            v-if="selectedList && selectedList.length > 0"
+            class="filter-item"
+          >
+            <el-dropdown trigger="click">
+              <el-button type="primary">
+                批量操作<i class="el-icon-arrow-down el-icon--right"></i>
+              </el-button>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>
+                  <a @click="batchDeleteStaff">
+                    删除
+                    <el-badge
+                      class="mark"
+                      :value="selectedList.length"
+                    />
+                  </a>
+                </el-dropdown-item>
+                <el-dropdown-item>
+                  <a @click="clearSelectedList">
+                    清空选中
+                  </a>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </span>
         </div>
         <div class="table-wrap">
           <el-table
-            :key="tableId"
+            ref="staffTable"
             v-loading="tableLoading"
-            :data="staffList"
+            :row-key="getRowKeys"
             style="width: 100%"
+            :data="staffList"
             stripe
             fit
             highlight-current-row
             @selection-change="selectionChangeHandler"
           >
             <el-table-column
+              :reserve-selection="true"
               type="selection"
               width="50"
               fixed
@@ -114,14 +127,6 @@
               width="80"
               fixed
             >
-              <template slot-scope="{row}">
-                <el-link
-                  type="primary"
-                  @click.stop="staffDetail(row.staffId)"
-                >
-                  {{ row.staffName }}
-                </el-link>
-              </template>
             </el-table-column>
             <el-table-column
               prop="staffNo"
@@ -162,18 +167,6 @@
             >
             </el-table-column>
             <el-table-column
-              v-if="showColumns.address"
-              prop="address"
-              label="联系地址"
-            >
-            </el-table-column>
-            <el-table-column
-              v-if="showColumns.remark"
-              prop="remark"
-              label="备注"
-            >
-            </el-table-column>
-            <el-table-column
               label="状态"
               width="80"
             >
@@ -188,14 +181,7 @@
               width="100"
               fixed="right"
             >
-              <template slot-scope="{row}">
-                <el-link
-                  type="primary"
-                  @click.stop="editStaff(row.staffId)"
-                >
-                  编辑
-                </el-link>
-                &nbsp;
+              <template slot-scope="{row}">&nbsp;
                 <el-popover
                   :ref="row.staffId"
                   placement="top"
@@ -212,7 +198,7 @@
                     <el-button
                       type="primary"
                       size="mini"
-                      @click.stop="deleteStaff(row.staffId)"
+                      @click.stop="deleteStaff(row)"
                     >确定
                     </el-button>
                   </div>
@@ -256,20 +242,19 @@ export default {
   },
   data () {
     return {
-      tableId: 0,
+      getRowKeys (row) {
+        return row.staffId
+      },
       tableLoading: false,
       total: 0,
       staffList: [],
+      selectedList: [],
       query: {
         key: '',
         sex: '',
         state: '',
         page: 1,
         limit: 10
-      },
-      showColumns: {
-        address: false,
-        remark: false
       }
     }
   },
@@ -281,22 +266,20 @@ export default {
     this.queryStaff()
   },
   methods: {
-    addStaff () {
-      this.$router.push({ path: '/table/selected/add' })
-    },
-    deleteStaff: async function (staffId) {
+    deleteStaff: async function (row) {
       const loading = this.$loading({
         text: '正在删除',
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
       })
       try {
-        await api.deleteStaff(staffId)
+        await api.deleteStaff(row.staffId)
         this.$message({
           showClose: true,
           type: 'success',
           message: '删除成功'
         })
+        this.$refs.staffTable.toggleRowSelection(row, false)
         this.queryStaff(this.query.page)
       } catch (e) {
         this.$message({
@@ -305,14 +288,53 @@ export default {
           message: e.message
         })
       } finally {
-        this.closePopover(staffId)
+        this.closePopover(row.staffId)
         this.$nextTick(() => {
           loading.close()
         })
       }
     },
-    editStaff (staffId) {
-      this.$router.push({ path: `/table/selected/edit/${staffId}`, query: this.queryParamFilter() })
+    batchDeleteStaff () {
+      const _this = this
+      if (!_this.selectedList || !_this.selectedList.length) {
+        _this.$message({
+          showClose: true,
+          type: 'error',
+          message: '请先选择员工'
+        })
+        return
+      }
+      _this.$confirm(`此操作将删除${_this.selectedList.length}位员工的信息, 是否继续?`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async function () {
+        const loading = _this.$loading({
+          text: '正在删除',
+          spinner: 'fa fa-spinner fa-spin fa-2x',
+          background: 'rgba(255, 255, 255, 0.5)'
+        })
+        try {
+          await api.batchDeleteStaff(_this.selectedList)
+          _this.$message({
+            showClose: true,
+            type: 'success',
+            message: '删除成功'
+          })
+          _this.clearSelectedList()
+          _this.queryStaff(_this.query.page)
+        } catch (e) {
+          _this.$message({
+            showClose: true,
+            type: 'error',
+            message: e.message
+          })
+        } finally {
+          _this.$nextTick(() => {
+            loading.close()
+          })
+        }
+      })
     },
     queryStaff: async function (pageNo) {
       if (Number.isInteger(pageNo)) {
@@ -335,9 +357,6 @@ export default {
         })
       }
     },
-    staffDetail (staffId) {
-      this.$router.push({ path: `/table/selected/detail/${staffId}`, query: this.queryParamFilter() })
-    },
     resetQuery () {
       this.query.key = ''
       this.query.sex = ''
@@ -347,16 +366,16 @@ export default {
     closePopover (id) {
       this.$refs[id].doClose()
     },
-    queryParamFilter () {
-      const query = {}
-      for (const k in this.query) {
-        if (!this.query[k]) continue
-        query[k] = this.query[k]
-      }
-      return query
+    clearSelectedList () {
+      this.$refs.staffTable.clearSelection()
     },
-    selectionChangeHandler (val) {
-      console.log(val)
+    selectionChangeHandler (selected) {
+      this.selectedList = []
+      if (selected.length > 0) {
+        for (const selection of selected) {
+          this.selectedList.push(selection.staffId)
+        }
+      }
     }
   }
 }

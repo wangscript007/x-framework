@@ -75,6 +75,49 @@ module.exports = [
     }
   },
   {
+    url: '/staff/batchDelete',
+    type: 'post',
+    response: config => {
+      const { ids } = config.body
+      const res = {
+        success: true,
+        message: 'success',
+        data: null
+      }
+
+      if (!ids || !ids.length) {
+        res.success = false
+        res.message = '请选择员工'
+        return res
+      }
+
+      const matchedList = []
+      let matchError = false
+      for (const id of ids) {
+        const matchIndex = List.findIndex(item => {
+          return item.staffId === id
+        })
+        if (matchIndex === -1) {
+          matchError = true
+          break
+        }
+        matchedList.push(id)
+      }
+
+      if (matchError) {
+        res.success = false
+        res.message = '操作失败，部分员工数据异常'
+        return res
+      }
+
+      for (const index in matchedList) {
+        List.splice(index, 1)
+      }
+
+      return res
+    }
+  },
+  {
     url: '/staff/info',
     type: 'get',
     response: config => {
