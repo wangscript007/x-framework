@@ -188,7 +188,7 @@
                 >
                   编辑
                 </el-link>
-                &nbsp;
+                <el-divider direction="vertical"></el-divider>
                 <el-popover
                   :ref="row.staffId"
                   placement="top"

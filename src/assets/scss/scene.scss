@@ -52,6 +52,31 @@
     }
   }
 
+  .tips-wrap {
+    .tips {
+      span, a {
+        display: inline-block;
+        vertical-align: middle;
+      }
+
+      span.primary {
+        color: $color-theme-6;
+        font-weight: bold;
+        margin-left: x-space(0.5);
+        margin-right: x-space(0.5);
+      }
+
+      a {
+        color: $color-theme-6;
+        text-decoration: none;
+        &:hover {
+          color: $color-theme-4;
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
   .table-wrap {
     .el-table {
       color: $color-primary-text;

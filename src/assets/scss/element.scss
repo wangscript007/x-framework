@@ -74,3 +74,18 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     }
   }
 }
+
+/* alert */
+.el-alert--primary {
+  &.is-light {
+    background-color: $color-theme-1;
+    color: $color-primary-text;
+    .el-alert__icon {
+      color: $color-theme-6;
+    }
+  }
+  &.is-dark {
+    background-color: $color-theme-6;
+    color: $color-gray-1;
+  }
+}

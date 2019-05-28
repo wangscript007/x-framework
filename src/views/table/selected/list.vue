@@ -66,32 +66,33 @@
               重置
             </el-button>
           </span>
-          <span
-            v-if="selectedList && selectedList.length > 0"
-            class="filter-item"
-          >
-            <el-dropdown trigger="click">
-              <el-button type="primary">
-                批量操作<i class="el-icon-arrow-down el-icon--right"></i>
-              </el-button>
-              <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>
-                  <a @click="batchDeleteStaff">
-                    删除
-                    <el-badge
-                      class="mark"
-                      :value="selectedList.length"
-                    />
-                  </a>
-                </el-dropdown-item>
-                <el-dropdown-item>
-                  <a @click="clearSelectedList">
-                    清空选中
-                  </a>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </el-dropdown>
+          <span class="filter-item">
+            <el-button
+              type="primary"
+              :disabled="!selectedList || !selectedList.length"
+              @click="batchDeleteStaff"
+            >
+              批量删除
+            </el-button>
           </span>
+        </div>
+        <div class="tips-wrap">
+          <el-alert
+            type="primary"
+            show-icon
+            :closable="false"
+            class="tips"
+          >
+            <template slot="title">
+              <span>您已选择</span>
+              <span class="primary">{{ selectedList.length }}</span>
+              <span>项</span>&nbsp;&nbsp;&nbsp;&nbsp;
+              <a
+                href="javascript:void(0)"
+                @click="clearSelectedList"
+              >清除选中</a>
+            </template>
+          </el-alert>
         </div>
         <div class="table-wrap">
           <el-table

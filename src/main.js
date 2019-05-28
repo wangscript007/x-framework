@@ -20,7 +20,7 @@ Vue.config.productionTip = false
 Vue.component('x-icon', XIcon)
 
 Vue.use(Element, {
-  // size: 'medium'
+  size: 'medium'
 })
 
 new Vue({
