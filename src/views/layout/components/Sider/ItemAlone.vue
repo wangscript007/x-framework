@@ -44,7 +44,7 @@ export default {
     },
     /* 最终显示的路由的path */
     matchedRoutePath () {
-      return this.generatePath(this.route, this.basePath)
+      return this.matchedRoute.meta.external ? this.matchedRoute.path : this.generatePath(this.route, this.basePath)
     }
   },
   methods: {
