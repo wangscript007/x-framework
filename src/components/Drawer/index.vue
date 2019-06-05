@@ -59,6 +59,9 @@ export default {
       document.body.style.cssText = `${value && hasScrollBar() ? `margin-right: ${getScrollbarWidth()}px; ` : ''}overflow-y: ${value ? 'hidden' : 'auto'}`
     }
   },
+  destroyed () {
+    document.body.style.cssText = 'margin-right: 0;overflow-y: auto;'
+  },
   methods: {
     maskClick () {
       this.$emit('maskClick')

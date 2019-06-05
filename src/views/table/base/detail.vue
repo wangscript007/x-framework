@@ -16,60 +16,70 @@
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="姓名">{{ staff.staffName || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="工号">{{ staff.staffNo || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="身份证号">{{ staff.cerNo || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="手机号码">{{ staff.phone || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="性别">{{ staff.sex === '1' ? '男' : '女' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="籍贯">{{ staff.native || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="联系地址">{{ staff.address || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="入职时间">{{ staff.entryTime || '-' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="状态">{{ staff.state === '1' ? '在职' : '离职' }}</el-form-item>
           </el-col>
           <el-col
             :xs="{span: 24}"
             :sm="{span: 12}"
+            :md="{span: 8}"
           >
             <el-form-item label="备注">{{ staff.remark || '-' }}</el-form-item>
           </el-col>
