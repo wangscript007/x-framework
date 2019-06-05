@@ -28,3 +28,41 @@
     clear: both
   }
 }
+
+/* 间距 */
+.space {
+  &-bottom {
+    &-0x {
+      margin-bottom: x-space(0);
+    }
+    &-1x {
+      margin-bottom: x-space(1);
+    }
+    &-2x {
+      margin-bottom: x-space(2);
+    }
+    &-3x {
+      margin-bottom: x-space(3);
+    }
+    &-4x {
+      margin-bottom: x-space(3);
+    }
+  }
+  &-top {
+    &-0x {
+      margin-top: x-space(0);
+    }
+    &-1x {
+      margin-top: x-space(1);
+    }
+    &-2x {
+      margin-top: x-space(2);
+    }
+    &-3x {
+      margin-top: x-space(3);
+    }
+    &-4x {
+      margin-top: x-space(3);
+    }
+  }
+}

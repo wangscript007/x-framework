@@ -5,7 +5,7 @@
         slot="header"
         class="fix"
       >
-        <strong class="el-card__header-title">员工信息</strong>
+        <strong class="el-card__header-title">员工基本信息</strong>
       </div>
       <el-form
         label-width="120px"
@@ -89,7 +89,6 @@
           >
             <el-button
               type="primary"
-              @click="backHandler"
             >返回
             </el-button>
           </el-col>
@@ -101,27 +100,27 @@
 
 <script>
 import Page from '@/components/Page'
-import mixin from '@/views/table/base/mixin'
 
 export default {
-  name: 'StaffDetail',
+  name: 'BaseDetail',
   components: {
     Page
   },
-  mixins: [mixin],
   data () {
     return {
-      staff: {}
-    }
-  },
-  created () {
-    const { params } = this.$route
-    if (params && params.staffId) {
-      this.getStaffInfo(params.staffId, staff => {
-        this.staff = staff
-      })
-    } else {
-      this.backHandler()
+      staff: {
+        staffId: 'eA4DE357-e8bb-df05-fF5f-dcFe8E1A5eF2',
+        staffName: '冯娜',
+        staffNo: '20190001',
+        cerNo: '320000197610292351',
+        sex: '2',
+        native: '广东省 汕头市 潮南区',
+        phone: '15845493777',
+        entryTime: '1978-04-10',
+        address: '',
+        state: '1',
+        remark: ''
+      }
     }
   }
 }

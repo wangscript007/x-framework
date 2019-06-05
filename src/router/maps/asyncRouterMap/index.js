@@ -1,5 +1,6 @@
 import dashboardRouterMap from '@/router/maps/asyncRouterMap/dashboard'
 import tableRouterMap from '@/router/maps/asyncRouterMap/table'
+import detailRouterMap from '@/router/maps/asyncRouterMap/detail'
 import componentsRouterMap from '@/router/maps/asyncRouterMap/components'
 import permissionRouterMap from '@/router/maps/asyncRouterMap/permission'
 import externalRouterMap from '@/router/maps/asyncRouterMap/external'
@@ -44,6 +45,8 @@ const asyncRouterMap = [
   dashboardRouterMap,
   /* 表格 */
   tableRouterMap,
+  /* 详情页 */
+  detailRouterMap,
   /* 组件 */
   componentsRouterMap,
   /* 权限控制 */
