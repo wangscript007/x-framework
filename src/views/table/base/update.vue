@@ -15,7 +15,9 @@
         </el-button>
       </div>
       <el-col
-        :md="{span: 12, offset: 6}"
+        :xl="{span: 18, offset:3}"
+        :lg="{span: 20, offset: 2}"
+        :md="{span: 22, offset: 1}"
         :sm="{span: 24}"
       >
         <el-form
@@ -33,93 +35,117 @@
             v-model.trim="staff.native"
             type="hidden"
           >
-          <el-form-item
-            label="员工姓名"
-            prop="staffName"
-          >
-            <el-input v-model.trim="staff.staffName"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="工号"
-            prop="staffNo"
-          >
-            <el-input v-model.trim="staff.staffNo"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="身份证号"
-            prop="cerNo"
-          >
-            <el-input v-model.trim="staff.cerNo"></el-input>
-          </el-form-item>
-          <el-form-item
-            label="手机号码"
-            prop="phone"
-          >
-            <el-input v-model.trim="staff.phone"></el-input>
-          </el-form-item>
-          <el-form-item label="性别">
-            <el-radio-group v-model="staff.sex">
-              <el-radio label="1">男</el-radio>
-              <el-radio label="2">女</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="籍贯">
-            <el-cascader
-              v-model="regionSelect"
-              :options="regionOptions"
-              :props="regionProps"
-              :clearable="true"
-              style="width: 100%;"
-              separator=" "
-            >
-            </el-cascader>
-          </el-form-item>
-          <el-form-item
-            label="联系地址"
-          >
-            <el-input v-model.trim="staff.address"></el-input>
-          </el-form-item>
-          <el-form-item label="入职时间">
-            <el-date-picker
-              v-model="staff.entryTime"
-              type="date"
-              format="yyyy年M月d日"
-              value-format="yyyy-MM-dd"
-              placeholder="选择日期"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-form-item>
-          <el-form-item label="状态">
-            <el-radio-group v-model="staff.state">
-              <el-radio label="1">在职</el-radio>
-              <el-radio label="2">离职</el-radio>
-            </el-radio-group>
-          </el-form-item>
-          <el-form-item label="备注">
-            <el-input
-              v-model.trim="staff.remark"
-              type="textarea"
-              :rows="5"
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              type="primary"
-              @click="submitHandler()"
-            >提交
-            </el-button>
-            <el-button
-              v-if="isAdd"
-              type="warning"
-              @click="submitHandler(true)"
-            >提交并继续添加
-            </el-button>
-            <el-button
-              v-else
-              @click="backHandler"
-            >返回
-            </el-button>
-          </el-form-item>
+          <el-row :gutter="24">
+            <el-col :md="12">
+              <el-form-item
+                label="员工姓名"
+                prop="staffName"
+              >
+                <el-input v-model.trim="staff.staffName"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item
+                label="工号"
+                prop="staffNo"
+              >
+                <el-input v-model.trim="staff.staffNo"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item
+                label="身份证号"
+                prop="cerNo"
+              >
+                <el-input v-model.trim="staff.cerNo"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item
+                label="手机号码"
+                prop="phone"
+              >
+                <el-input v-model.trim="staff.phone"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item label="性别">
+                <el-radio-group v-model="staff.sex">
+                  <el-radio label="1">男</el-radio>
+                  <el-radio label="2">女</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item label="籍贯">
+                <el-cascader
+                  v-model="regionSelect"
+                  :options="regionOptions"
+                  :props="regionProps"
+                  :clearable="true"
+                  style="width: 100%;"
+                  separator=" "
+                >
+                </el-cascader>
+              </el-form-item>
+            </el-col>
+            <el-col :md="24">
+              <el-form-item
+                label="联系地址"
+              >
+                <el-input v-model.trim="staff.address"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item label="入职时间">
+                <el-date-picker
+                  v-model="staff.entryTime"
+                  type="date"
+                  format="yyyy年M月d日"
+                  value-format="yyyy-MM-dd"
+                  placeholder="选择日期"
+                  style="width: 100%;"
+                ></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :md="12">
+              <el-form-item label="状态">
+                <el-radio-group v-model="staff.state">
+                  <el-radio label="1">在职</el-radio>
+                  <el-radio label="2">离职</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-col>
+            <el-col :md="24">
+              <el-form-item label="备注">
+                <el-input
+                  v-model.trim="staff.remark"
+                  type="textarea"
+                  :rows="5"
+                ></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :md="24">
+              <el-form-item>
+                <el-button
+                  type="primary"
+                  @click="submitHandler()"
+                >提交
+                </el-button>
+                <el-button
+                  v-if="isAdd"
+                  type="warning"
+                  @click="submitHandler(true)"
+                >提交并继续添加
+                </el-button>
+                <el-button
+                  v-else
+                  @click="backHandler"
+                >返回
+                </el-button>
+              </el-form-item>
+            </el-col>
+          </el-row>
         </el-form>
       </el-col>
     </el-card>

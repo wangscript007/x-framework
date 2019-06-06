@@ -5,7 +5,7 @@ const detailRouter = {
   name: 'Detail',
   component: Layout,
   meta: {
-    title: '详情页',
+    title: '详情',
     icon: 'fa fa-file-text-o',
     iconType: 'class',
     alwaysShow: true,

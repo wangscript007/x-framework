@@ -30,7 +30,7 @@
 }
 
 /* 间距 */
-.space {
+.margin {
   &-bottom {
     &-0x {
       margin-bottom: x-space(0);
@@ -45,7 +45,19 @@
       margin-bottom: x-space(3);
     }
     &-4x {
-      margin-bottom: x-space(3);
+      margin-bottom: x-space(4);
+    }
+    &-5 {
+      margin-bottom: x-space(5);
+    }
+    &-6x {
+      margin-bottom: x-space(6);
+    }
+    &-7x {
+      margin-bottom: x-space(7);
+    }
+    &-8x {
+      margin-bottom: x-space(8);
     }
   }
   &-top {
@@ -62,7 +74,19 @@
       margin-top: x-space(3);
     }
     &-4x {
-      margin-top: x-space(3);
+      margin-top: x-space(4);
+    }
+    &-5x {
+      margin-top: x-space(5);
+    }
+    &-6x {
+      margin-top: x-space(6);
+    }
+    &-7x {
+      margin-top: x-space(7);
+    }
+    &-8x {
+      margin-top: x-space(8);
     }
   }
 }

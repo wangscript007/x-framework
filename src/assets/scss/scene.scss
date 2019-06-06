@@ -142,3 +142,28 @@
     }
   }
 }
+
+/* fieldset */
+.x-field-set {
+  display: block;
+  position: relative;
+  margin: 0 0 x-space(4) 0;
+  padding-top: x-space(1);
+  border: solid 1px $--border-color-base;
+
+  .x-field-set-legend {
+    position: absolute;
+    width: auto;
+    top: 0;
+    margin-left: x-space(3);
+    padding: x-space(1);
+    transform: translateY(-50%);
+    background-color: $color-gray-1;
+  }
+
+  .x-field-set-content {
+    padding: x-space(2);
+    width: 100% !important;
+    overflow: hidden;
+  }
+}

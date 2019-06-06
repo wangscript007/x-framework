@@ -1,6 +1,7 @@
 import dashboardRouterMap from '@/router/maps/asyncRouterMap/dashboard'
-import tableRouterMap from '@/router/maps/asyncRouterMap/table'
 import detailRouterMap from '@/router/maps/asyncRouterMap/detail'
+import formRouterMap from '@/router/maps/asyncRouterMap/form'
+import tableRouterMap from '@/router/maps/asyncRouterMap/table'
 import componentsRouterMap from '@/router/maps/asyncRouterMap/components'
 import permissionRouterMap from '@/router/maps/asyncRouterMap/permission'
 import externalRouterMap from '@/router/maps/asyncRouterMap/external'
@@ -43,10 +44,12 @@ const asyncRouterMap = [
   /* 模块路由表引入 */
   /* 主页 */
   dashboardRouterMap,
-  /* 表格 */
-  tableRouterMap,
+  /* 表单页 */
+  formRouterMap,
   /* 详情页 */
   detailRouterMap,
+  /* 表格 */
+  tableRouterMap,
   /* 组件 */
   componentsRouterMap,
   /* 权限控制 */

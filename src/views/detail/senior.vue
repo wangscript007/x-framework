@@ -2,7 +2,7 @@
   <page>
     <el-card
       shadow="never"
-      class="space-bottom-2x"
+      class="margin-bottom-2x"
     >
       <div
         slot="header"
@@ -24,194 +24,202 @@
     </el-card>
     <el-card
       shadow="never"
-      class="space-bottom-2x"
+      class="margin-bottom-2x"
     >
       <div
         slot="header"
         class="fix"
       >
-        <strong class="el-card__header-title">基本信息</strong>
+        <strong class="el-card__header-title">员工信息</strong>
       </div>
-      <el-form
-        label-width="120px"
-        label-suffix="："
-        class="detail-form"
-      >
-        <el-row>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+      <field-set title="基本信息">
+        <el-form
+          label-width="120px"
+          label-suffix="："
+          class="detail-form"
+        >
+          <el-row>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="姓名">{{ staff.staffName || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="工号">{{ staff.staffNo || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="身份证号">{{ staff.cerNo || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="手机号码">{{ staff.phone || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="性别">{{ staff.sex === '1' ? '男' : '女' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="籍贯">{{ staff.native || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="联系地址">{{ staff.address || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="入职时间">{{ staff.entryTime || '-' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="状态">{{ staff.state === '1' ? '在职' : '离职' }}</el-form-item>
+            </el-col>
+            <el-col
+              :md="{span: 8}"
+              :sm="{span: 12}"
+              :xs="{span: 24}"
+            >
+              <el-form-item label="备注">{{ staff.remark || '-' }}</el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+      </field-set>
+      <field-set title="教育信息">
+        <el-table
+          :data="staff.education"
+          border
+          style="width: 100%"
+        >
+          <el-table-column
+            type="index"
+            width="50"
+            align="center"
           >
-            <el-form-item label="姓名">{{ staff.staffName || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="orgName"
+            label="机构或学校"
           >
-            <el-form-item label="工号">{{ staff.staffNo || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="time"
+            label="时间"
+            width="280"
           >
-            <el-form-item label="身份证号">{{ staff.cerNo || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="type"
+            label="教育等级"
+            width="120"
           >
-            <el-form-item label="手机号码">{{ staff.phone || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+        </el-table>
+      </field-set>
+      <field-set title="家庭成员">
+        <el-table
+          :data="staff.family"
+          border
+          style="width: 100%;"
+        >
+          <el-table-column
+            type="index"
+            width="50"
+            align="center"
           >
-            <el-form-item label="性别">{{ staff.sex === '1' ? '男' : '女' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="relationshipChinese"
+            label="关系"
+            width="80"
           >
-            <el-form-item label="籍贯">{{ staff.native || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="姓名"
+            width="100"
           >
-            <el-form-item label="联系地址">{{ staff.address || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="phoneNo"
+            label="联系电话"
+            width="140"
           >
-            <el-form-item label="入职时间">{{ staff.entryTime || '-' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="job"
+            label="职位"
+            width="180"
           >
-            <el-form-item label="状态">{{ staff.state === '1' ? '在职' : '离职' }}</el-form-item>
-          </el-col>
-          <el-col
-            :xs="{span: 24}"
-            :sm="{span: 12}"
-            :md="{span: 8}"
+          </el-table-column>
+          <el-table-column
+            prop="workingUnit"
+            label="工作单位"
           >
-            <el-form-item label="备注">{{ staff.remark || '-' }}</el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
+          </el-table-column>
+        </el-table>
+      </field-set>
     </el-card>
     <el-card
       shadow="never"
-      class="space-bottom-2x"
+      class="margin-bottom-2x"
     >
       <div
         slot="header"
         class="fix"
       >
-        <strong class="el-card__header-title">教育信息</strong>
+        <strong class="el-card__header-title">审批记录</strong>
       </div>
-      <el-table
-        :data="staff.education"
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          type="index"
-          width="50"
-          align="center"
+      <el-timeline>
+        <el-timeline-item
+          v-for="(activity, index) in activities"
+          :key="index"
+          :type="activity.type"
+          :timestamp="activity.timestamp"
         >
-        </el-table-column>
-        <el-table-column
-          prop="orgName"
-          label="机构或学校"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="time"
-          label="时间"
-          width="280"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="type"
-          label="教育等级"
-          width="120"
-        >
-        </el-table-column>
-      </el-table>
-    </el-card>
-    <el-card
-      shadow="never"
-    >
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">家庭信息</strong>
-      </div>
-      <el-table
-        :data="staff.family"
-        border
-        style="width: 100%"
-      >
-        <el-table-column
-          type="index"
-          width="50"
-          align="center"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="relationshipChinese"
-          label="关系"
-          width="80"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="100"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="phoneNo"
-          label="联系电话"
-          width="140"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="job"
-          label="职位"
-          width="180"
-        >
-        </el-table-column>
-        <el-table-column
-          prop="workingUnit"
-          label="工作单位"
-        >
-        </el-table-column>
-      </el-table>
+          {{activity.content}}
+        </el-timeline-item>
+      </el-timeline>
     </el-card>
   </page>
 </template>
 
 <script>
 import Page from '@/components/Page'
+import FieldSet from '@/components/FieldSet'
 
 export default {
   name: 'SeniorDetail',
   components: {
-    Page
+    Page,
+    FieldSet
   },
   data () {
     return {
@@ -238,6 +246,7 @@ export default {
         }
       ],
       current: 2,
+      tabActive: 'base',
       staff: {
         staffId: 'eA4DE357-e8bb-df05-fF5f-dcFe8E1A5eF2',
         staffName: '冯娜',
@@ -282,7 +291,23 @@ export default {
             workingUnit: '广州市赛德律师事务所'
           }
         ]
-      }
+      },
+      activities: [{
+        content: '提交资料（已完成）',
+        timestamp: '2019-05-31 10:32',
+        type: 'primary'
+      }, {
+        content: '人事部审核（审批通过）',
+        timestamp: '2019-06-03 09:44',
+        type: 'primary'
+      }, {
+        content: '总经理审核（审批中）',
+        timestamp: '',
+        type: 'warning'
+      }, {
+        content: '云备案（未开始）',
+        timestamp: ''
+      }]
     }
   }
 }
