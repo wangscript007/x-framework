@@ -179,13 +179,8 @@
               </el-col>
               <el-col :md="24">
                 <el-form-item>
-                  <el-button
-                    type="primary"
-                  >提交
-                  </el-button>
-                  <el-button
-                  >返回
-                  </el-button>
+                  <el-button ype="primary">提交</el-button>
+                  <el-button>返回</el-button>
                 </el-form-item>
               </el-col>
             </el-row>

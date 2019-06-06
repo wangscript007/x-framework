@@ -204,7 +204,7 @@
           :type="activity.type"
           :timestamp="activity.timestamp"
         >
-          {{activity.content}}
+          {{ activity.content }}
         </el-timeline-item>
       </el-timeline>
     </el-card>
