@@ -1,6 +1,7 @@
 <template>
   <div
     class="x-field-set"
+    :class="{'line-mode': lineMode}"
     :style="styles"
   >
     <div class="x-field-set-legend">
@@ -27,6 +28,10 @@ export default {
     spaceTop: {
       type: Number,
       default: -1
+    },
+    lineMode: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

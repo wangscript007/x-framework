@@ -162,8 +162,18 @@
   }
 
   .x-field-set-content {
-    padding: x-space(2);
+    padding: x-space(2) x-space(2.5) x-space(2.5) x-space(2.5);
     width: 100% !important;
     overflow: hidden;
+  }
+
+  &.line-mode {
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+
+    .x-field-set-content {
+      padding: x-space(2) 0 0 0;
+    }
   }
 }
