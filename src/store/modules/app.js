@@ -19,7 +19,9 @@ const app = {
       /* 是否打开抽屉式菜单 */
       siderOpened: false,
       /* 是否固定头部 */
-      headerFixed: defaultSetting.headerFixed
+      headerFixed: defaultSetting.headerFixed,
+      /* breadcrumb位置 */
+      breadcrumbPosition: defaultSetting.breadcrumbPosition
     }
   },
   mutations: {
@@ -34,6 +36,9 @@ const app = {
     },
     [appTypes.SET_SIDER_OPENED] (state, siderOpened = false) {
       state.app.siderOpened = siderOpened
+    },
+    [appTypes.SET_BREADCRUMB_POSITION] (state, breadcrumbPosition) {
+      state.app.breadcrumbPosition = breadcrumbPosition
     }
   },
   getters: {

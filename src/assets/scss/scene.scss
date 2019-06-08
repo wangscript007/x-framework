@@ -1,7 +1,7 @@
 /* Page */
 .x-layout-page {
   .x-layout-page-header {
-    padding: x-space(2) x-space(4) 0;
+    padding: x-space(3) x-space(4) x-space(1) x-space(4);
     background: $color-gray-1;
     border-bottom: 1px solid $color-gray-6;
 
@@ -11,6 +11,7 @@
     }
 
     .page-header-title {
+      margin-top: 0;
       margin-bottom: x-space(2);
       font-weight: 600;
       font-size: 20px;
@@ -175,5 +176,59 @@
     .x-field-set-content {
       padding: x-space(2) 0 0 0;
     }
+  }
+}
+
+/* result */
+.result-page-wrap {
+  width: 72%;
+  margin: x-space(6) auto;
+
+  .result-page-icon,
+  .result-page-index-title,
+  .result-page-description,
+  .result-page-actions {
+    text-align: center;
+    margin-bottom: x-space(3);
+  }
+
+  .result-page-icon {
+    .result-index-icon {
+      font-size: 72px;
+      line-height: 72px;
+    }
+  }
+
+  .result-page-index-title {
+    color: $color-title;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .result-page-description {
+    margin-bottom: x-space(3);
+    color: $color-secondary-text;
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .result-page-extra {
+    padding: x-space(3) x-space(5);
+    text-align: left;
+    background: $color-gray-2;
+    border-radius: 2px;
+
+    .result-page-extra-title {
+      margin-bottom: x-space(2);
+      color: $color-title;
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
+
+  .result-page-actions {
+    margin-top: x-space(4);
+    margin-bottom: 0;
   }
 }

@@ -280,6 +280,7 @@ $menu-item-text-color-active: $color-gray-1;
       height: $sider-header-height;
       font-size: $toggle-button-icon-height;
       line-height: $toggle-button-icon-height;
+      vertical-align: top;
       padding: ($sider-header-height - $toggle-button-icon-height) / 2;
       color: $color-primary-text;
       @include x-transition(0.3s);
@@ -288,6 +289,15 @@ $menu-item-text-color-active: $color-gray-1;
         color: $color-gray-12;
         background: $color-background;
       }
+    }
+
+    .el-breadcrumb {
+      display: inline-block;
+      width: auto;
+      height: $sider-header-height;
+      line-height: $sider-header-height;
+      vertical-align: top;
+      margin-left: x-space(1);
     }
 
     .right-menu {

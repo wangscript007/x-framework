@@ -4,8 +4,11 @@
       v-if="showHeader"
       class="x-layout-page-header"
     >
-      <breadcrumb></breadcrumb>
-      <h1 class="page-header-title">{{ pageHeaderTitle }}</h1>
+      <breadcrumb v-if="app.breadcrumbPosition === 'pageHeader' && showBreadcrumb"></breadcrumb>
+      <h1
+        v-if="showTitle"
+        class="page-header-title"
+      >{{ pageHeaderTitle }}</h1>
       <div
         v-if="showDescribe"
         class="page-header-describe"
@@ -21,6 +24,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 
 export default {
@@ -33,12 +37,21 @@ export default {
       type: Boolean,
       default: true
     },
+    showBreadcrumb: {
+      type: Boolean,
+      default: true
+    },
+    showTitle: {
+      type: Boolean,
+      default: true
+    },
     showDescribe: {
       type: Boolean,
       default: true
     }
   },
   computed: {
+    ...mapGetters(['app']),
     pageHeaderTitle () {
       const { meta } = this.$route
       return meta ? meta.headerTitle ? meta.headerTitle : meta.title ? meta.title : '' : ''

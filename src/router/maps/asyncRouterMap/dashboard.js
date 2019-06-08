@@ -18,7 +18,8 @@ const dashboard = {
         icon: 'dashboard',
         describe: '监控系统各项功能运作情况以及一些相关统计',
         roles: ['admin'],
-        absolute: true
+        absolute: true,
+        showInBreadcrumb: false
       }
     },
     /* editor的首页 */
@@ -31,7 +32,8 @@ const dashboard = {
         icon: 'dashboard',
         describe: '监控系统各项功能运作情况以及一些相关统计',
         roles: ['editor'],
-        absolute: true
+        absolute: true,
+        showInBreadcrumb: false
       }
     },
     /* user的首页 */
@@ -44,7 +46,8 @@ const dashboard = {
         icon: 'dashboard',
         describe: '监控系统各项功能运作情况以及一些相关统计',
         roles: ['user'],
-        absolute: true
+        absolute: true,
+        showInBreadcrumb: false
       }
     }
   ]

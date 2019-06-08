@@ -30,162 +30,178 @@
         slot="header"
         class="fix"
       >
-        <strong class="el-card__header-title">员工信息</strong>
+        <strong class="el-card__header-title">基本信息</strong>
       </div>
-      <field-set title="基本信息">
-        <el-form
-          label-width="120px"
-          label-suffix="："
-          class="detail-form"
+      <el-form
+        label-width="120px"
+        label-suffix="："
+        class="detail-form"
+      >
+        <el-row>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="姓名">{{ staff.staffName || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="工号">{{ staff.staffNo || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="身份证号">{{ staff.cerNo || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="手机号码">{{ staff.phone || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="性别">{{ staff.sex === '1' ? '男' : '女' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="籍贯">{{ staff.native || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="联系地址">{{ staff.address || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="入职时间">{{ staff.entryTime || '-' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="状态">{{ staff.state === '1' ? '在职' : '离职' }}</el-form-item>
+          </el-col>
+          <el-col
+            :md="{span: 8}"
+            :sm="{span: 12}"
+            :xs="{span: 24}"
+          >
+            <el-form-item label="备注">{{ staff.remark || '-' }}</el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-card>
+    <el-card
+      shadow="never"
+      class="margin-bottom-2x"
+    >
+      <div
+        slot="header"
+        class="fix"
+      >
+        <strong class="el-card__header-title">教育信息</strong>
+      </div>
+      <el-table
+        :data="staff.education"
+        border
+        style="width: 100%"
+      >
+        <el-table-column
+          type="index"
+          width="50"
+          align="center"
         >
-          <el-row>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="姓名">{{ staff.staffName || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="工号">{{ staff.staffNo || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="身份证号">{{ staff.cerNo || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="手机号码">{{ staff.phone || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="性别">{{ staff.sex === '1' ? '男' : '女' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="籍贯">{{ staff.native || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="联系地址">{{ staff.address || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="入职时间">{{ staff.entryTime || '-' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="状态">{{ staff.state === '1' ? '在职' : '离职' }}</el-form-item>
-            </el-col>
-            <el-col
-              :md="{span: 8}"
-              :sm="{span: 12}"
-              :xs="{span: 24}"
-            >
-              <el-form-item label="备注">{{ staff.remark || '-' }}</el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-      </field-set>
-      <field-set title="教育信息">
-        <el-table
-          :data="staff.education"
-          border
-          style="width: 100%"
+        </el-table-column>
+        <el-table-column
+          prop="orgName"
+          label="机构或学校"
         >
-          <el-table-column
-            type="index"
-            width="50"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="orgName"
-            label="机构或学校"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="time"
-            label="时间"
-            width="280"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="type"
-            label="教育等级"
-            width="120"
-          >
-          </el-table-column>
-        </el-table>
-      </field-set>
-      <field-set title="家庭成员">
-        <el-table
-          :data="staff.family"
-          border
-          style="width: 100%;"
+        </el-table-column>
+        <el-table-column
+          prop="time"
+          label="时间"
+          width="280"
         >
-          <el-table-column
-            type="index"
-            width="50"
-            align="center"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="relationshipChinese"
-            label="关系"
-            width="80"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="姓名"
-            width="100"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="phoneNo"
-            label="联系电话"
-            width="140"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="job"
-            label="职位"
-            width="180"
-          >
-          </el-table-column>
-          <el-table-column
-            prop="workingUnit"
-            label="工作单位"
-          >
-          </el-table-column>
-        </el-table>
-      </field-set>
+        </el-table-column>
+        <el-table-column
+          prop="type"
+          label="教育等级"
+          width="120"
+        >
+        </el-table-column>
+      </el-table>
+    </el-card>
+    <el-card
+      shadow="never"
+      class="margin-bottom-2x"
+    >
+      <div
+        slot="header"
+        class="fix"
+      >
+        <strong class="el-card__header-title">家庭成员</strong>
+      </div>
+      <el-table
+        :data="staff.family"
+        border
+        style="width: 100%;"
+      >
+        <el-table-column
+          type="index"
+          width="50"
+          align="center"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="relationshipChinese"
+          label="关系"
+          width="80"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+          width="100"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="phoneNo"
+          label="联系电话"
+          width="140"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="job"
+          label="职位"
+          width="180"
+        >
+        </el-table-column>
+        <el-table-column
+          prop="workingUnit"
+          label="工作单位"
+        >
+        </el-table-column>
+      </el-table>
     </el-card>
     <el-card
       shadow="never"

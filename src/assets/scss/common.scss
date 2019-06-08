@@ -1,3 +1,32 @@
+/* 字体色 */
+.color-primary {
+  color: $color-theme-6;
+}
+
+.color-success {
+  color: $color-success;
+}
+
+.color-warning {
+  color: $color-warning;
+}
+
+.color-danger {
+  color: $color-danger;
+}
+
+.color-title {
+  color: $color-title;
+}
+
+.color-primary-text {
+  color: $color-primary-text;
+}
+
+.color-secondary-text {
+  color: $color-secondary-text;
+}
+
 /* 对齐 */
 .text-left {
   text-align: left !important;

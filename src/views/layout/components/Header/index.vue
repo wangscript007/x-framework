@@ -4,6 +4,7 @@
     :class="{'header-fixed':fixed}"
   >
     <toggle></toggle>
+    <breadcrumb v-if="app.breadcrumbPosition === 'appHeader'"></breadcrumb>
     <div
       v-if="!isXsScreen"
       class="right-menu"
@@ -57,12 +58,14 @@ import { mapGetters } from 'vuex'
 import screen from '@/common/constants/screen'
 import Toggle from '@/views/layout/components/Header/Toggle'
 import FullScreen from '@/components/FullScreen'
+import Breadcrumb from '@/components/Breadcrumb'
 
 export default {
   name: 'LayoutHeader',
   components: {
     Toggle,
-    FullScreen
+    FullScreen,
+    Breadcrumb
   },
   props: {
     fixed: {

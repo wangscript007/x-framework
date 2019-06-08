@@ -3,5 +3,6 @@ module.exports = {
   logo: './static/img/logo.png',
   loginPic: './static/img/login.jpg',
   siderFixed: false,
-  headerFixed: false
+  headerFixed: false,
+  breadcrumbPosition: 'appHeader' /* 'appHeader' : 'pageHeader' */
 }
