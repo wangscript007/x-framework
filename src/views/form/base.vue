@@ -10,7 +10,7 @@
           class="float-right el-card__header-btn"
           type="text"
         >
-          返回
+          返回列表
         </el-button>
       </div>
       <el-row>
@@ -179,7 +179,7 @@
               </el-col>
               <el-col :md="24">
                 <el-form-item>
-                  <el-button ype="primary">提交</el-button>
+                  <el-button type="primary">提交</el-button>
                   <el-button>返回</el-button>
                 </el-form-item>
               </el-col>
