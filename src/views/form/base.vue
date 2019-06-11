@@ -46,10 +46,12 @@
               </el-col>
               <el-col :md="12">
                 <el-form-item label="性别">
-                  <el-radio-group v-model="form.sex">
-                    <el-radio label="1">男</el-radio>
-                    <el-radio label="2">女</el-radio>
-                  </el-radio-group>
+                  <form-radio
+                    v-model="form.sex"
+                    :items="sex"
+                    value-key-in-items="id"
+                    label-key-in-items="name"
+                  ></form-radio>
                 </el-form-item>
               </el-col>
               <el-col :md="12">
@@ -60,27 +62,21 @@
                     format="yyyy年M月d日"
                     value-format="yyyy-MM-dd"
                     placeholder="选择日期"
-                    style="width: 100%;"
+                    class="full-width"
                   ></el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col :md="12">
                 <el-form-item label="民族">
-                  <el-select
+                  <form-select
                     v-model="form.nation"
-                    filterable
-                    clearable
-                    placeholder="请选择"
-                    style="width: 100%;"
-                  >
-                    <el-option
-                      v-for="item in nation"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
+                    :items="nation"
+                    value-key-in-items="id"
+                    label-key-in-items="name"
+                    :filterable="true"
+                    :clearable="true"
+                    class="full-width"
+                  ></form-select>
                 </el-form-item>
               </el-col>
               <el-col :md="12">
@@ -90,47 +86,36 @@
                     :options="regionOptions"
                     :props="regionProps"
                     :clearable="true"
-                    style="width: 100%;"
                     separator=" "
+                    class="full-width"
                   >
                   </el-cascader>
                 </el-form-item>
               </el-col>
               <el-col :md="12">
                 <el-form-item label="政治面貌">
-                  <el-select
+                  <form-select
                     v-model="form.politicalStatus"
-                    filterable
-                    clearable
-                    placeholder="请选择"
-                    style="width: 100%;"
-                  >
-                    <el-option
-                      v-for="item in politicalStatus"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
+                    :items="politicalStatus"
+                    value-key-in-items="id"
+                    label-key-in-items="name"
+                    :filterable="true"
+                    :clearable="true"
+                    class="full-width"
+                  ></form-select>
                 </el-form-item>
               </el-col>
               <el-col :md="12">
                 <el-form-item label="户口性质">
-                  <el-select
+                  <form-select
                     v-model="form.householdType"
-                    clearable
-                    placeholder="请选择"
-                    style="width: 100%;"
-                  >
-                    <el-option
-                      v-for="item in householdType"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
-                    >
-                    </el-option>
-                  </el-select>
+                    :items="householdType"
+                    value-key-in-items="id"
+                    label-key-in-items="name"
+                    :filterable="true"
+                    :clearable="true"
+                    class="full-width"
+                  ></form-select>
                 </el-form-item>
               </el-col>
               <el-col :md="24">
@@ -144,32 +129,10 @@
               </el-col>
               <el-col :md="24">
                 <el-form-item label="兴趣爱好">
-                  <el-checkbox-group v-model="form.hobby">
-                    <el-checkbox
-                      label="美食"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="运动"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="旅游"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="政治"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="军事"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="汽车"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="科技"
-                    ></el-checkbox>
-                    <el-checkbox
-                      label="摄影"
-                    ></el-checkbox>
-                  </el-checkbox-group>
+                  <form-checkbox
+                    v-model="form.hobby"
+                    :items="hobby"
+                  ></form-checkbox>
                 </el-form-item>
               </el-col>
               <el-col :md="12">
@@ -193,14 +156,20 @@
 
 <script>
 import { regionData } from 'element-china-area-data'
-import { EMI_HOUSEHOLD_TYPE, EMI_NATION, EMI_POLITICAL_STATUS } from '@/common/emi/standard'
+import { EMI_SEX, EMI_HOUSEHOLD_TYPE, EMI_NATION, EMI_POLITICAL_STATUS } from '@/common/emi/standard'
 import validateUtil from '@/common/utils/validate'
 import Page from '@/components/Page'
+import FormSelect from '@/components/Form/Select'
+import FormCheckbox from '@/components/Form/Checkbox'
+import FormRadio from '@/components/Form/Radio'
 
 export default {
   name: 'BaseForm',
   components: {
-    Page
+    Page,
+    FormSelect,
+    FormCheckbox,
+    FormRadio
   },
   data () {
     return {
@@ -224,6 +193,7 @@ export default {
           { validator: validateUtil.validator('idCardNo'), trigger: 'blur' }
         ]
       },
+      sex: EMI_SEX,
       regionOptions: regionData,
       regionProps: {
         value: 'label'
@@ -231,7 +201,8 @@ export default {
       regionSelect: [],
       householdType: EMI_HOUSEHOLD_TYPE,
       nation: EMI_NATION,
-      politicalStatus: EMI_POLITICAL_STATUS
+      politicalStatus: EMI_POLITICAL_STATUS,
+      hobby: ['美食', '运动', '旅游', '政治', '军事', '汽车', '科技', '摄影']
     }
   },
   watch: {

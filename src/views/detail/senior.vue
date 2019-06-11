@@ -229,13 +229,11 @@
 
 <script>
 import Page from '@/components/Page'
-import FieldSet from '@/components/FieldSet'
 
 export default {
   name: 'SeniorDetail',
   components: {
-    Page,
-    FieldSet
+    Page
   },
   data () {
     return {

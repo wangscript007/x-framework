@@ -22,10 +22,10 @@ export const EMI_CERTIFICATE_TYPE = [
 
 /* 性别 */
 export const EMI_SEX = [
-  { id: '0', name: '未知' },
+  // { id: '0', name: '未知' },
   { id: '1', name: '男' },
-  { id: '2', name: '女' },
-  { id: '9', name: '未说明' }
+  { id: '2', name: '女' }
+  // { id: '9', name: '未说明' }
 ]
 
 /* 民族 */
