@@ -1,12 +1,11 @@
 <template>
   <page>
     <el-card shadow="never">
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">员工信息</strong>
-      </div>
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">员工信息</strong>
+        </div>
+      </template>
       <el-form
         label-width="120px"
         label-suffix="："

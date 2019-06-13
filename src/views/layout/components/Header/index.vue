@@ -21,32 +21,31 @@
           >
           <span>{{ user && user.realName ? user.realName : '' }}</span>
         </div>
-        <el-dropdown-menu
-          slot="dropdown"
-          class="avatar-dropdown"
-        >
-          <el-dropdown-item>
-            <a
-              target="_blank"
-              href="javascript:void(0)"
-            >
-              <x-icon icon="user" /><span>个人中心</span>
-            </a>
-          </el-dropdown-item>
-          <el-dropdown-item>
-            <router-link to="/">
-              <x-icon icon="setting" /><span>系统设置</span>
-            </router-link>
-          </el-dropdown-item>
-          <el-dropdown-item divided>
-            <a
-              href="javascript:void(0)"
-              @click="logout"
-            >
-              <x-icon icon="logout" /><span>退出登录</span>
-            </a>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+        <template v-slot:dropdown>
+          <el-dropdown-menu class="avatar-dropdown">
+            <el-dropdown-item>
+              <a
+                target="_blank"
+                href="javascript:void(0)"
+              >
+                <x-icon icon="user" /><span>个人中心</span>
+              </a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <router-link to="/">
+                <x-icon icon="setting" /><span>系统设置</span>
+              </router-link>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+              <a
+                href="javascript:void(0)"
+                @click="logout"
+              >
+                <x-icon icon="logout" /><span>退出登录</span>
+              </a>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
       <full-screen class="right-menu-item" />
     </div>

@@ -5,7 +5,7 @@ const resultRouter = {
   name: 'Result',
   component: Layout,
   meta: {
-    title: '结果页',
+    title: '结果',
     icon: 'check-circle',
     alwaysShow: true,
     redirectInBreadcrumb: false

@@ -1,16 +1,15 @@
 <template>
-  <div class="result-page-wrap">
+  <div class="result-page">
     <div class="result-page-icon">
       <template v-if="$slots.icon"><slot name="icon" /></template>
       <template v-else>
         <x-icon
           :icon="resultIconClass"
           :class="resultIconColor"
-          class="result-index-icon"
         />
       </template>
     </div>
-    <div class="result-page-index-title">
+    <div class="result-page-title">
       <template v-if="$slots.title"><slot name="title"></slot></template>
       <template v-else>{{ title }}</template>
     </div>

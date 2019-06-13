@@ -4,12 +4,11 @@
       shadow="never"
       class="margin-bottom-2x"
     >
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">资料审核进度</strong>
-      </div>
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">资料审核进度</strong>
+        </div>
+      </template>
       <el-steps
         :active="current"
         align-center
@@ -26,12 +25,11 @@
       shadow="never"
       class="margin-bottom-2x"
     >
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">基本信息</strong>
-      </div>
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">基本信息</strong>
+        </div>
+      </template>
       <el-form
         label-width="120px"
         label-suffix="："
@@ -115,12 +113,11 @@
       shadow="never"
       class="margin-bottom-2x"
     >
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">教育信息</strong>
-      </div>
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">教育信息</strong>
+        </div>
+      </template>
       <el-table
         :data="staff.education"
         border
@@ -155,12 +152,11 @@
       shadow="never"
       class="margin-bottom-2x"
     >
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">家庭成员</strong>
-      </div>
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">家庭成员</strong>
+        </div>
+      </template>
       <el-table
         :data="staff.family"
         border
@@ -203,16 +199,12 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-card
-      shadow="never"
-      class="margin-bottom-2x"
-    >
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">审批记录</strong>
-      </div>
+    <el-card shadow="never">
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">审批记录</strong>
+        </div>
+      </template>
       <el-timeline>
         <el-timeline-item
           v-for="(activity, index) in activities"

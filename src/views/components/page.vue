@@ -6,18 +6,17 @@
           shadow="never"
           class="layout-card-mg-b"
         >
-          <div
-            slot="header"
-            class="fix"
-          >
-            <strong class="el-card__header-title">卡片名称</strong>
-            <el-button
-              class="el-card__header-btn float-right"
-              type="text"
-            >
-              操作按钮
-            </el-button>
-          </div>
+          <template v-slot:header>
+            <div class="fix">
+              <strong class="el-card__header-title">卡片名称</strong>
+              <el-button
+                class="el-card__header-btn float-right"
+                type="text"
+              >
+                操作按钮
+              </el-button>
+            </div>
+          </template>
           <div class="text item">
             这里是内容
           </div>
@@ -33,18 +32,17 @@
           shadow="never"
           class="layout-card-mg-b"
         >
-          <div
-            slot="header"
-            class="fix"
-          >
-            <strong class="el-card__header-title">卡片名称</strong>
-            <el-button
-              class="el-card__header-btn float-right"
-              type="text"
-            >
-              操作按钮
-            </el-button>
-          </div>
+          <template v-slot:header>
+            <div class="fix">
+              <strong class="el-card__header-title">卡片名称</strong>
+              <el-button
+                class="el-card__header-btn float-right"
+                type="text"
+              >
+                操作按钮
+              </el-button>
+            </div>
+          </template>
           <div class="text item">
             这里是内容
           </div>
@@ -58,18 +56,17 @@
           shadow="never"
           class="layout-card-mg-b"
         >
-          <div
-            slot="header"
-            class="fix"
-          >
-            <strong class="el-card__header-title">卡片名称</strong>
-            <el-button
-              class="el-card__header-btn float-right"
-              type="text"
-            >
-              操作按钮
-            </el-button>
-          </div>
+          <template v-slot:header>
+            <div class="fix">
+              <strong class="el-card__header-title">卡片名称</strong>
+              <el-button
+                class="el-card__header-btn float-right"
+                type="text"
+              >
+                操作按钮
+              </el-button>
+            </div>
+          </template>
           <div class="text item">
             这里是内容
           </div>
@@ -82,18 +79,17 @@
           shadow="never"
           class="layout-card-mg-b"
         >
-          <div
-            slot="header"
-            class="fix"
-          >
-            <strong class="el-card__header-title">卡片名称</strong>
-            <el-button
-              class="el-card__header-btn float-right"
-              type="text"
-            >
-              操作按钮
-            </el-button>
-          </div>
+          <template v-slot:header>
+            <div class="fix">
+              <strong class="el-card__header-title">卡片名称</strong>
+              <el-button
+                class="el-card__header-btn float-right"
+                type="text"
+              >
+                操作按钮
+              </el-button>
+            </div>
+          </template>
           <div class="text item">
             这里是内容
           </div>

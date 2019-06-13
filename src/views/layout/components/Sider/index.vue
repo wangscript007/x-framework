@@ -11,6 +11,7 @@
           :collapse="collapsed"
           :collapse-transition="true"
           :router="false"
+          :unique-opened="true"
         >
           <template v-for="item in routers">
             <template v-if="item.meta && !item.meta.hidden">

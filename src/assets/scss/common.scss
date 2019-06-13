@@ -1,54 +1,123 @@
 /* 字体色 */
-.color-primary {
-  color: $color-theme-6;
+.color {
+  &-primary {
+    color: $color-theme-6;
+  }
+
+  &-success {
+    color: $color-success;
+  }
+
+  &-warning {
+    color: $color-warning;
+  }
+
+  &-danger {
+    color: $color-danger;
+  }
+
+  &-title {
+    color: $color-title;
+  }
+
+  &-primary-text {
+    color: $color-primary-text;
+  }
+
+  &-secondary-text {
+    color: $color-secondary-text;
+  }
 }
 
-.color-success {
-  color: $color-success;
-}
-
-.color-warning {
-  color: $color-warning;
-}
-
-.color-danger {
-  color: $color-danger;
-}
-
-.color-title {
-  color: $color-title;
-}
-
-.color-primary-text {
-  color: $color-primary-text;
-}
-
-.color-secondary-text {
-  color: $color-secondary-text;
+/* 字体 */
+.font {
+  &-size {
+    &-12 {
+      font-size: 12px;
+    }
+    &-14 {
+      font-size: 14px;
+    }
+    &-16 {
+      font-size: 16px;
+    }
+    &-18 {
+      font-size: 18px;
+    }
+    &-20 {
+      font-size: 20px;
+    }
+  }
+  &-weight {
+    &-lighter {
+      font-weight: lighter;
+    }
+    &-normal {
+      font-weight: normal;
+    }
+    &-bold {
+      font-weight: bold;
+    }
+    &-bolder {
+      font-weight: bolder;
+    }
+    &-100 {
+      font-weight: 100;
+    }
+    &-200 {
+      font-weight: 200;
+    }
+    &-300 {
+      font-weight: 300;
+    }
+    &-400 {
+      font-weight: 400;
+    }
+    &-500 {
+      font-weight: 500;
+    }
+    &-600 {
+      font-weight: 600;
+    }
+    &-700 {
+      font-weight: 700;
+    }
+    &-800 {
+      font-weight: 800;
+    }
+    &-900 {
+      font-weight: 900;
+    }
+  }
 }
 
 /* 对齐 */
-.text-left {
-  text-align: left !important;
-}
+.text {
+  &-left {
+    text-align: left !important;
+  }
 
-.text-center {
-  text-align: center !important;
-}
+  &-center {
+    text-align: center !important;
+  }
 
-.text-right {
-  text-align: right !important;
+  &-right {
+    text-align: right !important;
+  }
 }
 
 /* 浮动 */
-.float-left {
-  float: left;
+.float {
+  &-left {
+    float: left;
+  }
+
+  &-right {
+    float: right;
+  }
 }
 
-.float-right {
-  float: right;
-}
-
+/* 清除浮动 */
 .fix {
   zoom: 1;
 

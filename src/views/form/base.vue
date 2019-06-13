@@ -1,18 +1,17 @@
 <template>
   <page>
     <el-card shadow="never">
-      <div
-        slot="header"
-        class="fix"
-      >
-        <strong class="el-card__header-title">个人信息</strong>
-        <el-button
-          class="float-right el-card__header-btn"
-          type="text"
-        >
-          返回列表
-        </el-button>
-      </div>
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">个人信息</strong>
+          <el-button
+            class="float-right el-card__header-btn"
+            type="text"
+          >
+            返回列表
+          </el-button>
+        </div>
+      </template>
       <el-row>
         <el-col
           :xl="{span: 18, offset:3}"

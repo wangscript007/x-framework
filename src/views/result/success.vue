@@ -1,39 +1,37 @@
 <template>
   <page :show-header="false">
     <el-card shadow="never">
-      <div class="result-page-wrap">
-        <div class="result-page-icon">
-          <x-icon
-            icon="check-circle-fill"
-            class="result-index-icon color-success"
-          ></x-icon>
-        </div>
-        <div class="result-page-index-title">提交成功</div>
-        <div class="result-page-description">提交结果页用于反馈一系列操作任务的处理结果， 如果仅是简单操作，使用 Message 全局提示反馈即可。 本文字区域可以展示简单的补充说明，如果有类似展示 “单据”的需求，下面这个灰色区域可以呈现比较复杂的内容。</div>
-        <div class="result-page-extra">
-          <div class="result-page-extra-title">审批进度：</div>
-          <div class="result-page-extra-content">
-            <el-steps
-              :active="current"
-              size="mini"
-              align-center
+      <result type="success">
+        <template v-slot:title>提交成功</template>
+        <template v-slot:description>
+          提交结果页用于反馈一系列操作任务的处理结果， 如果仅是简单操作，使用 Message 全局提示反馈即可。 本文字区域可以展示简单的补充说明，如果有类似展示 “单据”的需求，下面这个灰色区域可以呈现比较复杂的内容。
+        </template>
+        <template v-slot:extra>
+          <div class="margin-bottom-3x color-title font-size-16  font-weight-500">审批进度：</div>
+          <el-steps
+            :active="current"
+            size="mini"
+            align-center
+          >
+            <el-step
+              v-for="item in process"
+              :key="item.id"
             >
-              <el-step
-                v-for="item in process"
-                :key="item.id"
-              >
-                <div slot="title">
+              <template v-slot:title>
+                <div>
                   <small>{{ item.title }}</small>
                 </div>
-                <div slot="description">
+              </template>
+              <template v-slot:description>
+                <div>
                   <span>{{ item.operator }}</span><br>
                   <span>{{ item.opTime }}</span>
                 </div>
-              </el-step>
-            </el-steps>
-          </div>
-        </div>
-        <div class="result-page-actions">
+              </template>
+            </el-step>
+          </el-steps>
+        </template>
+        <template v-slot:actions>
           <el-button
             type="primary"
           >
@@ -42,19 +40,21 @@
           <el-button>
             查看明细
           </el-button>
-        </div>
-      </div>
+        </template>
+      </result>
     </el-card>
   </page>
 </template>
 
 <script>
 import Page from '@/components/Page'
+import Result from '@/components/Result'
 
 export default {
   name: 'ResultSuccess',
   components: {
-    Page
+    Page,
+    Result
   },
   data () {
     return {

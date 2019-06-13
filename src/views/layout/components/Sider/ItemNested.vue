@@ -3,13 +3,13 @@
     :index="route.path"
     popper-class="sider-popup"
   >
-    <template slot="title">
+    <template v-slot:title>
       <x-icon
         v-if="showIcon && route.meta && route.meta.icon"
         :icon="route.meta.icon"
         :type="route.meta.iconType"
       />
-      <span slot="title">{{ route.meta && route.meta.title ? route.meta.title : '' }}</span>
+      <span>{{ route.meta && route.meta.title ? route.meta.title : '' }}</span>
     </template>
     <template v-for="item in route.children">
       <template v-if="item.meta && !item.meta.hidden">

@@ -83,7 +83,7 @@
             :closable="false"
             class="tips"
           >
-            <template slot="title">
+            <template v-slot:title>
               <span>您已选择</span>
               <span class="primary">{{ selectedList.length }}</span>
               <span>项</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -118,7 +118,7 @@
               width="50"
               fixed
             >
-              <template slot-scope="scope">
+              <template v-slot:default="scope">
                 <span>{{ (query.page - 1) * query.limit + 1 + scope.$index }}</span>
               </template>
             </el-table-column>
@@ -146,7 +146,7 @@
               width="50"
               align="center"
             >
-              <template slot-scope="scope">
+              <template v-slot:default="scope">
                 <span>{{ scope.row.sex === '1' ? '男' : '女' }}</span>
               </template>
             </el-table-column>
@@ -171,7 +171,7 @@
               label="状态"
               width="80"
             >
-              <template slot-scope="scope">
+              <template v-slot:default="scope">
                 <badge :status="scope.row.state === '1'? 'success' : 'danger'">
                   {{ scope.row.state === '1'? '在职' : '离职' }}
                 </badge>
@@ -182,33 +182,33 @@
               width="100"
               fixed="right"
             >
-              <template slot-scope="{row}">&nbsp;
+              <template v-slot:default="{row}">&nbsp;
                 <el-popover
                   :ref="row.staffId"
                   placement="top"
                   width="220"
                 >
-                  <p>确定删除员工“<strong class="text-danger">{{ row.staffName }}</strong>”吗？</p>
-                  <div class="text-right">
-                    <el-button
-                      size="mini"
-                      type="text"
-                      @click.stop="closePopover(row.staffId)"
-                    >取消
-                    </el-button>
-                    <el-button
-                      type="primary"
-                      size="mini"
-                      @click.stop="deleteStaff(row)"
-                    >确定
-                    </el-button>
-                  </div>
+                  <template v-slot:default>
+                    <p>确定删除员工“<strong class="text-danger">{{ row.staffName }}</strong>”吗？</p>
+                    <div class="text-right">
+                      <el-button
+                        size="mini"
+                        type="text"
+                        @click.stop="closePopover(row.staffId)"
+                      >取消
+                      </el-button>
+                      <el-button
+                        type="primary"
+                        size="mini"
+                        @click.stop="deleteStaff(row)"
+                      >确定
+                      </el-button>
+                    </div>
+                  </template>
                   <el-link
                     slot="reference"
                     type="primary"
-                  >
-                    删除
-                  </el-link>
+                  >删除</el-link>
                 </el-popover>
               </template>
             </el-table-column>

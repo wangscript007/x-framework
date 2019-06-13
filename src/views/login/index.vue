@@ -59,13 +59,14 @@
                   auto-complete="on"
                   @keyup.enter.native="handleLogin"
                 >
-                  <i
-                    slot="suffix"
-                    :title="showPassword ? '隐藏密码': '显示密码'"
-                    :class="showPassword ? 'fa fa-eye': 'fa fa-eye-slash'"
-                    class="show-pwd-icon"
-                    @click="showPassword = !showPassword"
-                  ></i>
+                  <template v-slot:suffix>
+                    <i
+                      :title="showPassword ? '隐藏密码': '显示密码'"
+                      :class="showPassword ? 'fa fa-eye': 'fa fa-eye-slash'"
+                      class="show-pwd-icon"
+                      @click="showPassword = !showPassword"
+                    ></i>
+                  </template>
                 </el-input>
               </el-form-item>
               <el-row class="form-op">
