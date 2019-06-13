@@ -8,7 +8,7 @@ const formRouter = {
     title: '表单',
     icon: 'container',
     alwaysShow: true,
-    redirectInBreadcrumb: false
+    redirectInBreadcrumb: true
   },
   children: [
     /* 基础表单页 */

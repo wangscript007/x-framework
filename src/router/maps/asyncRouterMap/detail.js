@@ -9,7 +9,7 @@ const detailRouter = {
     icon: 'fa fa-file-text-o',
     iconType: 'class',
     alwaysShow: true,
-    redirectInBreadcrumb: false
+    redirectInBreadcrumb: true
   },
   children: [
     /* 基础详情页 */

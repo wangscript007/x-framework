@@ -31,8 +31,8 @@ export default {
       default: () => []
     },
     radioValue: {
-      type: Array,
-      default: () => []
+      type: String,
+      default: ''
     },
     valueKeyInItems: {
       type: String,

@@ -8,7 +8,7 @@ const resultRouter = {
     title: '结果',
     icon: 'check-circle',
     alwaysShow: true,
-    redirectInBreadcrumb: false
+    redirectInBreadcrumb: true
   },
   children: [
     /* 成功页 */

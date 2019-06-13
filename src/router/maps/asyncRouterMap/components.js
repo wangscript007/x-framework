@@ -8,7 +8,7 @@ const componentsRouter = {
     title: '组件',
     icon: 'copyright',
     alwaysShow: true,
-    redirectInBreadcrumb: false
+    redirectInBreadcrumb: true
   },
   children: [
     /* 编辑器 */
