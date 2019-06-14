@@ -1,7 +1,7 @@
 <template>
   <div class="x-layout-main">
     <transition
-      name="page-change"
+      name="animate-layout-page"
       mode="out-in"
     >
       <router-view :key="key" />

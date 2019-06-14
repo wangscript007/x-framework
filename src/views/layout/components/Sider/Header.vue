@@ -8,7 +8,7 @@
         :src="app.logo"
         :alt="app.name"
       >
-      <transition name="sider-title">
+      <transition name="animate-sider-header-title">
         <h1
           v-if="!collapsed"
           key="0"

@@ -1,11 +1,7 @@
 import axios from 'axios'
 import store from '@/store'
-import {
-  Message
-} from 'element-ui'
-import {
-  getToken
-} from '@/common/cache/user'
+import { Message } from 'element-ui'
+import { getToken } from '@/common/cache/user'
 
 const SERVER_TOKEN_KEY = 'X-FRAMEWORK-TOKEN'
 

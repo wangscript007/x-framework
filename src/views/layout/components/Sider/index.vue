@@ -3,34 +3,39 @@
     class="x-layout-sider"
     :class="{collapsed: collapsed, fixed: fixed}"
   >
-    <sider-header :collapsed="collapsed"></sider-header>
-    <div class="sider-nav">
-      <scroll>
-        <el-menu
-          :default-active="activePath"
-          :collapse="collapsed"
-          :collapse-transition="true"
-          :router="false"
-          :unique-opened="true"
-        >
-          <template v-for="item in routers">
-            <template v-if="item.meta && !item.meta.hidden">
-              <item-alone
-                v-if="isAloneRoute(item) && !item.meta.alwaysShow"
-                :key="item.path"
-                :route="item"
-                :base-path="item.path"
-              ></item-alone>
-              <item-nested
-                v-else
-                :key="item.path"
-                :route="item"
-                :base-path="item.path"
-              ></item-nested>
+    <div
+      class="sider"
+      :class="{fixed: fixed}"
+    >
+      <sider-header :collapsed="collapsed"></sider-header>
+      <div class="sider-nav">
+        <scroll>
+          <el-menu
+            :default-active="activePath"
+            :collapse="collapsed"
+            :collapse-transition="true"
+            :router="false"
+            :unique-opened="true"
+          >
+            <template v-for="item in routers">
+              <template v-if="item.meta && !item.meta.hidden">
+                <item-alone
+                  v-if="isAloneRoute(item) && !item.meta.alwaysShow"
+                  :key="item.path"
+                  :route="item"
+                  :base-path="item.path"
+                ></item-alone>
+                <item-nested
+                  v-else
+                  :key="item.path"
+                  :route="item"
+                  :base-path="item.path"
+                ></item-nested>
+              </template>
             </template>
-          </template>
-        </el-menu>
-      </scroll>
+          </el-menu>
+        </scroll>
+      </div>
     </div>
   </div>
 </template>

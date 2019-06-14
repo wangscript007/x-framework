@@ -1,25 +1,16 @@
-/* ------ layout size options ------ */
-
-$sider-width: 256px;
-$sider-width-collapsed: 64px;
-$sider-header-height: 64px;
-$logo-size: 32px;
-$logo-margin: $logo-size/2;
-$layout-header-height: 64px;
-
-/* ------ layout color options ------ */
+/* ------ layout options ------ */
 
 $layout-bg-color: $color-gray-4;
+
+$layout-sider-width: 256px;
+$layout-sider-width-collapsed: 64px;
+$layout-sider-bg-color: $color-theme-12;
+$layout-sider-fixed-z-index: 99;
+
+$layout-header-height: 64px;
 $layout-header-bg-color: $color-gray-1;
-$sider-bg-color: $color-theme-12;
-$sider-header-bg-color: $color-theme-11;
-$sider-header-text-color: $color-gray-1;
-$menu-bg-color: $sider-bg-color;
-$sub-menu-bg-color: $color-theme-13;
-$sub-menu-item-bg-color: transparent;
-$menu-item-bg-color-active: $color-theme-6;
-$menu-item-text-color: $color-secondary-text-dark;
-$menu-item-text-color-active: $color-gray-1;
+$layout-header-fixed-z-index: 98;
+
 
 /* ------ layout ------ */
 
@@ -33,115 +24,31 @@ $menu-item-text-color-active: $color-gray-1;
   overflow-x: hidden;
 }
 
-@mixin el-menu-item-active-common {
-  color: $menu-item-text-color-active;
-  & > i,
-  & .el-tooltip > i {
-    color: $menu-item-text-color-active;
-  }
-}
-
-@mixin el-menu-common {
-  background-color: $menu-bg-color;
-  .el-menu-item,
-  .el-submenu__title {
-    height: 48px;
-    line-height: 45px;
-
-    .svg-icon,
-    .class-icon,
-    .image-icon {
-      width: 24px;
-      height: 19px;
-      margin-right: 5px;
-    }
-
-    .class-icon {
-      text-align: center;
-      font-size: 16px;
-      line-height: 19px;
-      @include x-transition(0.3s);
-    }
-
-    .image-icon {
-      background-size: 16px 16px;
-    }
-
-    [class^=el-icon-] {
-      height: 19px;
-      @include x-transition(0.3s);
-    }
-  }
-  .el-menu-item {
-    & > a {
-      @include x-transition(0.3s);
-      display: block;
-      color: $menu-item-text-color;
-      text-decoration: none;
-    }
-
-    &:hover,
-    &:focus,
-    &.is-active {
-      & > a {
-        @include el-menu-item-active-common;
-      }
-    }
-
-    &:hover,
-    &:focus {
-      background-color: $menu-bg-color !important;
-    }
-
-    &.is-active {
-      background-color: $menu-item-bg-color-active !important;
-    }
-  }
-  .el-submenu {
-    .el-submenu__title {
-      color: $menu-item-text-color;
-
-      &:hover,
-      &:focus {
-        background-color: $menu-bg-color !important;
-        @include el-menu-item-active-common;
-      }
-    }
-
-    &.is-opened,
-    &.is-active {
-      & > .el-submenu__title {
-        @include el-menu-item-active-common;
-      }
-    }
-  }
-}
-
 .x-layout-sider {
   position: relative;
   min-height: 100vh;
-  width: $sider-width;
-  max-width: $sider-width;
-  min-width: $sider-width;
+  width: $layout-sider-width;
+  max-width: $layout-sider-width;
+  min-width: $layout-sider-width;
   flex: 0 0 auto;
-  z-index: 10;
-  background: $sider-bg-color;
+  z-index: 1;
+  background: $layout-sider-bg-color;
   @include x-transition(0.3s);
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
 
   & + .x-layout-content {
     .x-layout-header.header-fixed {
-      width: calc(100% - #{$sider-width});
+      width: calc(100% - #{$layout-sider-width});
     }
   }
 
   &.collapsed {
-    width: $sider-width-collapsed;
-    max-width: $sider-width-collapsed;
-    min-width: $sider-width-collapsed;
+    width: $layout-sider-width-collapsed;
+    max-width: $layout-sider-width-collapsed;
+    min-width: $layout-sider-width-collapsed;
     & + .x-layout-content {
       .x-layout-header.header-fixed {
-        width: calc(100% - #{$sider-width-collapsed});
+        width: calc(100% - #{$layout-sider-width-collapsed});
       }
     }
   }
@@ -151,97 +58,15 @@ $menu-item-text-color-active: $color-gray-1;
     top: 0;
     left: 0;
     height: 100%;
-
-    .sider-nav .scroll-wrapper {
-      height: 100%;
-    }
+    z-index: $layout-sider-fixed-z-index;
 
     & + .x-layout-content {
       width: 100%;
-      padding-left: $sider-width;
+      padding-left: $layout-sider-width;
     }
 
     &.collapsed + .x-layout-content {
-      padding-left: $sider-width-collapsed;
-    }
-  }
-
-  .sider-header {
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    height: $sider-header-height;
-    line-height: $sider-header-height;
-    background: $sider-header-bg-color;
-    overflow: hidden;
-
-    & > a {
-      display: flex;
-      height: 100%;
-      flex-direction: row;
-      align-items: center;
-      text-decoration: none;
-
-      img {
-        flex: 0 0 $logo-size;
-        width: $logo-size;
-        height: $logo-size;
-        margin: 0 $logo-margin;
-      }
-
-      h1 {
-        flex: auto;
-        margin: 0;
-        color: $sider-header-text-color;
-        font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-        font-size: 20px;
-        font-weight: 600;
-        text-transform: uppercase;
-      }
-    }
-  }
-
-  .sider-nav {
-    height: 100%;
-    padding-top: $layout-header-height + 8px;
-    padding-bottom: 8px;
-
-    .el-menu {
-      border: none;
-      width: 100% !important;
-      @include el-menu-common;
-
-      .el-submenu {
-        .el-menu {
-          background-color: $sub-menu-bg-color !important;
-          box-shadow: inset 0 0 10px rgba(0, 0, 0, 1);
-
-          .el-menu-item,
-          .el-submenu__title {
-            background-color: $sub-menu-item-bg-color !important;
-          }
-
-          .el-menu-item {
-            &.is-active {
-              background-color: $menu-item-bg-color-active !important;
-            }
-          }
-
-          .el-submenu__title {
-            &:hover,
-            &:focus {
-              color: $menu-item-text-color-active;
-              background-color: $sub-menu-item-bg-color !important;
-            }
-          }
-        }
-      }
-
-      .el-submenu__icon-arrow {
-        @include x-transition(0.3s);
-      }
+      padding-left: $layout-sider-width-collapsed;
     }
   }
 }
@@ -258,7 +83,7 @@ $menu-item-text-color-active: $color-gray-1;
     position: relative;
     width: 100%;
     height: $layout-header-height;
-    z-index: 1;
+    z-index: 10;
     flex: 0 0 auto;
     background: $layout-header-bg-color;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
@@ -266,7 +91,7 @@ $menu-item-text-color-active: $color-gray-1;
 
     &.header-fixed {
       position: fixed;
-      z-index: 2;
+      z-index: $layout-header-fixed-z-index;
       top: 0;
       right: 0;
       & + .x-layout-main {
@@ -277,11 +102,11 @@ $menu-item-text-color-active: $color-gray-1;
     .sider-toggle-button {
       $toggle-button-icon-height: 20px;
       display: inline-block;
-      height: $sider-header-height;
+      height: $layout-header-height;
       font-size: $toggle-button-icon-height;
       line-height: $toggle-button-icon-height;
       vertical-align: top;
-      padding: ($sider-header-height - $toggle-button-icon-height) / 2;
+      padding: ($layout-header-height - $toggle-button-icon-height) / 2;
       color: $color-primary-text;
       @include x-transition(0.3s);
 
@@ -294,8 +119,8 @@ $menu-item-text-color-active: $color-gray-1;
     .el-breadcrumb {
       display: inline-block;
       width: auto;
-      height: $sider-header-height;
-      line-height: $sider-header-height;
+      height: $layout-header-height;
+      line-height: $layout-header-height;
       vertical-align: top;
       margin-left: x-space(1);
     }
@@ -395,82 +220,6 @@ $menu-item-text-color-active: $color-gray-1;
   }
 }
 
-.sider-popup {
-  .el-menu {
-    @include el-menu-common;
-  }
-}
-
-
-/* ------ x-drawer ------ */
-
-.x-drawer {
-  position: fixed;
-  width: 0;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-
-  &.x-drawer-open {
-    width: 100%;
-  }
-
-  * {
-    transition: transform 0.3s cubic-bezier(0.9, 0, 0.3, 0.7), box-shadow 0.3s cubic-bezier(0.9, 0, 0.3, 0.7);
-  }
-
-  .x-drawer-wrapper {
-    position: fixed;
-    height: 100%;
-
-    .x-drawer-content {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      z-index: 1;
-      background-color: #fff;
-    }
-  }
-
-  &.x-drawer-left .x-drawer-wrapper {
-    left: 0;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-  }
-
-  &.x-drawer-right .x-drawer-wrapper {
-    right: 0;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
-  }
-
-  .x-drawer-mask {
-    position: fixed;
-    width: 100%;
-    height: 0;
-    background-color: $color-primary-text;
-    opacity: 0;
-    filter: alpha(opacity=50);
-    transition: opacity 0.3s linear, height 0s ease 0.3s;
-    cursor: pointer;
-  }
-
-  &.x-drawer-open .x-drawer-mask {
-    height: 100%;
-    opacity: 0.3;
-    transition: none;
-    animation: x-drawer-fade-in 0.3s cubic-bezier(0.7, 0.3, 0.1, 1);
-  }
-}
-
-@keyframes x-drawer-fade-in {
-  0% {
-    opacity: 0;
-  }
-  to {
-    opacity: 0.3;
-  }
-}
-
 
 /* ------ 公共部分 ------ */
 
@@ -523,36 +272,3 @@ $menu-item-text-color-active: $color-gray-1;
   transform: translateX(-100%);
 }
 
-
-/* sider收缩展开时header标题的动画 */
-
-.sider-title-leave-active {
-  transition: opacity 0.05s;
-}
-
-.sider-title-enter-active {
-  transition: opacity 2.5s ease-in-out;
-}
-
-.sider-title-enter,
-.sider-title-leave-to {
-  opacity: 0;
-}
-
-
-/* 工作区路由变化时的动画 */
-
-.page-change-leave-active,
-.page-change-enter-active {
-  transition: all 0.5s;
-}
-
-.page-change-enter {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.page-change-leave-to {
-  opacity: 0;
-  transform: translateX(30px);
-}
