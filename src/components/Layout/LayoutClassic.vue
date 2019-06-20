@@ -1,9 +1,9 @@
 <template>
-  <router-view />
+  <div>经典布局</div>
 </template>
 
 <script>
 export default {
-  name: 'PageWrapper'
+  name: 'LayoutClassic'
 }
 </script>

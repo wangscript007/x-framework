@@ -3,7 +3,7 @@
     class="app-breadcrumb"
     separator-class="el-icon-arrow-right"
   >
-    <transition-group name="breadcrumb">
+    <transition-group name="animate-breadcrumb">
       <el-breadcrumb-item
         v-for="(item,index) in breadcrumb"
         :key="item.path"

@@ -1,5 +1,5 @@
 <template>
-  <div class="sider-header">
+  <div class="x-sider-header">
     <a
       href="/"
       :title="app.name"
@@ -35,5 +35,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

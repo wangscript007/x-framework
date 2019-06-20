@@ -1,8 +1,8 @@
 <template>
   <page>
     <el-card shadow="never">
-      <div class="complex-table">
-        <div class="filter-wrap">
+      <div class="x-table-page">
+        <div class="x-table-page-filter">
           <span class="filter-item">
             <el-input
               v-model.trim="query.key"
@@ -76,7 +76,7 @@
             </el-button>
           </span>
         </div>
-        <div class="tips-wrap">
+        <div class="x-table-page-info">
           <el-alert
             type="primary"
             show-icon
@@ -94,7 +94,7 @@
             </template>
           </el-alert>
         </div>
-        <div class="table-wrap">
+        <div class="x-table-page-table">
           <el-table
             ref="staffTable"
             v-loading="tableLoading"
@@ -214,7 +214,7 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="pagination-wrap">
+        <div class="x-table-page-pagination">
           <pagination
             v-show="total>0"
             :total="total"

@@ -1,6 +1,6 @@
 <template>
   <a
-    class="sider-toggle-button"
+    class="menu-item-toggle-button"
     href="javascript:void(0);"
     @click.stop="toggle"
   >
@@ -51,5 +51,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

@@ -1,4 +1,4 @@
-import Layout from '@/views/layout'
+import Layout from '@/components/Layout'
 
 const systemRouterMap = [
   /* 根路由 */
@@ -56,7 +56,7 @@ const systemRouterMap = [
     },
     children: [{
       path: '/redirect/:path*',
-      component: () => import('@/views/redirect')
+      component: () => import('@/components/Redirect')
     }]
   }
 ]

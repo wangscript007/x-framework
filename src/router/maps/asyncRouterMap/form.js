@@ -1,4 +1,4 @@
-import Layout from '@/views/layout'
+import Layout from '@/components/Layout'
 
 const formRouter = {
   path: '/form',

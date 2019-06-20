@@ -3,32 +3,36 @@
     class="screen"
     :class="app.screenSize"
   >
-    <div class="x-layout">
-      <transition name="sider-toggle">
-        <layout-sider
-          v-if="!smallScreen"
-          :routers="permission.routers"
+    <layout-default v-if="app.layout === 'default'">
+      <template v-slot:sider>
+        <content-sider
           :collapsed="app.siderCollapsed"
           :fixed="app.siderFixed"
-        ></layout-sider>
-      </transition>
-      <div class="x-layout-content">
-        <layout-header :fixed="app.headerFixed"></layout-header>
-        <layout-main></layout-main>
-        <layout-footer></layout-footer>
-      </div>
-    </div>
+        ></content-sider>
+      </template>
+      <template v-slot:header>
+        <content-header></content-header>
+      </template>
+      <template v-slot:main>
+        <content-main></content-main>
+      </template>
+      <template v-slot:footer>
+        <content-footer></content-footer>
+      </template>
+    </layout-default>
+    <layout-classic v-else></layout-classic>
     <layout-drawer
-      v-if="smallScreen"
+      v-if="xsScreen"
       ref="siderDrawer"
       :opened="app.siderOpened"
       @maskClick="closeSiderDrawer"
     >
-      <layout-sider
-        :routers="permission.routers"
-        :collapsed="false"
-        :fixed="true"
-      ></layout-sider>
+      <div class="x-layout-sider fixed">
+        <content-sider
+          :collapsed="false"
+          :fixed="true"
+        ></content-sider>
+      </div>
     </layout-drawer>
     <el-tooltip
       placement="top"
@@ -43,20 +47,24 @@
 import { mapGetters, mapMutations } from 'vuex'
 import { getScreenSize } from '@/common/utils'
 import screen from '@/common/constants/screen'
-import LayoutHeader from '@/views/layout/components/Header'
-import LayoutSider from '@/views/layout/components/Sider'
-import LayoutMain from '@/views/layout/components/Main'
-import LayoutFooter from '@/views/layout/components/Footer'
+import LayoutDefault from '@/components/Layout/LayoutDefault'
+import LayoutClassic from '@/components/Layout/LayoutClassic'
+import ContentSider from '@/components/Layout/components/Sider'
+import ContentHeader from '@/components/Layout/components/Header'
+import ContentMain from '@/components/Layout/components/Main'
+import ContentFooter from '@/components/Layout/components/Footer'
 import LayoutDrawer from '@/components/Drawer'
 import BackToTop from '@/components/BackToTop'
 
 export default {
   name: 'Layout',
   components: {
-    LayoutSider,
-    LayoutHeader,
-    LayoutMain,
-    LayoutFooter,
+    LayoutDefault,
+    LayoutClassic,
+    ContentSider,
+    ContentHeader,
+    ContentMain,
+    ContentFooter,
     LayoutDrawer,
     BackToTop
   },
@@ -67,23 +75,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['app', 'permission']),
-    smallScreen () {
+    ...mapGetters(['app']),
+    xsScreen () {
       return this.app.screenSize === screen.xs.name
     }
   },
   watch: {
     $route () {
-      if (this.smallScreen) {
+      if (this.xsScreen) {
         this.closeSiderDrawer()
       }
     },
     'app.screenSize' (size) {
       this.$nextTick(() => {
         this.closeSiderDrawer()
-        this.setSiderCollapsed(
-          size === screen.md.name || size === screen.sm.name || size === screen.xs.name
-        )
+        this.setSiderCollapsed(size === screen.md.name || size === screen.sm.name || size === screen.xs.name)
       })
     }
   },
@@ -117,6 +123,3 @@ export default {
   }
 }
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

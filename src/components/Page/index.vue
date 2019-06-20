@@ -1,23 +1,23 @@
 <template>
-  <div class="x-layout-page">
+  <div class="x-page">
     <div
       v-if="showHeader"
-      class="x-layout-page-header"
+      class="x-page-header"
     >
       <breadcrumb v-if="app.breadcrumbPosition === 'pageHeader' && showBreadcrumb"></breadcrumb>
       <h1
         v-if="showTitle"
-        class="page-header-title"
+        class="x-page-header-title"
       >{{ pageHeaderTitle }}</h1>
       <div
         v-if="showDescribe"
-        class="page-header-describe"
+        class="x-page-header-describe"
       >
         {{ $route.meta.describe || '' }}
       </div>
       <slot name="page-header"></slot>
     </div>
-    <div class="x-layout-page-content">
+    <div class="x-page-content">
       <slot></slot>
     </div>
   </div>

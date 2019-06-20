@@ -1,28 +1,26 @@
 <template>
-  <div
-    class="x-layout-header"
-    :class="{'header-fixed':fixed}"
-  >
-    <toggle></toggle>
-    <breadcrumb v-if="app.breadcrumbPosition === 'appHeader'"></breadcrumb>
-    <div
-      v-if="!isXsScreen"
-      class="right-menu"
-    >
+  <div class="x-header fix">
+    <div class="x-header-menu-left">
+      <toggle class="menu-item"></toggle>
+    </div>
+    <div class="x-header-menu-breadcrumb">
+      <breadcrumb v-if="app.breadcrumbPosition === 'appHeader'"></breadcrumb>
+    </div>
+    <div class="x-header-menu-right">
       <el-dropdown
-        class="user-wrapper right-menu-item"
+        class="menu-item menu-item-user"
         trigger="click"
       >
-        <div class="avatar-wrapper">
+        <div class="menu-item-user-dropdown-btn">
           <img
             v-if="user && user.avatar"
             :src="user.avatar"
             class="user-avatar"
           >
-          <span>{{ user && user.realName ? user.realName : '' }}</span>
+          <span v-if="!xsScreen">{{ user && user.realName ? user.realName : '' }}</span>
         </div>
         <template v-slot:dropdown>
-          <el-dropdown-menu class="avatar-dropdown">
+          <el-dropdown-menu class="x-header-avatar-dropdown">
             <el-dropdown-item>
               <a
                 target="_blank"
@@ -47,7 +45,10 @@
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <full-screen class="right-menu-item" />
+      <full-screen
+        v-if="!xsScreen"
+        class="menu-item"
+      />
     </div>
   </div>
 </template>
@@ -55,26 +56,20 @@
 <script>
 import { mapGetters } from 'vuex'
 import screen from '@/common/constants/screen'
-import Toggle from '@/views/layout/components/Header/Toggle'
+import Toggle from '@/components/Layout/components/Header/Toggle'
 import FullScreen from '@/components/FullScreen'
 import Breadcrumb from '@/components/Breadcrumb'
 
 export default {
-  name: 'LayoutHeader',
+  name: 'XHeader',
   components: {
     Toggle,
     FullScreen,
     Breadcrumb
   },
-  props: {
-    fixed: {
-      type: Boolean,
-      default: false
-    }
-  },
   computed: {
     ...mapGetters(['app', 'user']),
-    isXsScreen () {
+    xsScreen () {
       return this.app.screenSize === screen.xs.name
     }
   },
@@ -87,5 +82,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

@@ -1,7 +1,7 @@
 <template>
   <el-submenu
     :index="route.path"
-    popper-class="sider-popup"
+    popper-class="x-sider-popup"
   >
     <template v-slot:title>
       <x-icon
@@ -34,7 +34,7 @@
 
 <script>
 import path from 'path'
-import siderMixin from '@/views/layout/mixin/Sider'
+import siderMixin from '@/components/Layout/mixin/Sider'
 
 export default {
   name: 'ItemNested',
@@ -62,5 +62,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

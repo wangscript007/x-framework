@@ -1,6 +1,6 @@
 <template>
-  <div class="result-page">
-    <div class="result-page-icon">
+  <div class="x-result-page">
+    <div class="x-result-page-icon">
       <template v-if="$slots.icon"><slot name="icon" /></template>
       <template v-else>
         <x-icon
@@ -9,18 +9,18 @@
         />
       </template>
     </div>
-    <div class="result-page-title">
+    <div class="x-result-page-title">
       <template v-if="$slots.title"><slot name="title"></slot></template>
       <template v-else>{{ title }}</template>
     </div>
-    <div class="result-page-description">
+    <div class="x-result-page-description">
       <template v-if="$slots.description"><slot name="description"></slot></template>
       <template v-else>{{ description }}</template>
     </div>
-    <div class="result-page-extra">
+    <div class="x-result-page-extra">
       <slot name="extra"></slot>
     </div>
-    <div class="result-page-actions">
+    <div class="x-result-page-actions">
       <slot name="actions"></slot>
     </div>
   </div>

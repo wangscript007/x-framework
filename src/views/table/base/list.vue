@@ -1,8 +1,8 @@
 <template>
   <page>
     <el-card shadow="never">
-      <div class="complex-table">
-        <div class="filter-wrap">
+      <div class="x-table-page">
+        <div class="x-table-page-filter">
           <span class="filter-item">
             <el-input
               v-model.trim="query.key"
@@ -82,7 +82,7 @@
             <el-checkbox v-model="showColumns.remark">显示备注</el-checkbox>
           </span>
         </div>
-        <div class="table-wrap">
+        <div class="x-table-page-table">
           <el-table
             :key="tableId"
             v-loading="tableLoading"
@@ -220,7 +220,7 @@
             </el-table-column>
           </el-table>
         </div>
-        <div class="pagination-wrap">
+        <div class="x-table-page-pagination">
           <pagination
             v-show="total>0"
             :total="total"

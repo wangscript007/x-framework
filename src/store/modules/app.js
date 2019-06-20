@@ -4,6 +4,8 @@ import { appTypes } from '@/store/mutation-types'
 const app = {
   state: {
     app: {
+      /* 布局 */
+      layout: defaultSetting.layout,
       /* 系统名称 */
       name: defaultSetting.name,
       /* logo */
@@ -25,6 +27,9 @@ const app = {
     }
   },
   mutations: {
+    [appTypes.SET_LAYOUT] (state, layout) {
+      state.app.layout = layout
+    },
     [appTypes.SET_SCREEN_SIZE] (state, screenSize = '') {
       state.app.screenSize = screenSize
     },

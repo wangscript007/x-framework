@@ -1,9 +1,7 @@
 /* 改变主题色变量 */
-
 $--color-primary: $color-theme-6;
 
 /* 改变 icon 字体路径变量，必需 */
-
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 @import "~element-ui/packages/theme-chalk/src/index";
 
@@ -21,10 +19,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-form.detail-form {
   .el-form-item {
     margin-bottom: x-space(0);
+
     .el-form-item__label {
       color: $color-detail-label;
     }
   }
+
   .detail-btn-wrap {
     margin-top: x-space(2);
   }
@@ -39,6 +39,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   .el-checkbox__input {
     line-height: 1;
   }
+
   .el-checkbox__label {
     padding-left: x-space(1);
   }
@@ -53,9 +54,11 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 .el-radio {
   line-height: inherit;
+
   .el-radio__input {
     line-height: 1;
   }
+
   .el-radio__label {
     padding-left: x-space(1);
   }
@@ -65,10 +68,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 .el-card {
   .el-card__header {
     padding: x-space(2);
+
     .el-card__header-title {
       display: inline-block;
       line-height: 22px;
     }
+
     .el-card__header-btn {
       padding: 3px 0;
     }
@@ -80,10 +85,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
   &.is-light {
     background-color: $color-theme-1;
     color: $color-primary-text;
+
     .el-alert__icon {
       color: $color-theme-6;
     }
   }
+
   &.is-dark {
     background-color: $color-theme-6;
     color: $color-gray-1;

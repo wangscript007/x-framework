@@ -1,274 +1,111 @@
 /* ------ layout options ------ */
+$layout-default-bg-color: $color-gray-4;
 
-$layout-bg-color: $color-gray-4;
+$layout-default-sider-width: 256px;
+$layout-default-sider-width-collapsed: 64px;
+$layout-default-sider-bg-color: $color-theme-12;
+$layout-default-sider-fixed-z-index: 99;
 
-$layout-sider-width: 256px;
-$layout-sider-width-collapsed: 64px;
-$layout-sider-bg-color: $color-theme-12;
-$layout-sider-fixed-z-index: 99;
-
-$layout-header-height: 64px;
-$layout-header-bg-color: $color-gray-1;
-$layout-header-fixed-z-index: 98;
-
-
-/* ------ layout ------ */
+$layout-default-header-height: 64px;
+$layout-default-header-bg-color: $color-gray-1;
+$layout-default-header-fixed-z-index: 98;
 
 .x-layout {
   position: relative;
   display: flex;
   flex-direction: row;
-  background: $layout-bg-color;
+  background: $layout-default-bg-color;
   min-height: 0;
   z-index: 1;
   overflow-x: hidden;
-}
 
-.x-layout-sider {
-  position: relative;
-  min-height: 100vh;
-  width: $layout-sider-width;
-  max-width: $layout-sider-width;
-  min-width: $layout-sider-width;
-  flex: 0 0 auto;
-  z-index: 1;
-  background: $layout-sider-bg-color;
-  @include x-transition(0.3s);
-  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-
-  & + .x-layout-content {
-    .x-layout-header.header-fixed {
-      width: calc(100% - #{$layout-sider-width});
-    }
-  }
-
-  &.collapsed {
-    width: $layout-sider-width-collapsed;
-    max-width: $layout-sider-width-collapsed;
-    min-width: $layout-sider-width-collapsed;
-    & + .x-layout-content {
-      .x-layout-header.header-fixed {
-        width: calc(100% - #{$layout-sider-width-collapsed});
-      }
-    }
-  }
-
-  &.fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    z-index: $layout-sider-fixed-z-index;
-
-    & + .x-layout-content {
-      width: 100%;
-      padding-left: $layout-sider-width;
-    }
-
-    &.collapsed + .x-layout-content {
-      padding-left: $layout-sider-width-collapsed;
-    }
-  }
-}
-
-.x-layout-content {
-  display: flex;
-  flex-direction: column;
-  flex: auto;
-  min-height: 100vh;
-  overflow: hidden;
-  @include x-transition(0.3s);
-
-  .x-layout-header {
+  &-sider {
     position: relative;
-    width: 100%;
-    height: $layout-header-height;
+    width: $layout-default-sider-width;
+    max-width: $layout-default-sider-width;
+    min-width: $layout-default-sider-width;
+    min-height: 100vh;
     z-index: 10;
     flex: 0 0 auto;
-    background: $layout-header-bg-color;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+    background: $layout-default-sider-bg-color;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
     @include x-transition(0.3s);
 
-    &.header-fixed {
-      position: fixed;
-      z-index: $layout-header-fixed-z-index;
-      top: 0;
-      right: 0;
-      & + .x-layout-main {
-        padding-top: $layout-header-height;
+    & + &-content {
+      .x-layout-header.header-fixed {
+        width: calc(100% - #{$layout-default-sider-width});
       }
     }
 
-    .sider-toggle-button {
-      $toggle-button-icon-height: 20px;
-      display: inline-block;
-      height: $layout-header-height;
-      font-size: $toggle-button-icon-height;
-      line-height: $toggle-button-icon-height;
-      vertical-align: top;
-      padding: ($layout-header-height - $toggle-button-icon-height) / 2;
-      color: $color-primary-text;
+    &.collapsed {
+      width: $layout-default-sider-width-collapsed;
+      max-width: $layout-default-sider-width-collapsed;
+      min-width: $layout-default-sider-width-collapsed;
+      & + .x-layout-content {
+        .x-layout-header.header-fixed {
+          width: calc(100% - #{$layout-default-sider-width-collapsed});
+        }
+      }
+    }
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: $layout-default-sider-fixed-z-index;
+
+      & + .x-layout-content {
+        width: 100%;
+        padding-left: $layout-default-sider-width;
+      }
+
+      &.collapsed + .x-layout-content {
+        padding-left: $layout-default-sider-width-collapsed;
+      }
+    }
+  }
+
+  &-content {
+    display: flex;
+    position: relative;
+    min-height: 100vh ;
+    z-index: 9;
+    flex-direction: column;
+    flex: auto;
+    overflow: hidden;
+    @include x-transition(0.3s);
+
+    .x-layout-header {
+      position: relative;
+      width: 100%;
+      height: $layout-default-header-height;
+      z-index: 10;
+      flex: 0 0 auto;
+      background: $layout-default-header-bg-color;
+      box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
       @include x-transition(0.3s);
 
-      &:hover {
-        color: $color-gray-12;
-        background: $color-background;
-      }
-    }
-
-    .el-breadcrumb {
-      display: inline-block;
-      width: auto;
-      height: $layout-header-height;
-      line-height: $layout-header-height;
-      vertical-align: top;
-      margin-left: x-space(1);
-    }
-
-    .right-menu {
-      display: flex;
-      flex-direction: row;
-      justify-content: flex-start;
-      width: auto;
-      height: 100%;
-      float: right;
-      padding-right: x-space(1);
-
-      .right-menu-item {
-        @include x-transition(0.3s);
-        display: inline-flex;
-        flex-direction: row;
-        align-items: center;
-        padding: 0 x-space();
-
-        &:hover {
-          color: $color-gray-12;
-          background: $color-background;
-        }
-      }
-
-      .user-wrapper {
-        display: inline-flex;
-        height: 100%;
-        cursor: pointer;
-
-        .avatar-wrapper {
-          height: 100%;
-          display: inline-flex;
-          flex-direction: row;
-          align-items: center;
-
-          img,
-          span {
-            display: inline-block;
-            vertical-align: top;
-          }
-
-          img {
-            width: 24px;
-            height: 24px;
-            margin-right: x-space();
-            border-radius: 50%;
-            overflow: hidden;
-          }
-
-          span {
-            line-height: 24px;
-          }
+      &.header-fixed {
+        position: fixed;
+        z-index: $layout-default-header-fixed-z-index;
+        top: 0;
+        right: 0;
+        & + .x-layout-main {
+          padding-top: $layout-default-header-height;
         }
       }
     }
-  }
 
-  .x-layout-main {
-    position: relative;
-    flex: auto;
-  }
+    .x-layout-main {
+      position: relative;
+      flex: auto;
+    }
 
-  .x-layout-footer {
-    flex: 0 0 auto;
-
-    .footer-content {
-      margin: x-space(3) 0;
-      padding: 0 x-space(2);
-      text-align: center;
-
-      .footer-links {
-        margin-bottom: x-space();
-
-        a {
-          display: inline-block;
-          margin-right: x-space(5);
-          color: $color-secondary-text;
-          transition: all 0.3s;
-          text-decoration: none;
-
-          &:hover {
-            color: $color-primary-text;
-          }
-
-          &:last-child {
-            margin-right: 0;
-          }
-        }
-      }
-
-      .footer-copy {
-        color: $color-secondary-text;
-      }
+    .x-layout-footer {
+      flex: 0 0 auto;
     }
   }
 }
 
-
-/* ------ 公共部分 ------ */
-
-.el-dropdown-menu.avatar-dropdown {
-  min-width: 160px;
-  margin-top: x-space() !important;
-
-  .el-dropdown-menu__item {
-    @include x-transition(0.3s);
-
-    a {
-      display: block;
-      color: $color-primary-text;
-      text-decoration: none;
-
-      .x-icon,
-      span {
-        display: inline-block;
-        vertical-align: middle;
-      }
-
-      .x-icon {
-        font-size: 16px;
-      }
-
-      span {
-        margin-left: x-space();
-      }
-    }
-
-    &:hover {
-      color: $color-primary-text !important;
-    }
-  }
-}
-
-
-/* ------ animation ------ */
-
-
-/* sider在xs屏幕和其他大小屏幕切换时的动画 */
-
-.sider-toggle-enter-active,
-.sider-toggle-leave-active {
-  @include x-transition(0.3s);
-}
-
-.sider-toggle-enter,
-.sider-toggle-leave-to {
-  transform: translateX(-100%);
-}
 

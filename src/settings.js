@@ -1,8 +1,9 @@
 module.exports = {
+  layout: 'default', /* 'default' : 'classic' */
   name: 'X-FRAMEWORK',
   logo: './static/img/logo.png',
   loginPic: './static/img/login.jpg',
-  siderFixed: true,
-  headerFixed: true,
+  siderFixed: false,
+  headerFixed: false,
   breadcrumbPosition: 'appHeader' /* 'appHeader' : 'pageHeader' */
 }

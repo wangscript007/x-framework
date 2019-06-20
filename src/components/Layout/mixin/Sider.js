@@ -1,4 +1,4 @@
-import ItemAlone from '@/views/layout/components/Sider/ItemAlone'
+import ItemAlone from '@/components/Layout/components/Sider/ItemAlone'
 
 export default {
   methods: {

@@ -16,7 +16,7 @@
 
 <script>
 import path from 'path'
-import ItemLink from '@/views/layout/components/Sider/ItemLink'
+import ItemLink from '@/components/Layout/components/Sider/ItemLink'
 
 export default {
   name: 'ItemAlone',
@@ -79,5 +79,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>
