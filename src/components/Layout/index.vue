@@ -3,43 +3,90 @@
     class="screen"
     :class="app.screenSize"
   >
-    <layout-default v-if="app.layout === 'default'">
-      <template v-slot:sider>
-        <content-sider
-          :collapsed="app.siderCollapsed"
-          :fixed="app.siderFixed"
-        ></content-sider>
-      </template>
-      <template v-slot:header>
-        <content-header></content-header>
-      </template>
-      <template v-slot:main>
-        <content-main></content-main>
-      </template>
-      <template v-slot:footer>
-        <content-footer></content-footer>
-      </template>
-    </layout-default>
-    <layout-classic v-else></layout-classic>
-    <layout-drawer
+    <transition
+      name="animate-layout"
+      mode="out-in"
+    >
+      <layout-default v-if="app.layout === 'default'">
+        <template v-slot:sider>
+          <x-sider
+            :collapsed="app.siderCollapsed"
+            :fixed="app.siderFixed"
+          ></x-sider>
+        </template>
+        <template v-slot:header>
+          <x-header></x-header>
+        </template>
+        <template v-slot:main>
+          <x-main></x-main>
+        </template>
+        <template v-slot:footer>
+          <x-footer></x-footer>
+        </template>
+      </layout-default>
+      <layout-classic v-if="app.layout === 'classic'">
+        <template v-slot:sider>
+          <x-sider
+            :collapsed="app.siderCollapsed"
+            :fixed="app.siderFixed"
+            :show-header="false"
+          ></x-sider>
+        </template>
+        <template v-slot:header>
+          <x-header></x-header>
+        </template>
+        <template v-slot:main>
+          <x-main></x-main>
+        </template>
+        <template v-slot:footer>
+          <x-footer></x-footer>
+        </template>
+      </layout-classic>
+    </transition>
+    <drawer
       v-if="xsScreen"
-      ref="siderDrawer"
       :opened="app.siderOpened"
       @maskClick="closeSiderDrawer"
     >
-      <div class="x-layout-sider fixed">
-        <content-sider
-          :collapsed="false"
-          :fixed="true"
-        ></content-sider>
-      </div>
-    </layout-drawer>
+      <template v-slot:default>
+        <div class="x-layout-sider fixed">
+          <x-sider
+            :collapsed="false"
+            :fixed="true"
+          ></x-sider>
+        </div>
+      </template>
+    </drawer>
     <el-tooltip
       placement="top"
       content="回到顶部"
     >
       <back-to-top />
     </el-tooltip>
+    <drawer
+      type="right"
+      handler-top="20%"
+      class-name="x-settings"
+      :opened="settingDrawer.opened"
+      @maskClick="toggleSettingDrawer"
+    >
+      <template v-slot:handler>
+        <a
+          class="x-settings-toggle-btn"
+          href="javascript:void(0)"
+          title="系统设置"
+          @click.stop="toggleSettingDrawer"
+        >
+          <x-icon
+            :icon="`iconfont icon-${settingDrawer.opened ? 'close' : 'setting'}`"
+            type="class"
+          />
+        </a>
+      </template>
+      <template v-slot:default>
+        <layout-setting></layout-setting>
+      </template>
+    </drawer>
   </div>
 </template>
 
@@ -47,13 +94,8 @@
 import { mapGetters, mapMutations } from 'vuex'
 import { getScreenSize } from '@/common/utils'
 import screen from '@/common/constants/screen'
-import LayoutDefault from '@/components/Layout/LayoutDefault'
-import LayoutClassic from '@/components/Layout/LayoutClassic'
-import ContentSider from '@/components/Layout/components/Sider'
-import ContentHeader from '@/components/Layout/components/Header'
-import ContentMain from '@/components/Layout/components/Main'
-import ContentFooter from '@/components/Layout/components/Footer'
-import LayoutDrawer from '@/components/Drawer'
+import { LayoutDefault, LayoutClassic, XSider, XHeader, XMain, XFooter, LayoutSetting } from '@/components/Layout/components'
+import Drawer from '@/components/Drawer'
 import BackToTop from '@/components/BackToTop'
 
 export default {
@@ -61,17 +103,23 @@ export default {
   components: {
     LayoutDefault,
     LayoutClassic,
-    ContentSider,
-    ContentHeader,
-    ContentMain,
-    ContentFooter,
-    LayoutDrawer,
+    XSider,
+    XHeader,
+    XMain,
+    XFooter,
+    LayoutSetting,
+    Drawer,
     BackToTop
   },
   data () {
     return {
       refreshReady: true,
-      refreshDelay: 300
+      refreshDelay: 300,
+      settingDrawer: {
+        opened: false,
+        toggleReady: true,
+        toggleDelay: 300
+      }
     }
   },
   computed: {
@@ -119,6 +167,18 @@ export default {
     },
     closeSiderDrawer () {
       this.setSiderOpened(false)
+    },
+    toggleSettingDrawer () {
+      if (!this.settingDrawer.toggleReady) {
+        return
+      }
+      this.settingDrawer.toggleReady = false
+      const _this = this
+      const timer = setTimeout(() => {
+        _this.settingDrawer.opened = !_this.settingDrawer.opened
+        _this.settingDrawer.toggleReady = true
+        clearTimeout(timer)
+      }, this.settingDrawer.toggleDelay)
     }
   }
 }

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div :class="className">
     <div
       class="x-drawer"
-      :class="drawerClasses"
+      :class="drawerStyles"
     >
       <div
         class="x-drawer-mask"
@@ -15,6 +15,12 @@
         <div class="x-drawer-content">
           <slot></slot>
         </div>
+      </div>
+      <div
+        class="x-drawer-handler"
+        :style="handlerStyles"
+      >
+        <slot name="handler"></slot>
       </div>
     </div>
   </div>
@@ -37,10 +43,18 @@ export default {
     opened: {
       type: Boolean,
       default: false
+    },
+    handlerTop: {
+      type: String,
+      default: '0'
+    },
+    className: {
+      type: String,
+      default: ''
     }
   },
   computed: {
-    drawerClasses () {
+    drawerStyles () {
       return {
         'x-drawer-open': this.opened,
         'x-drawer-left': this.type === 'left',
@@ -51,6 +65,12 @@ export default {
       return {
         width: `${this.width}px`,
         transform: `translateX(${this.opened ? '0' : this.type === 'left' ? '-100' : this.type === 'right' ? '100' : '0'}%)`
+      }
+    },
+    handlerStyles () {
+      return {
+        top: this.handlerTop,
+        transform: `translateX(${this.opened ? (this.type === 'left' ? this.width + 'px' : this.type === 'right' ? -this.width + 'px' : '0') : '0'})`
       }
     }
   },
@@ -70,5 +90,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

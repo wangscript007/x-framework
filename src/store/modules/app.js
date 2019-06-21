@@ -42,6 +42,9 @@ const app = {
     [appTypes.SET_SIDER_OPENED] (state, siderOpened = false) {
       state.app.siderOpened = siderOpened
     },
+    [appTypes.SET_HEADER_FIXED] (state, headerFixed = false) {
+      state.app.headerFixed = headerFixed
+    },
     [appTypes.SET_BREADCRUMB_POSITION] (state, breadcrumbPosition) {
       state.app.breadcrumbPosition = breadcrumbPosition
     }

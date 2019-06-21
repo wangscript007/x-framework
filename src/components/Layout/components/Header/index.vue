@@ -1,10 +1,25 @@
 <template>
   <div class="x-header fix">
+    <div
+      v-if="app.layout === 'classic'"
+      class="x-header-logo"
+    >
+      <a
+        href="/"
+        :title="app.name"
+      >
+        <img
+          :src="app.logo"
+          :alt="app.name"
+        >
+        <h1>{{ app.name }}</h1>
+      </a>
+    </div>
     <div class="x-header-menu-left">
       <toggle class="menu-item"></toggle>
     </div>
     <div class="x-header-menu-breadcrumb">
-      <breadcrumb v-if="app.breadcrumbPosition === 'appHeader'"></breadcrumb>
+      <breadcrumb v-if="app.layout === 'default' && app.breadcrumbPosition === 'appHeader'"></breadcrumb>
     </div>
     <div class="x-header-menu-right">
       <el-dropdown

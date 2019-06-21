@@ -1,5 +1,5 @@
 <template>
-  <div class="x-layout">
+  <div class="x-layout layout-default">
     <transition name="animate-sider-toggle">
       <div
         v-if="app.screenSize !== screen.xs.name"
@@ -27,18 +27,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import screen from '@/common/constants/screen'
+import layoutMixin from '@/components/Layout/mixin/Layout'
 
 export default {
-  name: 'LayoutDefault',
-  data () {
-    return {
-      screen
-    }
-  },
-  computed: {
-    ...mapGetters(['app'])
-  }
+  name: 'LayoutClassic',
+  mixins: [layoutMixin]
 }
 </script>

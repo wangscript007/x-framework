@@ -11,7 +11,6 @@
       <transition name="animate-sider-header-title">
         <h1
           v-if="!collapsed"
-          key="0"
         >{{ app.name }}</h1>
       </transition>
     </a>

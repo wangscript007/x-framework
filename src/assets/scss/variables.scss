@@ -60,3 +60,36 @@ $--border-color-base: #DCDFE6 !default;
 
 /* base-spase */
 $base-space: 8px;
+
+/* 框架布局参数 */
+$layout-bg-color: $color-gray-4;
+
+/* sider */
+$layout-sider-width: 256px;
+$layout-sider-width-collapsed: 64px;
+$layout-sider-bg-color: $color-theme-12;
+$x-sider-header-height: 64px;
+$x-sider-header-bg-color: $color-theme-11;
+$x-sider-header-text-color: $color-gray-1;
+$x-sider-header-logo-size: 32px;
+$x-sider-header-logo-margin: $x-sider-header-logo-size/2;
+$x-sider-nav-bg-color: $color-theme-12;
+$x-sider-nav-sub-bg-color: $color-theme-13;
+$x-sider-nav-item-bg-color-active: $color-theme-6;
+$x-sider-nav-item-text-color: $color-secondary-text-dark;
+$x-sider-nav-item-text-color-active: $color-gray-1;
+$x-sider-nav-item-sub-bg-color: transparent;
+$layout-default-sider-fixed-z-index: 99;
+$layout-classic-sider-fixed-z-index: 98;
+
+/* header */
+$layout-header-height: $x-sider-header-height;
+$layout-header-bg-color: $color-gray-1;
+$layout-default-header-fixed-z-index: $layout-classic-sider-fixed-z-index;
+$layout-classic-header-fixed-z-index: $layout-default-sider-fixed-z-index;
+$x-header-logo-wrap-width: $layout-sider-width;
+$x-header-logo-size: $x-sider-header-logo-size;
+$x-header-logo-margin: $x-sider-header-logo-margin;
+
+/* drawer */
+$x-drawer-z-index: 1000;

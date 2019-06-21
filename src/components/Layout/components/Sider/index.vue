@@ -1,9 +1,12 @@
 <template>
   <div
     class="x-sider"
-    :class="{fixed: fixed}"
+    :class="{fixed: fixed, 'with-header': showHeader}"
   >
-    <sider-header :collapsed="collapsed"></sider-header>
+    <sider-header
+      v-if="showHeader"
+      :collapsed="collapsed"
+    ></sider-header>
     <div class="x-sider-nav">
       <scroll>
         <el-menu
@@ -58,6 +61,10 @@ export default {
     fixed: {
       type: Boolean,
       default: false
+    },
+    showHeader: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {
