@@ -16,62 +16,53 @@
       </a>
     </div>
     <div class="x-header-menu-left">
-      <el-tooltip
-        effect="dark"
-        :content="`${app.siderCollapsed ? '展开' : '收起'}导航`"
-        placement="bottom"
-      >
-        <toggle class="menu-item"></toggle>
-      </el-tooltip>
+      <toggle
+        class="menu-item"
+        :title="`${app.siderCollapsed ? '展开' : '收起'}导航`"
+      ></toggle>
     </div>
     <div class="x-header-menu-breadcrumb">
       <breadcrumb v-if="app.layout === 'default' && app.breadcrumbPosition === 'appHeader'"></breadcrumb>
     </div>
     <div class="x-header-menu-right">
-      <el-tooltip
-        effect="dark"
-        content="用户操作"
-        placement="bottom"
+      <el-dropdown
+        class="menu-item menu-item-user"
+        trigger="click"
       >
-        <el-dropdown
-          class="menu-item menu-item-user"
-          trigger="click"
-        >
-          <div class="menu-item-user-dropdown-btn">
-            <img
-              v-if="user && user.avatar"
-              :src="user.avatar"
-              class="user-avatar"
-            >
-            <span v-if="!xsScreen">{{ user && user.realName ? user.realName : '' }}</span>
-          </div>
-          <template v-slot:dropdown>
-            <el-dropdown-menu class="x-header-avatar-dropdown">
-              <el-dropdown-item>
-                <a
-                  target="_blank"
-                  href="javascript:void(0)"
-                >
-                  <x-icon icon="user" /><span>个人中心</span>
-                </a>
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <router-link to="/">
-                  <x-icon icon="setting" /><span>系统设置</span>
-                </router-link>
-              </el-dropdown-item>
-              <el-dropdown-item divided>
-                <a
-                  href="javascript:void(0)"
-                  @click="logout"
-                >
-                  <x-icon icon="logout" /><span>退出登录</span>
-                </a>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
-      </el-tooltip>
+        <div class="menu-item-user-dropdown-btn">
+          <img
+            v-if="user && user.avatar"
+            :src="user.avatar"
+            class="user-avatar"
+          >
+          <span v-if="!xsScreen">{{ user && user.realName ? user.realName : '' }}</span>
+        </div>
+        <template v-slot:dropdown>
+          <el-dropdown-menu class="x-header-avatar-dropdown">
+            <el-dropdown-item>
+              <a
+                target="_blank"
+                href="javascript:void(0)"
+              >
+                <x-icon icon="user" /><span>个人中心</span>
+              </a>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <router-link to="/">
+                <x-icon icon="setting" /><span>系统设置</span>
+              </router-link>
+            </el-dropdown-item>
+            <el-dropdown-item divided>
+              <a
+                href="javascript:void(0)"
+                @click="logout"
+              >
+                <x-icon icon="logout" /><span>退出登录</span>
+              </a>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <full-screen
         v-if="!xsScreen"
         class="menu-item"

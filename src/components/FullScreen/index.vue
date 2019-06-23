@@ -1,21 +1,16 @@
 <template>
-  <el-tooltip
-    :content="tipTitle"
-    effect="dark"
-    placement="bottom"
+  <a
+    class="full-screen-btn"
+    href="javascript:void(0)"
+    :title="title"
+    @click="click"
   >
-    <a
-      class="full-screen-btn"
-      href="javascript:void(0)"
-      @click="click"
-    >
-      <x-icon :icon="iconClass" />
-    </a>
-  </el-tooltip>
+    <x-icon :icon="iconClass" />
+  </a>
 </template>
 
 <script>
-import screenfull from 'screenfull'
+import screenFull from 'screenfull'
 
 export default {
   name: 'FullScreen',
@@ -28,29 +23,29 @@ export default {
     iconClass () {
       return this.isFullScreen ? 'fullscreen-exit' : 'fullscreen'
     },
-    tipTitle () {
+    title () {
       return this.isFullScreen ? '退出全屏' : '全屏显示'
     }
   },
   mounted () {
-    if (!screenfull.enabled) {
+    if (!screenFull.enabled) {
       return
     }
     const _this = this
-    screenfull.on('change', () => {
-      _this.isFullScreen = screenfull.isFullscreen
+    screenFull.on('change', () => {
+      _this.isFullScreen = screenFull.isFullscreen
     })
   },
   methods: {
     click () {
-      if (!screenfull.enabled) {
+      if (!screenFull.enabled) {
         this.$message({
-          message: '抱歉，您的浏览器无法使用改功能',
+          message: '抱歉，您的浏览器无法使用该功能',
           type: 'warning'
         })
         return false
       }
-      screenfull.toggle()
+      screenFull.toggle()
     }
   }
 }
