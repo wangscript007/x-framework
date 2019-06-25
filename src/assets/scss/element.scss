@@ -96,3 +96,73 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     color: $color-gray-1;
   }
 }
+
+/* step */
+.el-step {
+  &.is-horizontal {
+    .el-step__head {
+      &.is-wait {
+        color: $color-disable;
+        border-color: $color-disable;
+      }
+
+      &.is-process {
+        color: $color-gray-1;
+        border-color: $color-theme-6;
+
+        .el-step__icon {
+          background-color: $color-theme-6;
+        }
+      }
+
+      &.is-success,
+      &.is-finish {
+        color: $color-theme-6;
+        border-color: $color-theme-6;
+
+        .el-step__line {
+          background-color: $color-theme-6;
+        }
+      }
+    }
+
+    .el-step__main {
+      .el-step__title {
+        &.is-wait {
+          color: $color-secondary-text;
+        }
+
+        &.is-process {
+          color: $color-title;
+          font-weight: normal;
+        }
+
+        &.is-success,
+        &.is-finish {
+          color: $color-primary-text;
+        }
+      }
+
+      .el-step__description {
+        &.is-wait {
+          color: $color-secondary-text;
+        }
+
+        &.is-process {
+          color: $color-title;
+          font-weight: normal;
+        }
+
+        &.is-success,
+        &.is-finish {
+          color: $color-primary-text;
+        }
+      }
+    }
+
+    .el-step__line {
+      margin-left: x-space(3) !important;
+      margin-right: x-space(3) !important;
+    }
+  }
+}

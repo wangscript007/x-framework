@@ -2,11 +2,11 @@
   <el-radio-group v-model="checked">
     <template v-for="(item, index) in items">
       <el-radio
-        v-if="valueKeyInItems && labelKeyInItems"
-        :key="item[valueKeyInItems]"
-        :label="item[valueKeyInItems]"
+        v-if="valueKey && labelKey"
+        :key="item[valueKey]"
+        :label="item[valueKey]"
       >
-        {{ item[labelKeyInItems] }}
+        {{ item[labelKey] }}
       </el-radio>
       <el-radio
         v-else
@@ -34,11 +34,11 @@ export default {
       type: String,
       default: ''
     },
-    valueKeyInItems: {
+    valueKey: {
       type: String,
       default: null
     },
-    labelKeyInItems: {
+    labelKey: {
       type: String,
       default: null
     }

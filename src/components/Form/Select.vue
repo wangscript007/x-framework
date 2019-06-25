@@ -7,9 +7,9 @@
   >
     <el-option
       v-for="item in items"
-      :key="item[valueKeyInItems]"
-      :label="item[labelKeyInItems]"
-      :value="item[valueKeyInItems]"
+      :key="item[valueKey]"
+      :label="item[labelKey]"
+      :value="item[valueKey]"
     >
     </el-option>
   </el-select>
@@ -35,11 +35,11 @@ export default {
       type: String,
       default: ''
     },
-    valueKeyInItems: {
+    valueKey: {
       type: String,
       default: 'id'
     },
-    labelKeyInItems: {
+    labelKey: {
       type: String,
       default: 'name'
     },

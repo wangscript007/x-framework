@@ -9,12 +9,13 @@
         <template v-slot:extra>
           <div class="margin-bottom-3x color-title font-size-16  font-weight-500">审批进度：</div>
           <el-steps
-            :active="current"
+            :active="currentStep"
             size="mini"
+            finish-status="success"
             align-center
           >
             <el-step
-              v-for="item in process"
+              v-for="item in step"
               :key="item.id"
             >
               <template v-slot:title>
@@ -58,7 +59,8 @@ export default {
   },
   data () {
     return {
-      process: [
+      currentStep: 2,
+      step: [
         {
           id: 'p1',
           title: '资料填写',
@@ -83,8 +85,7 @@ export default {
           operator: '',
           opTime: ''
         }
-      ],
-      current: 2
+      ]
     }
   }
 }

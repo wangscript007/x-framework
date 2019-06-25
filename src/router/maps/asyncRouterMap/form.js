@@ -30,7 +30,7 @@ const formRouter = {
       component: () => import('@/views/form/step'),
       meta: {
         title: '分步表单',
-        describe: '分步表单页，一般用于复杂的信息分步录入以提高用户体验。',
+        describe: '分步表单要求业务功能具有明显的流程导向，“下一步”的开始建立在“上一步”完成的基础上，子表单间的信息项相对独立，填写当前表单不需或极少依赖上下步表单的信息。一般应用于“购物结算流程”、“密码找回”、“转账流程”等。',
         icon: 'fa fa-file-text-o',
         iconType: 'class'
       }

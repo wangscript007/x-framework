@@ -9,17 +9,10 @@
           <strong class="el-card__header-title">资料审核进度</strong>
         </div>
       </template>
-      <el-steps
-        :active="current"
-        align-center
-      >
-        <el-step
-          v-for="item in process"
-          :key="item.id"
-          :title="item.title"
-          :description="item.description"
-        ></el-step>
-      </el-steps>
+      <steps
+        v-model="currentStep"
+        :data="step"
+      ></steps>
     </el-card>
     <el-card
       shadow="never"
@@ -150,7 +143,6 @@
     </el-card>
     <el-card
       shadow="never"
-      class="margin-bottom-2x"
     >
       <template v-slot:header>
         <div class="fix">
@@ -199,37 +191,23 @@
         </el-table-column>
       </el-table>
     </el-card>
-    <el-card shadow="never">
-      <template v-slot:header>
-        <div class="fix">
-          <strong class="el-card__header-title">审批记录</strong>
-        </div>
-      </template>
-      <el-timeline>
-        <el-timeline-item
-          v-for="(activity, index) in activities"
-          :key="index"
-          :type="activity.type"
-          :timestamp="activity.timestamp"
-        >
-          {{ activity.content }}
-        </el-timeline-item>
-      </el-timeline>
-    </el-card>
   </page>
 </template>
 
 <script>
 import Page from '@/components/Page'
+import Steps from '@/components/Steps'
 
 export default {
   name: 'SeniorDetail',
   components: {
-    Page
+    Page,
+    Steps
   },
   data () {
     return {
-      process: [
+      currentStep: 2,
+      step: [
         {
           id: 'p1',
           title: '资料填写',
@@ -251,7 +229,6 @@ export default {
           description: '终审后，员工资料将在企业云平台上备案并部分公示'
         }
       ],
-      current: 2,
       tabActive: 'base',
       staff: {
         staffId: 'eA4DE357-e8bb-df05-fF5f-dcFe8E1A5eF2',
@@ -297,23 +274,7 @@ export default {
             workingUnit: '广州市赛德律师事务所'
           }
         ]
-      },
-      activities: [{
-        content: '提交资料（已完成）',
-        timestamp: '2019-05-31 10:32',
-        type: 'primary'
-      }, {
-        content: '人事部审核（审批通过）',
-        timestamp: '2019-06-03 09:44',
-        type: 'primary'
-      }, {
-        content: '总经理审核（审批中）',
-        timestamp: '',
-        type: 'warning'
-      }, {
-        content: '云备案（未开始）',
-        timestamp: ''
-      }]
+      }
     }
   }
 }
