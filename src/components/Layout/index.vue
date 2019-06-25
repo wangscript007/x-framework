@@ -7,7 +7,10 @@
       name="animate-layout"
       mode="out-in"
     >
-      <layout-default v-if="app.layout === 'default'">
+      <layout-default
+        v-if="app.layout === 'default'"
+        key="layout-default"
+      >
         <template v-slot:sider>
           <x-sider
             :collapsed="app.siderCollapsed"
@@ -24,7 +27,10 @@
           <x-footer></x-footer>
         </template>
       </layout-default>
-      <layout-classic v-if="app.layout === 'classic'">
+      <layout-classic
+        v-if="app.layout === 'classic'"
+        key="layout-classic"
+      >
         <template v-slot:sider>
           <x-sider
             :collapsed="app.siderCollapsed"

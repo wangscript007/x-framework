@@ -175,9 +175,9 @@ function carNo (value, name = '') {
 }
 
 /* 生成验证器 */
-function validator (type, name = '') {
+function validator (type, name = '', ...args) {
   return (rule, value, callback) => {
-    const res = validateUtil[type](value, name)
+    const res = validateUtil[type](value, name, ...args)
     res.valid ? callback() : callback(res.error)
   }
 }
@@ -196,4 +196,3 @@ const validateUtil = {
 }
 
 export default validateUtil
-

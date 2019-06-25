@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-    <router-view />
+    <transition
+      name="animate-app"
+      type="out-in"
+    >
+      <router-view key="app" />
+    </transition>
   </div>
 </template>
 
@@ -9,6 +14,3 @@ export default {
   name: 'App'
 }
 </script>
-
-<style scoped lang="scss" type="text/css">
-</style>
