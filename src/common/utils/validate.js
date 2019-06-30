@@ -15,6 +15,16 @@ const patterns = {
   xCarNo: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/ /* 新能源汽车 */
 }
 
+// ^\\d+$ //非负整数（正整数 + 0）
+// ^[0-9]*[1-9][0-9]*$ //正整数
+// ^((-\\d+)|(0+))$ //非正整数（负整数 + 0）
+// ^-[0-9]*[1-9][0-9]*$ //负整数
+// ^-?\\d+$ //整数
+// ^\\d+(\\.\\d+)?$ //非负浮点数（正浮点数 + 0）
+//   ^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$ //正浮点数
+// ^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$ //非正浮点数（负浮点数 + 0）
+// ^(-?\\d+)(\\.\\d+)?$ //浮点数
+
 /* 用户名 */
 function username (value, name = '') {
   const valid = patterns.username.test(value)
@@ -174,6 +184,16 @@ function carNo (value, name = '') {
   }
 }
 
+/* 一致 */
+function equateTo (value, name = '', validValue = '', validName = '') {
+  const valid = value === validValue
+  const tips = !name || !validName ? '两次输入不一致' : `${name}必须与${validName}一致`
+  return {
+    valid,
+    error: valid ? null : new Error(tips)
+  }
+}
+
 /* 生成验证器 */
 function validator (type, name = '', ...args) {
   return (rule, value, callback) => {
@@ -192,6 +212,7 @@ const validateUtil = {
   qqNo,
   wxNo,
   carNo,
+  equateTo,
   validator
 }
 

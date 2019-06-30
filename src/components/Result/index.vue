@@ -1,7 +1,12 @@
 <template>
-  <div class="x-result-page">
+  <div
+    class="x-result-page"
+    :class="{'space-top' : spaceTop, 'space-bottom' : spaceBottom}"
+  >
     <div class="x-result-page-icon">
-      <template v-if="$slots.icon"><slot name="icon" /></template>
+      <template v-if="$slots.icon">
+        <slot name="icon" />
+      </template>
       <template v-else>
         <x-icon
           :icon="resultIconClass"
@@ -10,14 +15,21 @@
       </template>
     </div>
     <div class="x-result-page-title">
-      <template v-if="$slots.title"><slot name="title"></slot></template>
+      <template v-if="$slots.title">
+        <slot name="title"></slot>
+      </template>
       <template v-else>{{ title }}</template>
     </div>
     <div class="x-result-page-description">
-      <template v-if="$slots.description"><slot name="description"></slot></template>
+      <template v-if="$slots.description">
+        <slot name="description"></slot>
+      </template>
       <template v-else>{{ description }}</template>
     </div>
-    <div class="x-result-page-extra">
+    <div
+      v-if="$slots.extra"
+      class="x-result-page-extra"
+    >
       <slot name="extra"></slot>
     </div>
     <div class="x-result-page-actions">
@@ -42,6 +54,14 @@ export default {
     description: {
       type: String,
       default: ''
+    },
+    spaceTop: {
+      type: Boolean,
+      default: true
+    },
+    spaceBottom: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

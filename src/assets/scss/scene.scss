@@ -183,7 +183,15 @@
 /* 场景 x-result-page */
 .x-result-page {
   width: 72%;
-  margin: x-space(6) auto;
+  margin: 0 auto;
+
+  &.space-top {
+    margin-top: x-space(6);
+  }
+
+  &.space-bottom {
+    margin-bottom: x-space(6);
+  }
 
   &-icon,
   &-title,

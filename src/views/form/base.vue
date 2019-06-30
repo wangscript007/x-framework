@@ -48,8 +48,8 @@
                   <form-radio
                     v-model="form.sex"
                     :items="sex"
-                    value-key-in-items="id"
-                    label-key-in-items="name"
+                    value-key="id"
+                    label-key="name"
                   ></form-radio>
                 </el-form-item>
               </el-col>
@@ -70,8 +70,8 @@
                   <form-select
                     v-model="form.nation"
                     :items="nation"
-                    value-key-in-items="id"
-                    label-key-in-items="name"
+                    value-key="id"
+                    label-key="name"
                     :filterable="true"
                     :clearable="true"
                     class="full-width"
@@ -96,8 +96,8 @@
                   <form-select
                     v-model="form.politicalStatus"
                     :items="politicalStatus"
-                    value-key-in-items="id"
-                    label-key-in-items="name"
+                    value-key="id"
+                    label-key="name"
                     :filterable="true"
                     :clearable="true"
                     class="full-width"
@@ -109,8 +109,8 @@
                   <form-select
                     v-model="form.householdType"
                     :items="householdType"
-                    value-key-in-items="id"
-                    label-key-in-items="name"
+                    value-key="id"
+                    label-key="name"
                     :filterable="true"
                     :clearable="true"
                     class="full-width"
