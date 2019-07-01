@@ -1,3 +1,40 @@
+/* 框架布局参数 */
+$layout-bg-color: $color-gray-4;
+
+/* sider */
+$layout-sider-width: x-space(32);
+$layout-sider-width-collapsed: x-space(8);
+$layout-sider-bg-color: $color-theme-12;
+
+$x-sider-header-height: x-space(8);
+$x-sider-header-bg-color: $color-theme-11;
+$x-sider-header-text-color: $color-gray-1;
+$x-sider-header-logo-size: x-space(4);
+$x-sider-header-logo-margin: x-space(2);
+$x-sider-nav-bg-color: $color-theme-12;
+$x-sider-nav-sub-bg-color: $color-theme-13;
+$x-sider-nav-item-bg-color-active: $color-primary;
+$x-sider-nav-item-text-color: $color-secondary-text-dark;
+$x-sider-nav-item-text-color-active: $color-gray-1;
+$x-sider-nav-item-sub-bg-color: transparent;
+
+$layout-default-sider-fixed-z-index: 99;
+$layout-classic-sider-fixed-z-index: 98;
+
+/* header */
+$layout-header-height: x-space(8);
+$layout-header-bg-color: $color-gray-1;
+$layout-default-header-fixed-z-index: 98;
+$layout-classic-header-fixed-z-index: 99;
+
+$x-header-logo-wrap-width: x-space(32);
+$x-header-logo-size: x-space(4);
+$x-header-logo-margin: x-space(2);
+
+/* drawer */
+$x-drawer-z-index: 1000;
+
+
 /* 布局模式 */
 .x-layout {
   display: flex;
@@ -388,12 +425,17 @@
         display: inline-flex;
         flex-direction: row;
         align-items: center;
-        padding: 0 x-space();
+        padding: 0 x-space(1);
         color: $color-primary-text;
+        text-decoration: none;
 
         &:hover {
           color: $color-gray-12;
-          //background: $color-background;
+        }
+
+        & > .menu-icon {
+          font-size: 18px;
+          margin-right: x-space(1);
         }
 
         &-toggle-button {
@@ -414,15 +456,15 @@
             align-items: center;
 
             img {
-              width: 24px;
-              height: 24px;
+              width: x-space(3);
+              height: x-space(3);
               border-radius: 50%;
               overflow: hidden;
             }
 
             span {
-              margin-left: x-space();
-              line-height: 24px;
+              margin-left: x-space(1);
+              line-height: x-space(3);
             }
           }
         }
@@ -449,7 +491,7 @@
   }
 
   &-avatar-dropdown.el-dropdown-menu {
-    min-width: 160px;
+    min-width: x-space(20);
     margin-top: x-space() !important;
 
     .el-dropdown-menu__item {
@@ -611,7 +653,7 @@
     background-color: $color-gray-1;
     border-radius: 4px 0 0 4px;
     box-shadow: -4px 0 6px rgba(0, 0, 0, 0.15);
-    color: $color-theme-6;
+    color: $color-primary;
     text-align: center;
     text-decoration: none;
 
@@ -652,7 +694,7 @@
           position: absolute;
           right: 0;
           bottom: 0;
-          color: $color-link;
+          color: $color-primary;
           font-size: 20px;
         }
 
@@ -675,7 +717,7 @@
         margin-bottom: x-space(1);
 
         .el-form-item__label {
-          color: $color-detail-label;
+          color: $color-label;
         }
 
         .el-form-item__content {
@@ -689,11 +731,11 @@
 /* 布局组件 nprogress */
 #nprogress {
   .bar {
-    background: $color-theme-6 !important;
+    background: $color-primary !important;
   }
 
   .peg {
-    box-shadow: 0 0 10px $color-theme-6, 0 0 5px $color-theme-6 !important;
+    box-shadow: 0 0 10px $color-primary, 0 0 5px $color-primary !important;
   }
 }
 

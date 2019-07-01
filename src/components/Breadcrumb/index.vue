@@ -1,9 +1,9 @@
 <template>
-  <el-breadcrumb
-    class="app-breadcrumb"
-    separator-class="el-icon-arrow-right"
-  >
-    <transition-group name="animate-breadcrumb">
+  <el-breadcrumb separator-class="el-icon-arrow-right">
+    <transition-group
+      name="animate-breadcrumb"
+      mode="out-in"
+    >
       <el-breadcrumb-item
         v-for="(item,index) in breadcrumb"
         :key="item.path"
@@ -44,12 +44,7 @@ export default {
   },
   methods: {
     getBreadcrumb () {
-      let matched = this.$route.matched
-      const first = matched[0]
-      if (first && first.name.trim().toLocaleLowerCase() !== 'base') {
-        matched = [{ path: '/', redirect: '/', meta: { title: '首页' } }].concat(matched)
-      }
-      this.breadcrumb = matched.filter(item => item.meta && item.meta.title && item.meta.showInBreadcrumb !== false)
+      this.breadcrumb = [{ path: '/', redirect: '/', meta: { title: '首页' } }].concat(this.$route.matched).filter(item => item.meta && item.meta.title && item.meta.showInBreadcrumb !== false)
     },
     pathCompile (path) {
       const { params } = this.$route
@@ -68,5 +63,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

@@ -109,7 +109,7 @@ export default {
     text-align: center;
     cursor: pointer;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    background-color: $color-theme-6;
+    background-color: $color-primary;
     opacity: 0.6;
 
     .Icon {

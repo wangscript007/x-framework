@@ -61,14 +61,14 @@
       }
 
       span.primary {
-        color: $color-theme-6;
+        color: $color-primary;
         font-weight: bold;
         margin-left: x-space(0.5);
         margin-right: x-space(0.5);
       }
 
       a {
-        color: $color-theme-6;
+        color: $color-primary;
         text-decoration: none;
 
         &:hover {
@@ -121,7 +121,7 @@
       }
 
       &.status-processing {
-        background-color: $color-link;
+        background-color: $color-primary;
       }
 
       &.status-success {

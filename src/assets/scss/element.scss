@@ -1,5 +1,8 @@
 /* 改变主题色变量 */
-$--color-primary: $color-theme-6;
+$--color-primary: $color-primary;
+
+/* 边框 */
+$--border-color-base: $color-border !default;
 
 /* 改变 icon 字体路径变量，必需 */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
@@ -21,7 +24,7 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     margin-bottom: x-space(0);
 
     .el-form-item__label {
-      color: $color-detail-label;
+      color: $color-label;
     }
   }
 
@@ -87,12 +90,12 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     color: $color-primary-text;
 
     .el-alert__icon {
-      color: $color-theme-6;
+      color: $color-primary;
     }
   }
 
   &.is-dark {
-    background-color: $color-theme-6;
+    background-color: $color-primary;
     color: $color-gray-1;
   }
 }
@@ -108,20 +111,20 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
       &.is-process {
         color: $color-gray-1;
-        border-color: $color-theme-6;
+        border-color: $color-primary;
 
         .el-step__icon {
-          background-color: $color-theme-6;
+          background-color: $color-primary;
         }
       }
 
       &.is-success,
       &.is-finish {
-        color: $color-theme-6;
-        border-color: $color-theme-6;
+        color: $color-primary;
+        border-color: $color-primary;
 
         .el-step__line {
-          background-color: $color-theme-6;
+          background-color: $color-primary;
         }
       }
     }
