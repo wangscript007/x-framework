@@ -81,9 +81,9 @@
               <el-col :md="12">
                 <el-form-item label="籍贯">
                   <el-cascader
-                    v-model="regionSelect"
-                    :options="regionOptions"
-                    :props="regionProps"
+                    v-model="region.selected"
+                    :options="region.options"
+                    :props="region.props"
                     :clearable="true"
                     separator=" "
                     class="full-width"
@@ -156,7 +156,7 @@
 <script>
 import { regionData } from 'element-china-area-data'
 import { EMI_SEX, EMI_HOUSEHOLD_TYPE, EMI_NATION, EMI_POLITICAL_STATUS } from '@/common/emi/standard'
-import validateUtil from '@/common/utils/validate'
+import validator from '@/common/utils/validate'
 import Page from '@/components/Page'
 import FormSelect from '@/components/Form/Select'
 import FormCheckbox from '@/components/Form/Checkbox'
@@ -189,15 +189,17 @@ export default {
         name: { required: true, message: '请输入姓名', trigger: 'blur' },
         cerNo: [
           { required: true, message: '请输入身份证号', trigger: 'blur' },
-          { validator: validateUtil.validator('idCardNo'), trigger: 'blur' }
+          { validator: validator('idCardNo'), trigger: 'blur' }
         ]
       },
       sex: EMI_SEX,
-      regionOptions: regionData,
-      regionProps: {
-        value: 'label'
+      region: {
+        options: regionData,
+        props: {
+          value: 'label'
+        },
+        selected: []
       },
-      regionSelect: [],
       householdType: EMI_HOUSEHOLD_TYPE,
       nation: EMI_NATION,
       politicalStatus: EMI_POLITICAL_STATUS,
@@ -205,8 +207,8 @@ export default {
     }
   },
   watch: {
-    regionSelect (value) {
-      this.staff.native = value.length ? value.join(' ') : ''
+    'region.selected' (value) {
+      this.form.native = value.length ? value.join(' ') : ''
     }
   }
 }

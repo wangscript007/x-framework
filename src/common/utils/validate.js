@@ -1,5 +1,8 @@
 /* 正则 */
 const patterns = {
+  number: /^[0-9]*$/, /* 纯数字 */
+  integer: /^(-?[1-9]*[1-9][0-9]*|0)$/, /* 可带减号，非0开头的整数 */
+  float: /^((-?[1-9]+(\.\d+)?)|(-?0\.\d+)|0)$/, /* 浮点数，可带减号，过滤“0n.”、“-0n.”、“00.”、“-00.”、“-0”非法格式  /^-?([1-9]+|0)(\.\d+)?$/ */
   username: /^\w+$/, /* 数字、英文字母或者下划线 */
   passwordS: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-强（字母+数字+特殊字符） */
   passwordM: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-中（字母+数字，字母+特殊字符，数字+特殊字符） */
@@ -9,24 +12,77 @@ const patterns = {
   idCardProv: /^[1-9][0-9]/, /* 身份证地区码 */
   mobileNo: /^1([34578])\d{9}$/, /* 手机号码 */
   telNo: /^((0\d{2,3}-\d{7,8})|(1[34578]\d{9}))$/, /* 固定电话、传真 */
+  email: /^([a-zA-Z]|[0-9])(\w|-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/, /* 邮箱 */
+  url: /^((https|http|ftp|rtsp|mms)?:\/\/)?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)$/,
   qqNo: /^[1-9][0-9]{4,10}$/, /* qq号 5至11位数字*/
   wxNo: /^[a-zA-Z]([-_a-zA-Z0-9]{5,19})+$/, /* 微信号 6至20位，以字母开头，字母，数字，减号，下划线*/
   cCarNo: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-HJ-NP-Z0-9]{4}[A-HJ-NP-Z0-9挂学警港澳]{1}$/, /* 普通汽车 */
   xCarNo: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/ /* 新能源汽车 */
 }
 
-// ^\\d+$ //非负整数（正整数 + 0）
-// ^[0-9]*[1-9][0-9]*$ //正整数
-// ^((-\\d+)|(0+))$ //非正整数（负整数 + 0）
-// ^-[0-9]*[1-9][0-9]*$ //负整数
-// ^-?\\d+$ //整数
-// ^\\d+(\\.\\d+)?$ //非负浮点数（正浮点数 + 0）
-//   ^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$ //正浮点数
-// ^((-\\d+(\\.\\d+)?)|(0+(\\.0+)?))$ //非正浮点数（负浮点数 + 0）
-// ^(-?\\d+)(\\.\\d+)?$ //浮点数
+/* 验证纯数字 */
+function isNumber (value, name) {
+  const valid = patterns.number.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '该项'}只能输入数字`)
+  }
+}
+
+/* 验证整数 */
+function isInteger (value, name, options) {
+  options = Object.assign({ min: null, max: null, include: true }, options)
+  let valid = patterns.integer.test(value)
+  let message = `${name || '该项'}只能输入有效整数`
+  const minValid = typeof options.min === 'number' && !isNaN(options.min)
+  const maxValid = typeof options.max === 'number' && !isNaN(options.max)
+  if (valid && (minValid || maxValid)) {
+    value = parseInt(value)
+    if (minValid && maxValid) {
+      valid = options.include ? options.min <= value && value <= options.max : options.min < value && value < options.max
+      message = `${name || '该项'}必须大于${options.include ? '等于' : ''} ${options.min} 且小于${options.include ? '等于' : ''} ${options.max}`
+    } else if (minValid && !maxValid) {
+      valid = options.include ? options.min <= value : options.min < value
+      message = `${name || '该项'}必须大于${options.include ? '或等于' : ''} ${options.min}`
+    } else if (!minValid && maxValid) {
+      valid = options.include ? value <= options.max : value < options.max
+      message = `${name || '该项'}必须小于${options.include ? '或等于' : ''} ${options.max}`
+    }
+  }
+  return {
+    valid,
+    error: valid ? null : new Error(message)
+  }
+}
+
+/* 验证浮点数 */
+function isFloat (value, name, options) {
+  options = Object.assign({ min: null, max: null, include: true }, options)
+  let valid = patterns.float.test(value)
+  let message = `${name || '该项'}只能输入有效浮点数`
+  const minValid = typeof options.min === 'number' && !isNaN(options.min)
+  const maxValid = typeof options.max === 'number' && !isNaN(options.max)
+  if (valid && (minValid || maxValid)) {
+    value = parseFloat(value)
+    if (minValid && maxValid) {
+      valid = options.include ? options.min <= value && value <= options.max : options.min < value && value < options.max
+      message = `${name || '该项'}必须大于${options.include ? '等于' : ''} ${options.min} 且小于${options.include ? '等于' : ''} ${options.max}`
+    } else if (minValid && !maxValid) {
+      valid = options.include ? options.min <= value : options.min < value
+      message = `${name || '该项'}必须大于${options.include ? '或等于' : ''} ${options.min}`
+    } else if (!minValid && maxValid) {
+      valid = options.include ? value <= options.max : value < options.max
+      message = `${name || '该项'}必须小于${options.include ? '或等于' : ''} ${options.max}`
+    }
+  }
+  return {
+    valid,
+    error: valid ? null : new Error(message)
+  }
+}
 
 /* 用户名 */
-function username (value, name = '') {
+function username (value, name) {
   const valid = patterns.username.test(value)
   return {
     valid,
@@ -35,9 +91,13 @@ function username (value, name = '') {
 }
 
 /* 密码 */
-function password (value, name = '', intensity = 'W') {
-  const valid = patterns[`password${intensity}`].test(value)
-  const tips = intensity === 'S' ? '必须由字母、数字和特殊字符组成' : intensity === 'M' ? '必须包含字母、数字、特殊字符中2种字符' : '只能由数字、字母、下划线组成'
+function password (value, name, options) {
+  options = Object.assign({ intensity: 'W' }, options)
+  if (!require && !value) {
+    return { valid: true }
+  }
+  const valid = patterns[`password${options.intensity}`].test(value)
+  const tips = options.intensity === 'S' ? '必须由字母、数字和特殊字符组成' : options.intensity === 'M' ? '必须包含字母、数字、特殊字符中2种字符' : '只能由数字、字母、下划线组成'
   return {
     valid,
     error: valid ? null : new Error(`${name || '密码'}${tips}`)
@@ -45,7 +105,7 @@ function password (value, name = '', intensity = 'W') {
 }
 
 /* 身份证格式校验 */
-function idCardNo (value, name = '') {
+function idCardNo (value, name) {
   /* 检验身份证校验码 */
   function _checkCode (val) {
     const factor = ['7', '9', '10', '5', '8', '4', '2', '1', '6', '3', '7', '9', '10', '5', '8', '4', '2']
@@ -132,7 +192,7 @@ function idCardNo (value, name = '') {
 }
 
 /* 手机号码 */
-function mobileNo (value, name = '') {
+function mobileNo (value, name) {
   const valid = patterns.mobileNo.test(value)
   return {
     valid,
@@ -141,7 +201,7 @@ function mobileNo (value, name = '') {
 }
 
 /* 座机、传真 */
-function telNo (value, name = '') {
+function telNo (value, name) {
   const valid = patterns.telNo.test(value)
   return {
     valid,
@@ -150,7 +210,7 @@ function telNo (value, name = '') {
 }
 
 /* 联系方式 */
-function contactNo (value, name = '') {
+function contactNo (value, name) {
   const valid = patterns.mobileNo.test(value) || patterns.telNo.test(value)
   return {
     valid,
@@ -158,8 +218,36 @@ function contactNo (value, name = '') {
   }
 }
 
+/* email */
+function email (value, name) {
+  const valid = patterns.email.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || '邮箱'}格式错误`)
+  }
+}
+
+/* url */
+function url (value, name) {
+  // const strRegex = '^((https|http|ftp|rtsp|mms)?://)' +
+  //   '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?' + /* ftp的user@ */
+  //   '(([0-9]{1,3}.){3}[0-9]{1,3}' + /* IP形式的URL- 199.194.52.184 */
+  //   '|' + /* 允许IP和DOMAIN（域名）*/
+  //   '([0-9a-z_!~*\'()-]+.)*' + /* 域名- www.*/
+  //   '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].' + /* 二级域名 */
+  //   '[a-z]{2,6})' + /* 一级domain- .com 或 .museum */
+  //   '(:[0-9]{1,4})?' + /* 端口- :80  */
+  //   '((/?)|' + /* a slash isn't required if there is no file name */
+  //   '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$'
+  const valid = patterns.url.test(value)
+  return {
+    valid,
+    error: valid ? null : new Error(`${name || 'Url'}格式错误`)
+  }
+}
+
 /* qq */
-function qqNo (value, name = '') {
+function qqNo (value, name) {
   const valid = patterns.qqNo.test(value)
   return {
     valid,
@@ -168,7 +256,7 @@ function qqNo (value, name = '') {
 }
 
 /* 微信号*/
-function wxNo (value, name = '') {
+function wxNo (value, name) {
   const valid = patterns.wxNo.test(value)
   return {
     valid,
@@ -177,7 +265,7 @@ function wxNo (value, name = '') {
 }
 
 /* 车牌号 */
-function carNo (value, name = '') {
+function carNo (value, name) {
   const valid = patterns.cCarNo.test(value) || patterns.xCarNo.test(value)
   return {
     valid,
@@ -185,36 +273,39 @@ function carNo (value, name = '') {
   }
 }
 
-/* 一致 */
-function equateTo (value, name = '', validValue = '', validName = '') {
-  const valid = value === validValue
-  const tips = !name || !validName ? '两次输入不一致' : `${name}必须与${validName}一致`
-  return {
-    valid,
-    error: valid ? null : new Error(tips)
-  }
-}
-
-/* 生成验证器 */
-function validator (type, name = '', ...args) {
-  return (rule, value, callback) => {
-    const res = validateUtil[type](value, name, ...args)
-    res.valid ? callback() : callback(res.error)
-  }
-}
-
-const validateUtil = {
+/* 类型表 */
+const validateTypes = {
+  isNumber,
+  isInteger,
+  isFloat,
   username,
   password,
   idCardNo,
   mobileNo,
   telNo,
   contactNo,
+  email,
+  url,
   qqNo,
   wxNo,
-  carNo,
-  equateTo,
-  validator
+  carNo
 }
 
-export default validateUtil
+/* 验证器 */
+function validator (type, name = '', options) {
+  options = Object.assign({ require: false }, options)
+  return (rule, value, callback) => {
+    if (!value) {
+      if (options.require) {
+        callback(new Error(`${name || '该项'}为必填项`))
+      } else {
+        callback()
+      }
+      return
+    }
+    const res = validateTypes[type](value, name, options)
+    res.valid ? callback() : callback(res.error)
+  }
+}
+
+export default validator

@@ -78,9 +78,9 @@
             <el-col :md="12">
               <el-form-item label="籍贯">
                 <el-cascader
-                  v-model="regionSelect"
-                  :options="regionOptions"
-                  :props="regionProps"
+                  v-model="region.selected"
+                  :options="region.options"
+                  :props="region.props"
                   :clearable="true"
                   style="width: 100%;"
                   separator=" "
@@ -155,7 +155,7 @@
 import moment from 'moment'
 import { regionData } from 'element-china-area-data'
 import { updateStaff } from '@/api/staff'
-import validateUtil from '@/common/utils/validate'
+import validator from '@/common/utils/validate'
 import Page from '@/components/Page'
 import mixin from '@/views/table/base/mixin'
 
@@ -177,23 +177,25 @@ export default {
         ],
         cerNo: [
           { required: true, message: '请输入身份证号', trigger: 'blur' },
-          { validator: validateUtil.validator('idCardNo'), trigger: 'blur' }
+          { validator: validator('idCardNo'), trigger: 'blur' }
         ],
         phone: [
           { required: true, message: '请输入手机号码', trigger: 'blur' },
-          { validator: validateUtil.validator('mobileNo'), trigger: 'blur' }
+          { validator: validator('mobileNo'), trigger: 'blur' }
         ]
       },
-      regionOptions: regionData,
-      regionProps: {
-        value: 'label'
+      region: {
+        options: regionData,
+        props: {
+          value: 'label'
+        },
+        selected: []
       },
-      regionSelect: [],
       isAdd: true
     }
   },
   watch: {
-    regionSelect (value) {
+    'region.selected' (value) {
       this.staff.native = value.length ? value.join(' ') : ''
     }
   },
@@ -205,7 +207,7 @@ export default {
       this.getStaffInfo(params.staffId, staff => {
         Object.assign(this.staff, staff)
         if (staff.native) {
-          this.regionSelect = staff.native.split(' ')
+          this.region.selected = staff.native.split(' ')
         }
       })
     }

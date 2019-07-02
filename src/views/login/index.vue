@@ -115,7 +115,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
-import validateUtil from '@/common/utils/validate'
+import validator from '@/common/utils/validate'
 
 export default {
   name: 'Login',
@@ -129,12 +129,12 @@ export default {
         username: [
           { required: true, trigger: 'blur', message: '请输入用户名' },
           { min: 4, max: 30, message: '用户名长度应在4到30为之间' },
-          { validator: validateUtil.validator('username', '用户名'), trigger: 'blur' }
+          { validator: validator('username', '用户名'), trigger: 'blur' }
         ],
         password: [
           { required: true, trigger: 'blur', message: '请输入密码' },
           { min: 6, max: 30, message: '密码长度应在6到30为之间' },
-          { validator: validateUtil.validator('password', '密码'), trigger: 'blur' }
+          { validator: validator('password', '密码'), trigger: 'blur' }
         ]
       },
       showPassword: false,

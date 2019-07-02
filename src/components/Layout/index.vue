@@ -73,7 +73,7 @@
       type="right"
       handler-top="20%"
       class-name="x-settings"
-      :opened="settingDrawer.opened"
+      :opened="settingDrawerOpened"
       @maskClick="toggleSettingDrawer"
     >
       <template v-slot:handler>
@@ -84,7 +84,7 @@
           @click.stop="toggleSettingDrawer"
         >
           <x-icon
-            :icon="`iconfont icon-${settingDrawer.opened ? 'close' : 'setting'}`"
+            :icon="`iconfont icon-${settingDrawerOpened ? 'close' : 'setting'}`"
             type="class"
           />
         </a>
@@ -99,10 +99,14 @@
 <script>
 import { mapGetters, mapMutations } from 'vuex'
 import { getScreenSize } from '@/common/utils'
+import { debounce } from 'lodash'
 import screen from '@/common/constants/screen'
 import { LayoutDefault, LayoutClassic, XSider, XHeader, XMain, XFooter, LayoutSetting } from '@/components/Layout/components'
 import Drawer from '@/components/Drawer'
 import BackToTop from '@/components/BackToTop'
+
+const WINDOW_RESIZE_HANDLER_DELAY = 300
+const SETTING_DRAWER_TOGGLE_DELAY = 300
 
 export default {
   name: 'Layout',
@@ -119,13 +123,7 @@ export default {
   },
   data () {
     return {
-      refreshReady: true,
-      refreshDelay: 300,
-      settingDrawer: {
-        opened: false,
-        toggleReady: true,
-        toggleDelay: 300
-      }
+      settingDrawerOpened: false
     }
   },
   computed: {
@@ -148,10 +146,10 @@ export default {
     }
   },
   beforeMount () {
-    window.addEventListener('resize', this._resizeHandler)
+    window.addEventListener('resize', this.windowResizeHandler)
   },
   mounted () {
-    this._resizeHandler()
+    this.windowResizeHandler()
   },
   methods: {
     ...mapMutations({
@@ -159,33 +157,18 @@ export default {
       setSiderCollapsed: 'SET_SIDER_COLLAPSED',
       setSiderOpened: 'SET_SIDER_OPENED'
     }),
-    _resizeHandler () {
-      if (!this.refreshReady) {
-        return
-      }
-      this.refreshReady = false
-      const _this = this
-      const timer = setTimeout(() => {
-        _this.setScreenSize(getScreenSize())
-        _this.refreshReady = true
-        clearTimeout(timer)
-      }, this.refreshDelay)
-    },
+    windowResizeHandler: debounce(function () {
+      this.setScreenSize(getScreenSize())
+    }, WINDOW_RESIZE_HANDLER_DELAY),
     closeSiderDrawer () {
       this.setSiderOpened(false)
     },
-    toggleSettingDrawer () {
-      if (!this.settingDrawer.toggleReady) {
-        return
-      }
-      this.settingDrawer.toggleReady = false
-      const _this = this
-      const timer = setTimeout(() => {
-        _this.settingDrawer.opened = !_this.settingDrawer.opened
-        _this.settingDrawer.toggleReady = true
-        clearTimeout(timer)
-      }, this.settingDrawer.toggleDelay)
-    }
+    toggleSettingDrawer: debounce(function () {
+      this.settingDrawerOpened = !this.settingDrawerOpened
+    }, SETTING_DRAWER_TOGGLE_DELAY, {
+      leading: true,
+      trailing: false
+    })
   }
 }
 </script>

@@ -15,21 +15,33 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     .el-form-item__label-wrap .el-form-item__label {
       color: $color-title;
     }
-  }
-}
-
-/* detail-form */
-.el-form.detail-form {
-  .el-form-item {
-    margin-bottom: x-space(0);
-
-    .el-form-item__label {
-      color: $color-label;
+    /* 级联选择器在error状态下hover边框颜色变化样式重置 */
+    &.el-form-item--feedback {
+      &.is-error {
+        .el-cascader {
+          &:hover {
+            .el-input__inner {
+              border-color: $--color-danger;
+            }
+          }
+        }
+      }
     }
   }
 
-  .detail-btn-wrap {
-    margin-top: x-space(2);
+  /* detail-form */
+  &.detail-form {
+    .el-form-item {
+      margin-bottom: x-space(0);
+
+      .el-form-item__label {
+        color: $color-label;
+      }
+    }
+
+    .detail-btn-wrap {
+      margin-top: x-space(2);
+    }
   }
 }
 

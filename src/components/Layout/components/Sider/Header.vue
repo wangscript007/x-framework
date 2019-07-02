@@ -1,7 +1,7 @@
 <template>
   <div class="x-sider-header">
     <a
-      href="/"
+      href="javascript:void(0)"
       :title="app.name"
     >
       <img
