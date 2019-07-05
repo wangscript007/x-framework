@@ -24,17 +24,29 @@ export function getScrollbarWidth () {
   return scrollbarWidth
 }
 
-function getRandomInt (min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
 export function shuffle (arr) {
+  const _getRandomInt = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
   const _arr = arr.slice()
   for (let i = 0, len = _arr.length; i < len; i++) {
-    const j = getRandomInt(0, i)
+    const j = _getRandomInt(0, i)
     const t = _arr[i]
     _arr[i] = _arr[j]
     _arr[j] = t
   }
   return _arr
+}
+
+export function getValueType (value) {
+  try {
+    const typeStr = Object.prototype.toString.call(value)
+    return typeStr.replace(/(.*)\[object (.*)]/g, '$1$2')
+  } catch (e) {
+    return 'Undefined'
+  }
+}
+
+export function isNumber (value) {
+  return getValueType(value) === 'Number' && !isNaN(value)
 }
