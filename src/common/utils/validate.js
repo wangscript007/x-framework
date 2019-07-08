@@ -1,14 +1,14 @@
-import { getValueType, isNumber } from './index'
+import { getValueType, getStrLength, isEmpty, isNumber } from './index'
 
 /* 正则 */
 const PATTERNS = {
   NUMBER: /^[0-9]*$/, /* 纯数字 */
   INTEGER: /^(-?[1-9]*[1-9][0-9]*|0)$/, /* 可带减号，非0开头的整数 */
-  FLOAT: /^((-?[1-9]+(\.\d+)?)|(-?0\.\d+)|0)$/, /* 浮点数，可带减号，过滤“0n.”、“-0n.”、“00.”、“-00.”、“-0”非法格式  /^-?([1-9]+|0)(\.\d+)?$/ */
+  FLOAT: /^((-?[1-9]+[0-9]*(\.\d+)?)|(-?0\.\d+)|0)$/, /* 浮点数，可带减号，过滤“0n.”、“-0n.”、“00.”、“-00.”、“-0”非法格式  /^-?([1-9]+|0)(\.\d+)?$/ */
   USERNAME: /^\w+$/, /* 数字、英文字母或者下划线 */
-  PASSWORD_S: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-强（字母+数字+特殊字符） */
+  PASSWORD_H: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*]+$)(?![\d!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-强（字母+数字+特殊字符） */
   PASSWORD_M: /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, /* 密码-中（字母+数字，字母+特殊字符，数字+特殊字符） */
-  PASSWORD_W: /^\w+$/, /* 密码-弱（数字，字母，下划线） */
+  PASSWORD_L: /^\w+$/, /* 密码-弱（数字，字母，下划线） */
   ID_CODE: /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/, /* 身份证校验码 */
   ID_DATE: /^(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)$/, /* 身份证日期码 */
   ID_PROV: /^[1-9][0-9]/, /* 身份证地区码 */
@@ -22,55 +22,159 @@ const PATTERNS = {
   CAR_E: /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}(([0-9]{5}[DF]$)|([DF][A-HJ-NP-Z0-9][0-9]{4}$))/ /* 新能源汽车 */
 }
 
+/* 默认触发方式 */
+const DEFAULT_TRIGGER = 'change'
+
+/* 验证器 */
 const validators = {
-  /* 非空 */
-  require (value, name) {
-    const valueType = getValueType(value)
-    const valid = !(valueType === 'Null' || valueType === 'Undefined' || (valueType === 'String' && value === ''))
-    return {
-      valid,
-      error: valid ? null : new Error(`${name || '该项'}为必填项`)
+  /*
+   * 非空校验
+   * options.min：最小长度
+   * options.max：最大长度
+   */
+  require (value, name, options) {
+    const valid = !isEmpty(value)
+    if (!valid) {
+      return { valid: false, error: new Error(`${name || '该项'}为必填项`) }
     }
+    const { min, max } = Object.assign({ min: null, max: null }, options)
+    if (isNumber(min) || isNumber(max)) {
+      return this.length(value, name, { min, max })
+    }
+    return { valid: true, error: null }
   },
-  /* 验证纯数字 */
-  number (value, name) {
+  /*
+   * 数字校验
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   */
+  number (value, name, options) {
+    const { require, min, max } = Object.assign({ require: false, min: null, max: null }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.NUMBER.test(value)
-    return {
-      valid,
-      error: valid ? null : new Error(`${name || '该项'}只能输入数字`)
+    if (!valid) {
+      return { valid: false, error: new Error(`${name || '该项'}只能输入数字`) }
     }
+    if (isNumber(min) || isNumber(max)) {
+      return this.length(value, name, { min, max })
+    }
+    return { valid: true, error: null }
   },
-  /* 整数 */
+  /*
+   * 字符串长度校验
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   */
+  length (value, name, options) {
+    const { require, min, max } = Object.assign({ require: false, min: null, max: null }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
+    const minValid = isNumber(min)
+    const maxValid = isNumber(max)
+    if (!minValid && !maxValid) {
+      return { valid: true, error: null }
+    }
+    let valid = false
+    let message = ''
+    const valueLength = getStrLength(value)
+    if (minValid && maxValid) {
+      valid = min <= valueLength && valueLength <= max
+      message = `${name || '该项'}的长度必须在 ${min} - ${max} 个字符之间`
+      return { valid, error: valid ? null : new Error(message) }
+    }
+    valid = minValid ? (min <= valueLength) : (valueLength <= max)
+    message = `${name || '该项'}的长度必须${minValid ? '大' : '小'}于或等于 ${minValid ? min : max} 个字符`
+    return { valid, error: valid ? null : new Error(message) }
+  },
+  /*
+   * 整数校验
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   * options.include：是否包含
+   */
   integer (value, name, options) {
+    const { require, min, max, include } = Object.assign({
+      require: false,
+      min: null,
+      max: null,
+      include: true
+    }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.INTEGER.test(value)
     if (!valid) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入有效整数`) }
     }
-    options = Object.assign({ min: null, max: null, include: true }, options)
-    const { min, max } = options
     if (isNumber(min) || isNumber(max)) {
-      this.range(parseInt(value), name, options)
-      return
+      return this.range(parseInt(value), name, { min, max, include })
     }
     return { valid: true, error: null }
   },
-  /* 浮点数 */
+  /*
+   * 浮点数校验
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   * options.include：是否包含
+   */
   float (value, name, options) {
+    const { require, min, max, include } = Object.assign({
+      require: false,
+      min: null,
+      max: null,
+      include: true
+    }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.FLOAT.test(value)
     if (!valid) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入有效浮点数`) }
     }
-    options = Object.assign({ min: null, max: null, include: true }, options)
-    const { min, max } = options
     if (isNumber(min) || isNumber(max)) {
-      this.range(parseFloat(value), name, options)
-      return
+      return this.range(parseFloat(value), name, { min, max, include })
     }
     return { valid: true, error: null }
   },
-  /* 范围 */
+  /*
+   * 数值大小校验
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   * options.include：是否包含
+   */
   range (value, name, options) {
-    const { min, max, include } = Object.assign({ min: null, max: null, include: true }, options)
+    const { require, min, max, include } = Object.assign({
+      require: false,
+      min: null,
+      max: null,
+      include: true
+    }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const minValid = isNumber(min)
     const maxValid = isNumber(max)
     if (!minValid && !maxValid) {
@@ -87,29 +191,76 @@ const validators = {
     message = `${name || '该项'}必须${minValid ? '大' : '小'}于${include ? '或等于' : ''} ${minValid ? min : max}`
     return { valid, error: valid ? null : new Error(message) }
   },
-  /* 用户名 */
-  username (value, name) {
+  /*
+   * 用户名校验
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   */
+  username (value, name, options) {
+    const { require, min, max } = Object.assign({ require: false, min: null, max: null }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.USERNAME.test(value)
-    return {
-      valid,
-      error: valid ? null : new Error(`${name || '用户名'}只能由数字、英文字母或者下划线组成`)
+    if (!valid) {
+      return { valid: false, error: new Error(`${name || '该项'}只能由数字、英文字母或者下划线组成`) }
     }
+    if (isNumber(min) || isNumber(max)) {
+      return this.length(value, name, { min, max })
+    }
+    return { valid: true, error: null }
   },
-  /* 密码 */
+  /*
+   * 密码校验
+   * options.level：严格等级
+   * options.require：是否必填
+   * options.min：最小长度
+   * options.max：最大长度
+   */
   password (value, name, options) {
-    options = Object.assign({ intensity: 'W' }, options)
-    if (!require && !value) {
-      return { valid: true }
+    const { level, require, min, max } = Object.assign({ level: 'L', require: false, min: null, max: null }, options)
+    if (require) {
+      console.log('验证必填')
+      return this.require(value, name, { require })
     }
-    const valid = PATTERNS[`PASSWORD_${options.intensity}`].test(value)
-    const tips = options.intensity === 'S' ? '必须由字母、数字和特殊字符组成' : options.intensity === 'M' ? '必须包含字母、数字、特殊字符中2种字符' : '只能由数字、字母、下划线组成'
-    return {
-      valid,
-      error: valid ? null : new Error(`${name || '密码'}${tips}`)
+    if (isEmpty(value)) {
+      console.log('空')
+      return { valid: true, error: null }
     }
+    const messages = {
+      H: '必须由字母、数字和特殊字符组成',
+      M: '必须包含字母、数字、特殊字符中2种字符',
+      L: '只能由数字、字母、下划线组成'
+    }
+    const valid = PATTERNS[`PASSWORD_${level}`].test(value)
+    if (!valid) {
+      console.log('验证出错')
+      return { valid: false, error: new Error(`${name || '密码'}${messages[level]}`) }
+    }
+    if (isNumber(min) || isNumber(max)) {
+      console.log('验证大小')
+      this.length(value, name, { min, max })
+      return
+    }
+    console.log('验证通过')
+    return { valid: true, error: null }
   },
-  /* 身份证 */
-  id (value, name) {
+  /*
+   * 身份证校验，中国大陆适用
+   * options.require：是否必填
+   */
+  id (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     /* 检验身份证校验码 */
     function _checkCode (val) {
       const factor = ['7', '9', '10', '5', '8', '4', '2', '1', '6', '3', '7', '9', '10', '5', '8', '4', '2']
@@ -191,66 +342,144 @@ const validators = {
       error: valid ? null : new Error(`${name || '身份证号码'}格式错误`)
     }
   },
-  /* 座机、传真 */
-  tel (value, name) {
+  /*
+   * 手机号校验，中国大陆适用
+   * options.require：是否必填
+   */
+  mobile (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
+    const valid = PATTERNS.MOBILE.test(value)
+    return {
+      valid,
+      error: valid ? null : new Error(`${name || '手机号码'}格式错误`)
+    }
+  },
+  /*
+   * 座机、传真校验
+   * options.require：是否必填
+   */
+  tel (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.TEL.test(value)
     return {
       valid,
       error: valid ? null : new Error(`${name || '号码'}格式错误`)
     }
   },
-  /* 联系方式 */
-  contact (value, name) {
+  /*
+   * 联系方式校验，包含mobile和tel
+   * options.require：是否必填
+   */
+  contact (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.MOBILE.test(value) || PATTERNS.TEL.test(value)
     return {
       valid,
       error: valid ? null : new Error(`${name || '号码'}格式错误`)
     }
   },
-  /* email */
-  email (value, name) {
+  /*
+   * email校验
+   * options.require：是否必填
+   */
+  email (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.EMAIL.test(value)
     return {
       valid,
       error: valid ? null : new Error(`${name || '邮箱'}格式错误`)
     }
   },
-  /* url */
-  url (value, name) {
-    // const strRegex = '^((https|http|ftp|rtsp|mms)?://)' +
-    //   '?(([0-9a-z_!~*\'().&=+$%-]+: )?[0-9a-z_!~*\'().&=+$%-]+@)?' + /* ftp的user@ */
-    //   '(([0-9]{1,3}.){3}[0-9]{1,3}' + /* IP形式的URL- 199.194.52.184 */
-    //   '|' + /* 允许IP和DOMAIN（域名）*/
-    //   '([0-9a-z_!~*\'()-]+.)*' + /* 域名- www.*/
-    //   '([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].' + /* 二级域名 */
-    //   '[a-z]{2,6})' + /* 一级domain- .com 或 .museum */
-    //   '(:[0-9]{1,4})?' + /* 端口- :80  */
-    //   '((/?)|' + /* a slash isn't required if there is no file name */
-    //   '(/[0-9a-z_!~*\'().;?:@&=+$,%#-]+)+/?)$'
+  /*
+   * url校验
+   * options.require：是否必填
+   */
+  url (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.URL.test(value)
     return {
       valid,
       error: valid ? null : new Error(`${name || 'Url'}格式错误`)
     }
   },
-  /* qq */
-  qq (value, name) {
+  /*
+   * qq号码校验
+   * options.require：是否必填
+   */
+  qq (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.QQ.test(value)
     return {
       valid,
       error: valid ? null : new Error(`${name || 'QQ号'}格式错误`)
     }
   },
-  /* 微信号 */
-  wechat (value, name) {
+  /*
+   * 微信号码校验
+   * options.require：是否必填
+   */
+  wechat (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.WECHAT.test(value)
     return {
       valid,
       error: valid ? null : new Error(`${name || '微信号'}格式错误`)
     }
   },
-  /* 车牌号 */
-  car (value, name) {
+  /*
+   * 车牌号校验，中国大陆适用
+   * options.require：是否必填
+   */
+  car (value, name, options) {
+    const { require } = Object.assign({ require: false }, options)
+    if (require) {
+      return this.require(value, name, { require })
+    }
+    if (isEmpty(value)) {
+      return { valid: true, error: null }
+    }
     const valid = PATTERNS.CAR_N.test(value) || PATTERNS.CAR_E.test(value)
     return {
       valid,
@@ -259,63 +488,68 @@ const validators = {
   }
 }
 
-/* 验证器 */
-// function extendValidator (type, name = '', options) {
-//   options = Object.assign({ require: false }, options)
-//   return (rule, value, callback) => {
-//     if (!value) {
-//       if (options.require) {
-//         callback(new Error(`${name || '该项'}为必填项`))
-//       } else {
-//         callback()
-//       }
-//       return
-//     }
-//     const res = validateTypes[type](value, name, options)
-//     res.valid ? callback() : callback(res.error)
-//   }
-// }
-
-/*
-* [
-*   {
-*     type: '', require、date、array、extend-validator
-*     name: '',
-*     options: {
-*       min：
-*       max:
-*       include:
-*     }
-*   }
-* ]
-*/
-
-/*
-*  如果参数是array类型，则返回一组验证器定义对象array
-*  如果参数是一个object类型，则返回一个验证器对象
-* */
-
-function validator (param) {
-  const createValidator = function (object) {
-    if (!object || !object.type) {
-      return
+/* 创建验证器对象 */
+function createValidator (validator, name) {
+  if (!validator) {
+    return null
+  }
+  const { type, trigger } = validator
+  /* 没有定义type或者不包含在扩展验证中，使用element原生验证 */
+  if (!type || !Object.keys(validators).includes(type)) {
+    return Object.assign({ require: false, message: null, trigger: trigger || DEFAULT_TRIGGER }, validator)
+  }
+  /* 包含在扩展验证中的，使用扩展验证 */
+  const validatorOptionKeys = Object.keys(validator)
+  const options = {}
+  for (const key of validatorOptionKeys) {
+    if (!['type', 'trigger'].includes(key)) {
+      options[key] = validator[key]
     }
-    /* 两种处理方式 */
-    /* 一、包含在扩展验证中的，使用扩展验证 */
-    /* 二、非包含在扩展验证中的，使用element验证 */
   }
+  return {
+    validator: (rule, value, callback) => {
+      const res = validators[type](value, name, options)
+      res.valid ? callback() : callback(res.error)
+    },
+    trigger: trigger || DEFAULT_TRIGGER
+  }
+}
 
+/*
+* 返回相应验证器
+* validator：                                 验证器定义参数
+*                                             当值为Object类型时，返回单个object类型的验证器
+*                                             当值为Array类型时，返回array类型的多个验证器
+* validator.type:                             验证器类型
+* validator.require:                          是否必填
+* validator.min:                              最小长度/最小值
+* validator.max:                              最大长度/最大值
+* validator.include：                         设置最大值或最小值时，是否以包含来验证
+* validator.level：                           等级，password验证器专用
+* validator.trigger：                         验证触发器
+*
+* name:                                       用于提示的字段名
+*/
+function validator (validator, name = '') {
   /* 参数为object类型，返回验证器定义对象 */
-  if (Object.prototype.toString.call(param) === '[Object Object]') {
-
+  if (getValueType(validator) === 'Object') {
+    return createValidator(validator, name)
   }
-
   /* 参数为array类型，返回验证器定义对象array */
-  if (Array.isArray(param)) {
-
+  if (getValueType(validator) === 'Array') {
+    if (!validator.length) {
+      return null
+    }
+    if (validator.length === 1) {
+      return createValidator(name, validator[0])
+    }
+    const validators = []
+    for (const options of validator) {
+      validators.push(createValidator(name, options))
+    }
+    return validators
   }
-
-  return {}
+  return null
 }
 
 export default validator

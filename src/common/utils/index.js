@@ -38,6 +38,10 @@ export function shuffle (arr) {
   return _arr
 }
 
+export function getStrLength (str = '') {
+  return isEmpty(str) ? 0 : str.replace(/[\u0391-\uFFE5]/g, 'aa').length
+}
+
 export function getValueType (value) {
   try {
     const typeStr = Object.prototype.toString.call(value)
@@ -49,4 +53,17 @@ export function getValueType (value) {
 
 export function isNumber (value) {
   return getValueType(value) === 'Number' && !isNaN(value)
+}
+
+export function isEmpty (value) {
+  if (typeof value === 'boolean') {
+    return false
+  }
+  if (value instanceof Array) {
+    if (value.length === 0) return true
+  }
+  if (value instanceof Object) {
+    if (JSON.stringify(value) === '{}') return true
+  }
+  return value === 'null' || value == null || value === 'undefined' || value === undefined || value === ''
 }
