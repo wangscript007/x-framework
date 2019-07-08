@@ -50,17 +50,16 @@
               </el-col>
             </el-row>
           </el-col>
-          <el-col :md="24">
-            <el-form-item
-              class="text-center"
-            >
-              <el-button
-                type="primary"
-                @click="submitForm('strForm')"
-              >提交
-              </el-button>
-              <el-button @click="resetForm('strForm')">重置</el-button>
-            </el-form-item>
+          <el-col
+            :md="24"
+            class="text-center"
+          >
+            <el-button
+              type="primary"
+              @click="submitForm('strForm')"
+            >提交
+            </el-button>
+            <el-button @click="resetForm('strForm')">重置</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -156,17 +155,16 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :md="24">
-              <el-form-item
-                class="text-center"
-              >
-                <el-button
-                  type="primary"
-                  @click="submitForm('integerForm')"
-                >提交
-                </el-button>
-                <el-button @click="resetForm('integerForm')">重置</el-button>
-              </el-form-item>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('integerForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('integerForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -263,17 +261,16 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :md="24">
-              <el-form-item
-                class="text-center"
-              >
-                <el-button
-                  type="primary"
-                  @click="submitForm('floatForm')"
-                >提交
-                </el-button>
-                <el-button @click="resetForm('floatForm')">重置</el-button>
-              </el-form-item>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('floatForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('floatForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -419,17 +416,16 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :md="24">
-              <el-form-item
-                class="text-center"
-              >
-                <el-button
-                  type="primary"
-                  @click="submitForm('usualForm')"
-                >提交
-                </el-button>
-                <el-button @click="resetForm('usualForm')">重置</el-button>
-              </el-form-item>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('usualForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('usualForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -554,17 +550,16 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :md="24">
-              <el-form-item
-                class="text-center"
-              >
-                <el-button
-                  type="primary"
-                  @click="submitForm('elForm')"
-                >提交
-                </el-button>
-                <el-button @click="resetForm('elForm')">重置</el-button>
-              </el-form-item>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('elForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('elForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -619,17 +614,16 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :md="24">
-              <el-form-item
-                class="text-center"
-              >
-                <el-button
-                  type="primary"
-                  @click="submitForm('eqForm')"
-                >提交
-                </el-button>
-                <el-button @click="resetForm('eqForm')">重置</el-button>
-              </el-form-item>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('eqForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('eqForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -667,17 +661,16 @@
                 </el-col>
               </el-row>
             </el-col>
-            <el-col :md="24">
-              <el-form-item
-                class="text-center"
-              >
-                <el-button
-                  type="primary"
-                  @click="submitForm('asyncForm')"
-                >提交
-                </el-button>
-                <el-button @click="resetForm('asyncForm')">重置</el-button>
-              </el-form-item>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('asyncForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('asyncForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -784,7 +777,7 @@ export default {
       },
       rules: {
         /* 字符串 */
-        strRequire: validator({ type: 'require' }),
+        strRequire: validator([{ type: 'require' }, { type: 'length', min: 3, max: 5 }]),
         strLength: validator({ type: 'length', min: 3, max: 5 }),
         number: validator({ type: 'number' }),
         /* 整数 */

@@ -45,18 +45,11 @@ const validators = {
   },
   /*
    * 数字校验
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    */
   number (value, name, options) {
-    const { require, min, max } = Object.assign({ require: false, min: null, max: null }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+    const { min, max } = Object.assign({ min: null, max: null }, options)
     const valid = PATTERNS.NUMBER.test(value)
     if (!valid) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入数字`) }
@@ -68,18 +61,11 @@ const validators = {
   },
   /*
    * 字符串长度校验
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    */
   length (value, name, options) {
-    const { require, min, max } = Object.assign({ require: false, min: null, max: null }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+    const { min, max } = Object.assign({ min: null, max: null }, options)
     const minValid = isNumber(min)
     const maxValid = isNumber(max)
     if (!minValid && !maxValid) {
@@ -99,24 +85,12 @@ const validators = {
   },
   /*
    * 整数校验
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    * options.include：是否包含
    */
   integer (value, name, options) {
-    const { require, min, max, include } = Object.assign({
-      require: false,
-      min: null,
-      max: null,
-      include: true
-    }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+    const { min, max, include } = Object.assign({ min: null, max: null, include: true }, options)
     const valid = PATTERNS.INTEGER.test(value)
     if (!valid) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入有效整数`) }
@@ -128,24 +102,12 @@ const validators = {
   },
   /*
    * 浮点数校验
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    * options.include：是否包含
    */
   float (value, name, options) {
-    const { require, min, max, include } = Object.assign({
-      require: false,
-      min: null,
-      max: null,
-      include: true
-    }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+    const { min, max, include } = Object.assign({ min: null, max: null, include: true }, options)
     const valid = PATTERNS.FLOAT.test(value)
     if (!valid) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入有效浮点数`) }
@@ -157,24 +119,16 @@ const validators = {
   },
   /*
    * 数值大小校验
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    * options.include：是否包含
    */
   range (value, name, options) {
-    const { require, min, max, include } = Object.assign({
-      require: false,
+    const { min, max, include } = Object.assign({
       min: null,
       max: null,
       include: true
     }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
     const minValid = isNumber(min)
     const maxValid = isNumber(max)
     if (!minValid && !maxValid) {
@@ -193,18 +147,11 @@ const validators = {
   },
   /*
    * 用户名校验
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    */
   username (value, name, options) {
-    const { require, min, max } = Object.assign({ require: false, min: null, max: null }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+    const { min, max } = Object.assign({ min: null, max: null }, options)
     const valid = PATTERNS.USERNAME.test(value)
     if (!valid) {
       return { valid: false, error: new Error(`${name || '该项'}只能由数字、英文字母或者下划线组成`) }
@@ -217,20 +164,11 @@ const validators = {
   /*
    * 密码校验
    * options.level：严格等级
-   * options.require：是否必填
    * options.min：最小长度
    * options.max：最大长度
    */
   password (value, name, options) {
-    const { level, require, min, max } = Object.assign({ level: 'L', require: false, min: null, max: null }, options)
-    if (require) {
-      console.log('验证必填')
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      console.log('空')
-      return { valid: true, error: null }
-    }
+    const { level, min, max } = Object.assign({ level: 'L', min: null, max: null }, options)
     const messages = {
       H: '必须由字母、数字和特殊字符组成',
       M: '必须包含字母、数字、特殊字符中2种字符',
@@ -238,29 +176,17 @@ const validators = {
     }
     const valid = PATTERNS[`PASSWORD_${level}`].test(value)
     if (!valid) {
-      console.log('验证出错')
       return { valid: false, error: new Error(`${name || '密码'}${messages[level]}`) }
     }
     if (isNumber(min) || isNumber(max)) {
-      console.log('验证大小')
-      this.length(value, name, { min, max })
-      return
+      return this.length(value, name, { min, max })
     }
-    console.log('验证通过')
     return { valid: true, error: null }
   },
   /*
    * 身份证校验，中国大陆适用
-   * options.require：是否必填
    */
-  id (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  id (value, name) {
     /* 检验身份证校验码 */
     function _checkCode (val) {
       const factor = ['7', '9', '10', '5', '8', '4', '2', '1', '6', '3', '7', '9', '10', '5', '8', '4', '2']
@@ -277,6 +203,7 @@ const validators = {
       }
       return false
     }
+
     /* 检验身份证日期码 */
     function _checkBirthday (val) {
       if (PATTERNS.ID_DATE.test(val)) {
@@ -290,6 +217,7 @@ const validators = {
       }
       return false
     }
+
     /* 检验身份证地区码 */
     function _checkProvince (val) {
       const provinceMap = {
@@ -335,6 +263,7 @@ const validators = {
       }
       return false
     }
+
     /* 验证 */
     const valid = _checkCode(value) && _checkBirthday(value.substring(6, 14)) && _checkProvince(value.substring(0, 2))
     return {
@@ -344,16 +273,8 @@ const validators = {
   },
   /*
    * 手机号校验，中国大陆适用
-   * options.require：是否必填
    */
-  mobile (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  mobile (value, name) {
     const valid = PATTERNS.MOBILE.test(value)
     return {
       valid,
@@ -362,16 +283,8 @@ const validators = {
   },
   /*
    * 座机、传真校验
-   * options.require：是否必填
    */
-  tel (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  tel (value, name) {
     const valid = PATTERNS.TEL.test(value)
     return {
       valid,
@@ -380,16 +293,8 @@ const validators = {
   },
   /*
    * 联系方式校验，包含mobile和tel
-   * options.require：是否必填
    */
-  contact (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  contact (value, name) {
     const valid = PATTERNS.MOBILE.test(value) || PATTERNS.TEL.test(value)
     return {
       valid,
@@ -398,16 +303,8 @@ const validators = {
   },
   /*
    * email校验
-   * options.require：是否必填
    */
-  email (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  email (value, name) {
     const valid = PATTERNS.EMAIL.test(value)
     return {
       valid,
@@ -416,16 +313,8 @@ const validators = {
   },
   /*
    * url校验
-   * options.require：是否必填
    */
-  url (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  url (value, name) {
     const valid = PATTERNS.URL.test(value)
     return {
       valid,
@@ -434,16 +323,8 @@ const validators = {
   },
   /*
    * qq号码校验
-   * options.require：是否必填
    */
-  qq (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  qq (value, name) {
     const valid = PATTERNS.QQ.test(value)
     return {
       valid,
@@ -452,16 +333,8 @@ const validators = {
   },
   /*
    * 微信号码校验
-   * options.require：是否必填
    */
-  wechat (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  wechat (value, name) {
     const valid = PATTERNS.WECHAT.test(value)
     return {
       valid,
@@ -470,16 +343,8 @@ const validators = {
   },
   /*
    * 车牌号校验，中国大陆适用
-   * options.require：是否必填
    */
-  car (value, name, options) {
-    const { require } = Object.assign({ require: false }, options)
-    if (require) {
-      return this.require(value, name, { require })
-    }
-    if (isEmpty(value)) {
-      return { valid: true, error: null }
-    }
+  car (value, name) {
     const valid = PATTERNS.CAR_N.test(value) || PATTERNS.CAR_E.test(value)
     return {
       valid,
@@ -499,8 +364,8 @@ function createValidator (validator, name) {
     return Object.assign({ require: false, message: null, trigger: trigger || DEFAULT_TRIGGER }, validator)
   }
   /* 包含在扩展验证中的，使用扩展验证 */
+  const options = { require: false }
   const validatorOptionKeys = Object.keys(validator)
-  const options = {}
   for (const key of validatorOptionKeys) {
     if (!['type', 'trigger'].includes(key)) {
       options[key] = validator[key]
@@ -508,6 +373,17 @@ function createValidator (validator, name) {
   }
   return {
     validator: (rule, value, callback) => {
+      if (type !== 'require') {
+        if (options.require) {
+          const res = validators.require(value, name)
+          if (!res.valid) {
+            callback(res.error)
+          }
+        }
+        if (isEmpty(value)) {
+          callback()
+        }
+      }
       const res = validators[type](value, name, options)
       res.valid ? callback() : callback(res.error)
     },
@@ -541,11 +417,11 @@ function validator (validator, name = '') {
       return null
     }
     if (validator.length === 1) {
-      return createValidator(name, validator[0])
+      return createValidator(validator[0], name)
     }
     const validators = []
     for (const options of validator) {
-      validators.push(createValidator(name, options))
+      validators.push(createValidator(options, name))
     }
     return validators
   }

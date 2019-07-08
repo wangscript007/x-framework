@@ -59,11 +59,27 @@ export function isEmpty (value) {
   if (typeof value === 'boolean') {
     return false
   }
-  if (value instanceof Array) {
-    if (value.length === 0) return true
-  }
-  if (value instanceof Object) {
-    if (JSON.stringify(value) === '{}') return true
+  if (value instanceof Array && value.length === 0 || value instanceof Object && JSON.stringify(value) === '{}') {
+    return true
   }
   return value === 'null' || value == null || value === 'undefined' || value === undefined || value === ''
+}
+
+export function formatStr (str = '', params) {
+  if (isEmpty(params)) {
+    return str
+  }
+  if (getValueType(params) === 'Object') {
+    for (const key of Object.keys(params)) {
+      str = str.replace(new RegExp(`{${key}}`, 'g'), params[key])
+    }
+    return str
+  }
+  if (getValueType(params) === 'Array') {
+    for (const param of params) {
+      str = str.replace(new RegExp(`{${param}}`, 'g'), param)
+    }
+    return str
+  }
+  return str
 }
