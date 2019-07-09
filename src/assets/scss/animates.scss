@@ -11,11 +11,11 @@
 
   &-layout {
     &-enter-active {
-      animation: zoomIn 1s;
+      animation: fadeIn 1s;
     }
 
     &-leave-active {
-      animation: zoomOut 1s;
+      animation: fadeOut 1s;
     }
   }
 

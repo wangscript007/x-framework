@@ -119,13 +119,7 @@
 
 /* 清除浮动 */
 .fix {
-  zoom: 1;
-
-  &:after {
-    content: "";
-    display: block;
-    clear: both
-  }
+  @include x-fix
 }
 
 /* 间距 */

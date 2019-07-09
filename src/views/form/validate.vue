@@ -629,7 +629,10 @@
         </el-form>
       </template>
     </el-card>
-    <el-card shadow="never">
+    <el-card
+      shadow="never"
+      class="margin-bottom-2x"
+    >
       <template v-slot:header>
         <div class="fix">
           <strong class="el-card__header-title">异步</strong>
@@ -671,6 +674,75 @@
               >提交
               </el-button>
               <el-button @click="resetForm('asyncForm')">重置</el-button>
+            </el-col>
+          </el-row>
+        </el-form>
+      </template>
+    </el-card>
+    <el-card shadow="never">
+      <template v-slot:header>
+        <div class="fix">
+          <strong class="el-card__header-title">文件上传</strong>
+        </div>
+      </template>
+      <template v-slot:default>
+        <el-form
+          ref="uploadForm"
+          :model="uploadForm"
+          :rules="rules"
+          :label-width="formLabelWidth"
+          status-icon
+        >
+          <el-row>
+            <el-col
+              :xl="{span: 18, offset:3}"
+              :lg="{span: 20, offset: 2}"
+              :md="{span: 22, offset: 1}"
+              :sm="{span: 24}"
+            >
+              <el-row :gutter="24">
+                <el-col :md="12">
+                  <el-form-item
+                    label="文件"
+                    prop="normal"
+                  >
+                    <el-upload
+                      class="upload-demo"
+                      action="#"
+                      multiple
+                      :file-list="uploadForm.normal"
+                      :limit="3"
+                      :before-remove="beforeRemove"
+                      :on-preview="handlePreview"
+                      :on-remove="handleRemove"
+                      :on-exceed="handleExceed"
+                      :before-upload="beforeUpload"
+                    >
+                      <el-button
+                        type="primary"
+                        icon="el-icon-upload"
+                      >选择
+                      </el-button>
+                      <template v-slot:tip>
+                        <div class="el-upload__tip">
+                          只能上传jpg/png文件，且不超过500kb
+                        </div>
+                      </template>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-col>
+            <el-col
+              :md="24"
+              class="text-center"
+            >
+              <el-button
+                type="primary"
+                @click="submitForm('uploadForm')"
+              >提交
+              </el-button>
+              <el-button @click="resetForm('uploadForm')">重置</el-button>
             </el-col>
           </el-row>
         </el-form>
@@ -776,6 +848,10 @@ export default {
       asyncForm: {
         usernameAsync: ''
       },
+      /* 上传 */
+      uploadForm: {
+        normal: []
+      },
       rules: {
         /* 字符串 */
         strRequire: validator({ type: 'length', required: true, min: 3, max: 5 }),
@@ -860,10 +936,11 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },
+    /* 验证是否相等 */
     validatePassEquate (rule, value, callback) {
       value === this.eqForm.password ? callback() : callback(new Error('两次输入密码不一致!'))
     },
-    /* 注意，element-ui 验证组件中的validator函数暂不支持async await语法 */
+    /* 用户名异步验证 注意：element-ui 验证组件中的validator函数暂不支持async await语法*/
     validUsernameAsync: debounce(function (rule, value, callback) {
       if (!value) {
         return
@@ -886,7 +963,25 @@ export default {
       }).catch(e => {
         return callback(new Error(e.message || '校验失败，请重试'))
       })
-    }, VALID_USERNAME_DELAY)
+    }, VALID_USERNAME_DELAY),
+    /* 阻止upload组件自动上传 */
+    beforeUpload (file) {
+      // this.formData.append('file', file)
+      return false
+    },
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview (file) {
+      console.log(file)
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove (file, fileList) {
+      // return this.$confirm(`确定移除 ${file.name}？`)
+      return false
+    }
   }
 }
 </script>

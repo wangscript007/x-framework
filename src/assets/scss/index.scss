@@ -34,8 +34,8 @@ body {
   overflow-x: hidden;
 }
 
-@import "./element.scss";
 @import "./mixin.scss";
+@import "./element.scss";
 @import "./animates.scss";
 @import "./layout.scss";
 @import "./scene.scss";
