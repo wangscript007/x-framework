@@ -52,7 +52,7 @@ export function getValueType (value) {
 }
 
 export function isNumber (value) {
-  return getValueType(value) === 'Number' && !isNaN(value)
+  return getValueType(value) === 'Number' && !isNaN(value) && /^((-?[1-9]+[0-9]*(\.\d+)?)|(-?0\.\d+)|0)$/.test(value)
 }
 
 export function isEmpty (value) {
@@ -62,7 +62,7 @@ export function isEmpty (value) {
   if (value instanceof Array && value.length === 0 || value instanceof Object && JSON.stringify(value) === '{}') {
     return true
   }
-  return value === 'null' || value == null || value === 'undefined' || value === undefined || value === ''
+  return ['null', null, 'undefined', undefined, ''].includes(value)
 }
 
 export function formatStr (str = '', params) {

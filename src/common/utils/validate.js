@@ -28,30 +28,13 @@ const DEFAULT_TRIGGER = 'change'
 /* 验证器 */
 const validators = {
   /*
-   * 非空校验
-   * options.min：最小长度
-   * options.max：最大长度
-   */
-  require (value, name, options) {
-    const valid = !isEmpty(value)
-    if (!valid) {
-      return { valid: false, error: new Error(`${name || '该项'}为必填项`) }
-    }
-    const { min, max } = Object.assign({ min: null, max: null }, options)
-    if (isNumber(min) || isNumber(max)) {
-      return this.length(value, name, { min, max })
-    }
-    return { valid: true, error: null }
-  },
-  /*
    * 数字校验
    * options.min：最小长度
    * options.max：最大长度
    */
   number (value, name, options) {
     const { min, max } = Object.assign({ min: null, max: null }, options)
-    const valid = PATTERNS.NUMBER.test(value)
-    if (!valid) {
+    if (!PATTERNS.NUMBER.test(value)) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入数字`) }
     }
     if (isNumber(min) || isNumber(max)) {
@@ -66,22 +49,18 @@ const validators = {
    */
   length (value, name, options) {
     const { min, max } = Object.assign({ min: null, max: null }, options)
-    const minValid = isNumber(min)
-    const maxValid = isNumber(max)
-    if (!minValid && !maxValid) {
+    const minEffective = isNumber(min)
+    const maxEffective = isNumber(max)
+    if (!minEffective && !maxEffective) {
       return { valid: true, error: null }
     }
-    let valid = false
-    let message = ''
     const valueLength = getStrLength(value)
-    if (minValid && maxValid) {
-      valid = min <= valueLength && valueLength <= max
-      message = `${name || '该项'}的长度必须在 ${min} - ${max} 个字符之间`
-      return { valid, error: valid ? null : new Error(message) }
+    if (minEffective && maxEffective) {
+      const valid = min <= valueLength && valueLength <= max
+      return { valid, error: valid ? null : new Error(`${name || '该项'}的长度必须在 ${min} - ${max} 个字符之间`) }
     }
-    valid = minValid ? (min <= valueLength) : (valueLength <= max)
-    message = `${name || '该项'}的长度必须${minValid ? '大' : '小'}于或等于 ${minValid ? min : max} 个字符`
-    return { valid, error: valid ? null : new Error(message) }
+    const valid = minEffective ? (min <= valueLength) : (valueLength <= max)
+    return { valid, error: valid ? null : new Error(`${name || '该项'}的长度必须${minEffective ? '大' : '小'}于或等于 ${minEffective ? min : max} 个字符`) }
   },
   /*
    * 整数校验
@@ -91,8 +70,7 @@ const validators = {
    */
   integer (value, name, options) {
     const { min, max, include } = Object.assign({ min: null, max: null, include: true }, options)
-    const valid = PATTERNS.INTEGER.test(value)
-    if (!valid) {
+    if (!PATTERNS.INTEGER.test(value)) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入有效整数`) }
     }
     if (isNumber(min) || isNumber(max)) {
@@ -108,8 +86,7 @@ const validators = {
    */
   float (value, name, options) {
     const { min, max, include } = Object.assign({ min: null, max: null, include: true }, options)
-    const valid = PATTERNS.FLOAT.test(value)
-    if (!valid) {
+    if (!PATTERNS.FLOAT.test(value)) {
       return { valid: false, error: new Error(`${name || '该项'}只能输入有效浮点数`) }
     }
     if (isNumber(min) || isNumber(max)) {
@@ -124,26 +101,24 @@ const validators = {
    * options.include：是否包含
    */
   range (value, name, options) {
-    const { min, max, include } = Object.assign({
-      min: null,
-      max: null,
-      include: true
-    }, options)
-    const minValid = isNumber(min)
-    const maxValid = isNumber(max)
-    if (!minValid && !maxValid) {
+    const { min, max, include } = Object.assign({ min: null, max: null, include: true }, options)
+    const minEffective = isNumber(min)
+    const maxEffective = isNumber(max)
+    if (!minEffective && !maxEffective) {
       return { valid: true, error: null }
     }
-    let valid = false
-    let message = ''
-    if (minValid && maxValid) {
-      valid = include ? min <= value && value <= max : min < value && value < max
-      message = `${name || '该项'}必须大于${include ? '等于' : ''} ${min} 且小于${include ? '等于' : ''} ${max}`
-      return { valid, error: valid ? null : new Error(message) }
+    if (minEffective && maxEffective) {
+      const valid = include ? min <= value && value <= max : min < value && value < max
+      return {
+        valid,
+        error: valid ? null : new Error(`${name || '该项'}必须大于${include ? '等于' : ''} ${min} 且小于${include ? '等于' : ''} ${max}`)
+      }
     }
-    valid = minValid ? (include ? min <= value : min < value) : (include ? value <= max : value < max)
-    message = `${name || '该项'}必须${minValid ? '大' : '小'}于${include ? '或等于' : ''} ${minValid ? min : max}`
-    return { valid, error: valid ? null : new Error(message) }
+    const valid = minEffective ? (include ? min <= value : min < value) : (include ? value <= max : value < max)
+    return {
+      valid,
+      error: valid ? null : new Error(`${name || '该项'}必须${minEffective ? '大' : '小'}于${include ? '或等于' : ''} ${minEffective ? min : max}`)
+    }
   },
   /*
    * 用户名校验
@@ -152,8 +127,7 @@ const validators = {
    */
   username (value, name, options) {
     const { min, max } = Object.assign({ min: null, max: null }, options)
-    const valid = PATTERNS.USERNAME.test(value)
-    if (!valid) {
+    if (!PATTERNS.USERNAME.test(value)) {
       return { valid: false, error: new Error(`${name || '该项'}只能由数字、英文字母或者下划线组成`) }
     }
     if (isNumber(min) || isNumber(max)) {
@@ -174,8 +148,7 @@ const validators = {
       M: '必须包含字母、数字、特殊字符中2种字符',
       L: '只能由数字、字母、下划线组成'
     }
-    const valid = PATTERNS[`PASSWORD_${level}`].test(value)
-    if (!valid) {
+    if (!PATTERNS[`PASSWORD_${level}`].test(value)) {
       return { valid: false, error: new Error(`${name || '密码'}${messages[level]}`) }
     }
     if (isNumber(min) || isNumber(max)) {
@@ -256,12 +229,7 @@ const validators = {
         81: '香港',
         82: '澳门'
       }
-      if (PATTERNS.ID_PROV.test(val)) {
-        if (provinceMap[val]) {
-          return true
-        }
-      }
-      return false
+      return !!(PATTERNS.ID_PROV.test(val) && provinceMap[val])
     }
 
     /* 验证 */
@@ -353,42 +321,50 @@ const validators = {
   }
 }
 
-/* 创建验证器对象 */
-function createValidator (validator, name) {
-  if (!validator) {
-    return null
+function validatorOptionsFilter (validator, keys = []) {
+  if (!keys.length) {
+    return validator
   }
-  const { type, trigger } = validator
-  /* 没有定义type或者不包含在扩展验证中，使用element原生验证 */
-  if (!type || !Object.keys(validators).includes(type)) {
-    return Object.assign({ require: false, message: null, trigger: trigger || DEFAULT_TRIGGER }, validator)
-  }
-  /* 包含在扩展验证中的，使用扩展验证 */
-  const options = { require: false }
+  const options = {}
   const validatorOptionKeys = Object.keys(validator)
   for (const key of validatorOptionKeys) {
-    if (!['type', 'trigger'].includes(key)) {
+    if (!keys.includes(key)) {
       options[key] = validator[key]
     }
   }
-  return {
-    validator: (rule, value, callback) => {
-      if (type !== 'require') {
-        if (options.require) {
-          const res = validators.require(value, name)
-          if (!res.valid) {
-            callback(res.error)
-          }
-        }
-        if (isEmpty(value)) {
+  return options
+}
+
+/* 创建验证器对象 */
+function createValidator (validator, name) {
+  const result = []
+  if (!validator) {
+    return result
+  }
+  const { required, type, trigger } = Object.assign({ required: false, trigger: DEFAULT_TRIGGER }, validator)
+  const validatorKeys = Object.keys(validators)
+  /* 如果required为true，则必须为验证器生成一个element原生的required验证器 */
+  if (required) {
+    result.push({ required: true, message: `${name || '该项'}为必填项`, trigger: trigger || DEFAULT_TRIGGER })
+  }
+  /* 如果type存在，且类型在扩展验证器中，则根据type参数生成扩展验证器 */
+  if (type && validatorKeys.includes(type)) {
+    result.push({
+      validator: (rule, value, callback) => {
+        if (!required && isEmpty(value)) {
           callback()
         }
-      }
-      const res = validators[type](value, name, options)
-      res.valid ? callback() : callback(res.error)
-    },
-    trigger: trigger || DEFAULT_TRIGGER
+        const res = validators[type](value, name, validatorOptionsFilter(validator, ['type', 'trigger', 'required']))
+        res.valid ? callback() : callback(res.error)
+      },
+      trigger
+    })
   }
+  /* type不存在且非require或者type存在且类型不属于扩展验证器，则以element原生验证器处理 */
+  if (type && !validatorKeys.includes(type) || !type && !required) {
+    result.push(Object.assign({ message: '', trigger }, validatorOptionsFilter(validator, ['required'])))
+  }
+  return result
 }
 
 /*
@@ -397,7 +373,7 @@ function createValidator (validator, name) {
 *                                             当值为Object类型时，返回单个object类型的验证器
 *                                             当值为Array类型时，返回array类型的多个验证器
 * validator.type:                             验证器类型
-* validator.require:                          是否必填
+* validator.required:                          是否必填
 * validator.min:                              最小长度/最小值
 * validator.max:                              最大长度/最大值
 * validator.include：                         设置最大值或最小值时，是否以包含来验证

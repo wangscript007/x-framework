@@ -13,7 +13,7 @@
         ref="strForm"
         :model="strForm"
         :rules="rules"
-        label-width="auto"
+        :label-width="formLabelWidth"
         status-icon
       >
         <el-row>
@@ -78,7 +78,7 @@
           ref="integerForm"
           :model="integerForm"
           :rules="rules"
-          label-width="auto"
+          :label-width="formLabelWidth"
           status-icon
         >
           <el-row>
@@ -99,7 +99,7 @@
                 </el-col>
                 <el-col :md="12">
                   <el-form-item
-                    label="整数(必填)"
+                    label="必填"
                     prop="integerRequire"
                   >
                     <el-input v-model.trim="integerForm.integerRequire"></el-input>
@@ -184,7 +184,7 @@
           ref="floatForm"
           :model="floatForm"
           :rules="rules"
-          label-width="auto"
+          :label-width="formLabelWidth"
           status-icon
         >
           <el-row>
@@ -205,7 +205,7 @@
                 </el-col>
                 <el-col :md="12">
                   <el-form-item
-                    label="浮点数(必填)"
+                    label="必填"
                     prop="floatRequire"
                   >
                     <el-input v-model.trim="floatForm.floatRequire"></el-input>
@@ -290,7 +290,7 @@
           ref="usualForm"
           :model="usualForm"
           :rules="rules"
-          label-width="auto"
+          :label-width="formLabelWidth"
           status-icon
         >
           <el-row>
@@ -445,7 +445,7 @@
           ref="elForm"
           :model="elForm"
           :rules="rules"
-          label-width="auto"
+          :label-width="formLabelWidth"
           status-icon
         >
           <el-row>
@@ -579,7 +579,7 @@
           ref="eqForm"
           :model="eqForm"
           :rules="rules"
-          label-width="auto"
+          :label-width="formLabelWidth"
           status-icon
         >
           <el-row>
@@ -640,7 +640,7 @@
           ref="asyncForm"
           :model="asyncForm"
           :rules="rules"
-          label-width="auto"
+          :label-width="formLabelWidth"
           status-icon
         >
           <el-row>
@@ -702,6 +702,7 @@ export default {
   },
   data () {
     return {
+      formLabelWidth: '90px',
       sex: EMI_SEX,
       hobby: ['美食', '运动', '旅游', '政治', '军事', '汽车', '科技', '摄影'],
       nation: EMI_NATION,
@@ -777,12 +778,12 @@ export default {
       },
       rules: {
         /* 字符串 */
-        strRequire: validator([{ type: 'require' }, { type: 'length', min: 3, max: 5 }]),
+        strRequire: validator({ type: 'length', required: true, min: 3, max: 5 }),
         strLength: validator({ type: 'length', min: 3, max: 5 }),
         number: validator({ type: 'number' }),
         /* 整数 */
         integer: validator({ type: 'integer' }),
-        integerRequire: validator({ type: 'integer', require: true }),
+        integerRequire: validator({ type: 'integer', required: true }),
         integerLt: validator({ type: 'integer', max: 10, include: false }),
         integerLtI: validator({ type: 'integer', max: 10 }),
         integerGt: validator({ type: 'integer', min: 10, include: false }),
@@ -791,7 +792,7 @@ export default {
         integerRangeI: validator({ type: 'integer', min: 0, max: 10 }),
         /* 浮点数 */
         float: validator({ type: 'float' }),
-        floatRequire: validator({ type: 'float', require: true }),
+        floatRequire: validator({ type: 'float', required: true }),
         floatLt: validator({ type: 'float', max: 10, include: false }),
         floatLtI: validator({ type: 'float', max: 10 }),
         floatGt: validator({ type: 'float', min: 10, include: false }),
@@ -800,7 +801,7 @@ export default {
         floatRangeI: validator({ type: 'integer', min: 0, max: 10 }),
         /* 常用类型 */
         username: validator({ type: 'username' }, '用户名'),
-        passwordL: validator({ type: 'password', require: true }, '密码'),
+        passwordL: validator({ type: 'password', required: true }, '密码'),
         passwordM: validator({ type: 'password', level: 'M' }, '密码'),
         passwordH: validator({ type: 'password', level: 'H' }, '密码'),
         idCard: validator({ type: 'id' }, '身份证'),
@@ -814,21 +815,21 @@ export default {
         carNo: validator({ type: 'car' }, '车牌号'),
         /* 表单控件 */
         radio: validator({ required: true, message: '请选择性别' }),
-        checkbox: validator({ type: 'array', required: true, message: '请至少选择一个兴趣爱好' }),
+        checkbox: validator({ required: true, type: 'array', message: '请至少选择一个兴趣爱好' }),
         select: validator({ required: true, message: '请选择民族' }),
         region: validator({ required: true, message: '请选择籍贯' }),
-        date: validator({ type: 'date', required: true, message: '请选择日期' }),
-        time: validator({ type: 'date', required: true, message: '请选择时间' }),
+        date: validator({ required: true, type: 'date', message: '请选择日期' }),
+        time: validator({ required: true, type: 'date', message: '请选择时间' }),
         describe: validator({ required: true, message: '请填写描述' }),
         /* 相等 */
-        password: validator({ type: 'password', require: true }, '密码'),
+        password: validator({ type: 'password', required: true }, '密码'),
         rePassword: [
-          validator({ type: 'password', require: true }, '重复密码'),
+          ...validator({ type: 'password', required: true }, '重复密码'),
           { validator: this.validatePassEquate, trigger: 'change' }
         ],
         /* 异步 */
         usernameAsync: [
-          validator({ type: 'username', require: true }, '用户名'),
+          ...validator({ type: 'username', required: true }, '用户名'),
           { validator: this.validUsernameAsync, trigger: 'change' }
         ]
       }
