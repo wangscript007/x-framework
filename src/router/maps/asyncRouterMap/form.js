@@ -46,6 +46,18 @@ const formRouter = {
         icon: 'fa fa-file-text-o',
         iconType: 'class'
       }
+    },
+    /* 表单验证 */
+    {
+      path: 'upload',
+      name: 'UploadForm',
+      component: () => import('@/views/form/upload'),
+      meta: {
+        title: '文件上传',
+        describe: '许很多业务都有上传文件的需求，在x-framework form表单中，文件上传需要做一些特殊处理',
+        icon: 'fa fa-file-text-o',
+        iconType: 'class'
+      }
     }
   ]
 }

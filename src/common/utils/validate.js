@@ -321,6 +321,7 @@ const validators = {
   }
 }
 
+/* 验证器属性过滤 */
 function validatorOptionsFilter (validator, keys = []) {
   if (!keys.length) {
     return validator
@@ -345,7 +346,7 @@ function createValidator (validator, name) {
   const validatorKeys = Object.keys(validators)
   /* 如果required为true，则必须为验证器生成一个element原生的required验证器 */
   if (required) {
-    result.push({ required: true, message: `${name || '该项'}为必填项`, trigger: trigger || DEFAULT_TRIGGER })
+    result.push({ required: true, message: validator.message || `${name || '该项'}为必填项`, trigger: trigger || DEFAULT_TRIGGER })
   }
   /* 如果type存在，且类型在扩展验证器中，则根据type参数生成扩展验证器 */
   if (type && validatorKeys.includes(type)) {
