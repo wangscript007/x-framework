@@ -548,6 +548,19 @@
                     ></el-input>
                   </el-form-item>
                 </el-col>
+                <el-col :md="24">
+                  <el-form-item
+                    label="内容"
+                    prop="editor"
+                  >
+                    <tinymce
+                      ref="editor"
+                      v-model="elForm.editor"
+                      @contentChange="editorChange"
+                    >
+                    </tinymce>
+                  </el-form-item>
+                </el-col>
               </el-row>
             </el-col>
             <el-col
@@ -689,6 +702,7 @@ import Page from '@/components/Page'
 import FormSelect from '@/components/Form/Select'
 import FormCheckbox from '@/components/Form/Checkbox'
 import FormRadio from '@/components/Form/Radio'
+import Tinymce from '@/components/Tinymce'
 
 const VALID_USERNAME_DELAY = 300
 
@@ -698,7 +712,8 @@ export default {
     Page,
     FormSelect,
     FormCheckbox,
-    FormRadio
+    FormRadio,
+    Tinymce
   },
   data () {
     return {
@@ -765,7 +780,8 @@ export default {
         region: '',
         date: '',
         time: '',
-        describe: ''
+        describe: '',
+        editor: ''
       },
       /* 相等 */
       eqForm: {
@@ -821,6 +837,7 @@ export default {
         date: validator({ required: true, type: 'date', message: '请选择日期' }),
         time: validator({ required: true, type: 'date', message: '请选择时间' }),
         describe: validator({ required: true, message: '请填写描述' }),
+        editor: validator({ required: true, message: '请填写内容' }),
         /* 相等 */
         password: validator({ type: 'password', required: true }, '密码'),
         rePassword: [
@@ -847,6 +864,11 @@ export default {
     }
   },
   methods: {
+    /* 编辑器内容改变事件 */
+    editorChange () {
+      this.$refs['elForm'].validateField('editor')
+    },
+    /* 表单提交 */
     submitForm (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -857,6 +879,7 @@ export default {
         }
       })
     },
+    /* 重置表单 */
     resetForm (formName) {
       this.$refs[formName].resetFields()
     },

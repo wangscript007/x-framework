@@ -5,5 +5,6 @@ module.exports = {
   layout: 'default', /* 'default' : 'classic' */
   siderFixed: false,
   headerFixed: false,
-  breadcrumbPosition: 'appHeader' /* 'appHeader' : 'pageHeader' */
+  breadcrumbPosition: 'appHeader', /* 'appHeader' : 'pageHeader' */
+  showSettings: true
 }

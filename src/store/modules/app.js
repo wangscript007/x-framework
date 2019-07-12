@@ -23,7 +23,9 @@ const app = {
       /* 是否固定头部 */
       headerFixed: defaultSetting.headerFixed,
       /* breadcrumb位置 */
-      breadcrumbPosition: defaultSetting.breadcrumbPosition
+      breadcrumbPosition: defaultSetting.breadcrumbPosition,
+      /* 是否显示设置 */
+      showSettings: defaultSetting.showSettings
     }
   },
   mutations: {

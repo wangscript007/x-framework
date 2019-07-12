@@ -3,7 +3,7 @@
     <el-card shadow="never">
       <tinymce
         v-model="content"
-        name="editor"
+        @contentChange="contentChange"
       >
       </tinymce>
       <div v-html="content"></div>
@@ -22,7 +22,12 @@ export default {
   },
   data () {
     return {
-      content: '<p>Welcome to Use Tinymce Editor</p>'
+      content: '<p>请输入内容</p>'
+    }
+  },
+  methods: {
+    contentChange (content) {
+      console.log(content)
     }
   }
 }

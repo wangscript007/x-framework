@@ -4,10 +4,9 @@
  * For LGPL see License.txt in the project root for license information.
  * For commercial licenses see https://www.tiny.cloud/
  *
- * Version: 5.0.3 (2019-03-19)
+ * Version: 5.0.11 (2019-07-04)
  */
-(function () {
-var fullpage = (function (domGlobals) {
+(function (domGlobals) {
     'use strict';
 
     var Cell = function (initial) {
@@ -290,7 +289,6 @@ var fullpage = (function (domGlobals) {
       html = global$4({
         validate: false,
         indent: true,
-        apply_source_formatting: true,
         indent_before: 'head,html,body,meta,title,script,link,style',
         indent_after: 'head,html,body,meta,title,script,link,style'
       }).serialize(headerFragment);
@@ -567,16 +565,15 @@ var fullpage = (function (domGlobals) {
     };
     var Buttons = { register: register$1 };
 
-    global.add('fullpage', function (editor) {
-      var headState = Cell(''), footState = Cell('');
-      Commands.register(editor, headState);
-      Buttons.register(editor);
-      FilterContent.setup(editor, headState, footState);
-    });
     function Plugin () {
+      global.add('fullpage', function (editor) {
+        var headState = Cell(''), footState = Cell('');
+        Commands.register(editor, headState);
+        Buttons.register(editor);
+        FilterContent.setup(editor, headState, footState);
+      });
     }
 
-    return Plugin;
+    Plugin();
 
 }(window));
-})();

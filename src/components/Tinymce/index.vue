@@ -1,8 +1,8 @@
 <template>
   <div class="editor-wrapper">
     <editor
-      ref="tinymceEditor"
       :id="id"
+      ref="tinymceEditor"
       v-model="value"
       :name="name"
       :init="init"
@@ -113,12 +113,6 @@ export default {
       this.value = newValue
     },
     value (newValue) {
-      const activeEditor = tinymce.activeEditor
-      const editBody = activeEditor.getBody()
-      activeEditor.selection.select(editBody)
-      const text = activeEditor.selection.getContent({ format: 'text' })
-      console.log(text)
-      // console.log(this.$refs.tinymceEditor)
       this.$emit('contentChange', newValue)
     }
   },

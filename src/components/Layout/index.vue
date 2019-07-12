@@ -70,6 +70,7 @@
       <back-to-top />
     </el-tooltip>
     <drawer
+      v-if="app.showSettings"
       type="right"
       handler-top="20%"
       class-name="x-settings"

@@ -12,7 +12,7 @@ const pluginList = [
   'codesample',
   'directionality',
   // 'emoticons',
-  'fullpage',
+  // 'fullpage',
   'fullscreen',
   'help',
   'hr',

@@ -83,7 +83,7 @@
                     <el-button
                       type="primary"
                       @click="submitHandler()"
-                    >提交
+                    >创建文章
                     </el-button>
                     <el-button @click="resetForm()">重置</el-button>
                   </el-form-item>
