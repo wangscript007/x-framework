@@ -65,6 +65,25 @@
                     ></el-date-picker>
                   </el-form-item>
                 </el-col>
+                <el-col :md="12">
+                  <el-form-item
+                    label="附件"
+                    prop="enclosure"
+                  >
+                    <el-upload
+                      multiple
+                      action="https://jsonplaceholder.typicode.com/posts/"
+                      :on-preview="handlePreview"
+                      :on-remove="handleRemove"
+                      :before-remove="beforeRemove"
+                      :limit="3"
+                      :on-exceed="handleExceed"
+                      :file-list="form.enclosure"
+                    >
+                      <el-button type="primary">点击上传</el-button>
+                    </el-upload>
+                  </el-form-item>
+                </el-col>
                 <el-col :md="24">
                   <el-form-item
                     label="内容"
@@ -115,12 +134,15 @@ export default {
         author: '',
         releaseTime: '',
         describe: '',
+        titleImage: [],
+        enclosure: [],
         content: ''
       },
       rules: {
         title: validator({ required: true }, '标题'),
         author: validator({ required: true }, '作者'),
         releaseTime: validator({ required: true, type: 'date', message: '请选择日期' }),
+        enclosure: validator({ required: true, message: '请上传附件' }),
         describe: validator({ required: true, message: '请填写描述' }),
         content: validator({ required: true, message: '请填写内容' })
       },
@@ -128,6 +150,18 @@ export default {
     }
   },
   methods: {
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview (file) {
+      console.log(file)
+    },
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
+    },
+    beforeRemove (file, fileList) {
+      return this.$confirm(`确定移除 ${file.name}？`)
+    },
     contentChange () {
       this.$refs['form'].validateField('content')
     },
