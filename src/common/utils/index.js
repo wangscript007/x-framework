@@ -3,6 +3,7 @@ import screen from '@/common/constants/screen'
 const { body } = document
 const RATIO = 3
 
+/* 获取屏幕大小 */
 export function getScreenSize () {
   const width = body.getBoundingClientRect().width - RATIO
   const matched = Object.values(screen).find((item) => {
@@ -11,10 +12,12 @@ export function getScreenSize () {
   return matched ? matched.name : ''
 }
 
+/* 判断是否有滚动条 */
 export function hasScrollBar () {
   return document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)
 }
 
+/* 获取滚动条宽度 */
 export function getScrollbarWidth () {
   var scrollDiv = document.createElement('div')
   scrollDiv.style.cssText = 'width:99px;height:99px;overflow:scroll;position:absolute;top:-9999px;opacity:0;'
@@ -24,6 +27,7 @@ export function getScrollbarWidth () {
   return scrollbarWidth
 }
 
+/* 沙箱 */
 export function shuffle (arr) {
   const _getRandomInt = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min)
@@ -38,10 +42,12 @@ export function shuffle (arr) {
   return _arr
 }
 
+/* 获取字符串长度 */
 export function getStrLength (str = '') {
   return isEmpty(str) ? 0 : str.replace(/[\u0391-\uFFE5]/g, 'aa').length
 }
 
+/* 获取值类型 */
 export function getValueType (value) {
   try {
     const typeStr = Object.prototype.toString.call(value)
@@ -51,10 +57,12 @@ export function getValueType (value) {
   }
 }
 
+/* 判断是否数字 */
 export function isNumber (value) {
   return getValueType(value) === 'Number' && !isNaN(value) && /^((-?[1-9]+[0-9]*(\.\d+)?)|(-?0\.\d+)|0)$/.test(value)
 }
 
+/* 判断是否空值 */
 export function isEmpty (value) {
   if (typeof value === 'boolean') {
     return false
@@ -65,6 +73,15 @@ export function isEmpty (value) {
   return ['null', null, 'undefined', undefined, ''].includes(value)
 }
 
+/*
+ * 字符串占位转换
+ * str：接受转换的字符串
+ * params：占位符
+ *
+ * eg：
+ * formatStr('Hello {language}', { language: 'JavaScript' }) => Hello JavaScript
+ * formatStr('{0} is the best {1} of this {2}', ['JavaScript', 'language', 'world']) => JavaScript is the best language of this world
+ */
 export function formatStr (str = '', params) {
   if (isEmpty(params)) {
     return str
@@ -76,10 +93,20 @@ export function formatStr (str = '', params) {
     return str
   }
   if (getValueType(params) === 'Array') {
-    for (const param of params) {
-      str = str.replace(new RegExp(`{${param}}`, 'g'), param)
+    for (let i = 0, len = params.length; i < len; i++) {
+      str = str.replace(new RegExp(`{${i}}`, 'g'), params[i])
     }
     return str
   }
   return str
+}
+
+/* base64转码 */
+export function base64Encode (content) {
+  return Buffer.from(content).toString('base64')
+}
+
+/* base64解码 */
+export function base64Decode (base64) {
+  return Buffer.from(base64.replace(/\s/g, '+'), 'base64').toString()
 }

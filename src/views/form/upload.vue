@@ -72,15 +72,16 @@
                   >
                     <el-upload
                       multiple
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      :on-preview="handlePreview"
-                      :on-remove="handleRemove"
-                      :before-remove="beforeRemove"
+                      :action="uploadPath"
+                      :data="uploadData"
                       :limit="3"
-                      :on-exceed="handleExceed"
-                      :file-list="form.enclosure"
+                      :file-list="enclosure"
+                      :on-remove="enclosureOnRemove"
+                      :on-success="enclosureOnSuccess"
+                      :on-exceed="enclosureOnExceed"
+                      :before-upload="enclosureBeforeUpload"
                     >
-                      <el-button type="primary">点击上传</el-button>
+                      <el-button type="default">点击上传</el-button>
                     </el-upload>
                   </el-form-item>
                 </el-col>
@@ -118,6 +119,7 @@
 
 <script>
 import validator from '@/common/utils/validate'
+import { createUploadToken } from '@/common/utils/qiniu'
 import Page from '@/components/Page'
 import Tinymce from '@/components/Tinymce'
 
@@ -146,21 +148,46 @@ export default {
         describe: validator({ required: true, message: '请填写描述' }),
         content: validator({ required: true, message: '请填写内容' })
       },
-      formData: {}
+      enclosure: [],
+      uploadPath: 'http://upload.qiniu.com',
+      uploadData: {}
     }
   },
+  created () {
+    this.uploadData.token = createUploadToken()
+  },
   methods: {
-    handleRemove (file, fileList) {
-      console.log(file, fileList)
+    enclosureBeforeUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
+      if (!isJPG) {
+        this.$message.error('附件只能上传jpg格式的图片')
+      }
+      if (!isLt2M) {
+        this.$message.error('附件的大小不能大于 2MB')
+      }
+      return isJPG && isLt2M
     },
-    handlePreview (file) {
-      console.log(file)
-    },
-    handleExceed (files, fileList) {
+    enclosureOnExceed (files, fileList) {
       this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     },
-    beforeRemove (file, fileList) {
-      return this.$confirm(`确定移除 ${file.name}？`)
+    enclosureOnSuccess (res, file) {
+      this.form.enclosure.push({
+        key: res.key,
+        name: file.name,
+        url: `http://puo5abfbc.bkt.clouddn.com/${res.key}`
+      })
+      this.$refs['form'].validateField('enclosure')
+    },
+    enclosureOnRemove (file) {
+      const key = file.response.key
+      const matchedIndex = this.form.enclosure.findIndex(item => {
+        return item.key === key
+      })
+      if (matchedIndex > -1) {
+        this.form.enclosure.splice(matchedIndex, 1)
+      }
+      this.$refs['form'].validateField('enclosure')
     },
     contentChange () {
       this.$refs['form'].validateField('content')
