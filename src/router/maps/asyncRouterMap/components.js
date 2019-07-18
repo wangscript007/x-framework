@@ -25,6 +25,17 @@ const componentsRouter = {
     },
     /* page模板 */
     {
+      path: 'tree',
+      name: 'Tree',
+      component: () => import('@/views/components/tree'),
+      meta: {
+        title: '树型组件',
+        describe: '树型组件，一般应用于树形结构数据的管理和应用，例如“机构管理”，“权限管理”等。',
+        icon: 'apartment'
+      }
+    },
+    /* page模板 */
+    {
       path: 'page',
       name: 'Page',
       component: () => import('@/views/components/page'),
