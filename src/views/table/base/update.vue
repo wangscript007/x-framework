@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { regionData } from 'element-china-area-data'
 import { updateStaff } from '@/api/staff'
 import validator from '@/common/utils/validate'
@@ -222,7 +222,7 @@ export default {
         sex: '1',
         native: '',
         phone: '',
-        entryTime: moment().format('YYYY-MM-DD'),
+        entryTime: dayjs().format('YYYY-MM-DD'),
         address: '',
         state: '1',
         remark: ''
