@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <page>
     <el-card shadow="never">
       <template v-slot:header>
@@ -18,6 +18,12 @@
             @check-change="handleCheckChange"
             @node-click="handleNodeClick"
           >
+            <template v-slot:default="{ node, data }">
+              <div class="x-edit-tree-node">
+                <span class="x-edit-tree-node-label">{{ node.label }}</span>
+                <span class="x-edit-tree-node-opera"></span>
+              </div>
+            </template>
           </el-tree>
         </div>
       </template>
