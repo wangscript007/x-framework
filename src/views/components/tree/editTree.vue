@@ -7,21 +7,40 @@
         </div>
       </template>
       <template v-slot:default>
-        <div class="x-tree-wrap has-border has-space">
+        <div class="x-tree">
           <el-tree
             ref="deptTree"
             node-key="deptId"
             :data="deptData"
             :props="props"
-            :show-checkbox="true"
             :default-expand-all="true"
-            @check-change="handleCheckChange"
-            @node-click="handleNodeClick"
           >
             <template v-slot:default="{ node, data }">
-              <div class="x-edit-tree-node">
-                <span class="x-edit-tree-node-label">{{ node.label }}</span>
-                <span class="x-edit-tree-node-opera"></span>
+              <div class="x-tree-node">
+                <span class="x-tree-node-label">{{ node.label }}</span>
+                <span class="x-tree-node-options">
+                  <a
+                    v-if="data.addable !== false"
+                    class="op-add"
+                    href="javascript:void(0)"
+                    title="添加"
+                    @click.stop="handleAdd(node, data)"
+                  ></a>
+                  <a
+                    v-if="data.editable !== false"
+                    class="op-edit"
+                    href="javascript:void(0)"
+                    title="编辑"
+                    @click.stop="handleEdit(node, data)"
+                  ></a>
+                  <a
+                    v-if="data.removable !== false"
+                    class="op-remove"
+                    href="javascript:void(0)"
+                    title="删除"
+                    @click.stop="handleRemove(node, data)"
+                  ></a>
+                </span>
               </div>
             </template>
           </el-tree>
@@ -41,9 +60,13 @@ export default {
   },
   data () {
     return {
+      /* 原始数据 */
       deptData: [{
         deptId: 'X01',
-        deptName: 'X-FRAMEWORK STUDIO',
+        deptName: '机构X',
+        addable: true,
+        editable: false,
+        removable: false,
         children: [
           {
             deptId: 'X0101',
@@ -135,11 +158,17 @@ export default {
     }
   },
   methods: {
-    handleCheckChange (data, checked, indeterminate) {
-      console.log(data, checked, indeterminate)
+    handleAdd (node, data) {
+      console.log('node：', node)
+      console.log('data：', data)
     },
-    handleNodeClick (data) {
-      console.log(data)
+    handleEdit (node, data) {
+      console.log('node：', node)
+      console.log('data：', data)
+    },
+    handleRemove (node, data) {
+      console.log('node：', node)
+      console.log('data：', data)
     }
   }
 }

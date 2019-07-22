@@ -1,44 +1,43 @@
 <template>
-  <div class="uploader-wrapper">
-    <el-dialog
-      title="上传图片"
-      custom-class="image-uploader-dialog"
-      :visible.sync="showDialog"
-      :modal-append-to-body="false"
-      :lock-scroll="false"
-    >
-      <div class="image-wrapper">
-        <el-upload
-          accept="image/png,image/jpg,image/jpeg,image/ico,image/gif"
-          :multiple="true"
-          :file-list="fileList"
-          :show-file-list="true"
-          :on-success="handleSuccess"
-          :on-remove="handleRemove"
-          :before-upload="beforeUpload"
-          action="https://httpbin.org/post"
-          list-type="picture-card"
-          class="image-uploader"
+  <el-dialog
+    title="上传图片"
+    custom-class="image-uploader-dialog dialog-responsive-xl"
+    :visible.sync="showDialog"
+    :modal-append-to-body="true"
+    :append-to-body="true"
+    :lock-scroll="false"
+  >
+    <div class="image-wrapper">
+      <el-upload
+        accept="image/png,image/jpg,image/jpeg,image/ico,image/gif"
+        :multiple="true"
+        :file-list="fileList"
+        :show-file-list="true"
+        :on-success="handleSuccess"
+        :on-remove="handleRemove"
+        :before-upload="beforeUpload"
+        action="https://httpbin.org/post"
+        list-type="picture-card"
+        class="image-uploader"
+      >
+        <x-icon
+          icon="plus"
+          class="uploader-icon"
+        ></x-icon>
+      </el-upload>
+    </div>
+    <template v-slot:footer>
+      <div class="text-right">
+        <el-button @click="showDialog = false">取消</el-button>
+        <el-button
+          type="primary"
+          @click="handleSubmit"
         >
-          <x-icon
-            icon="plus"
-            class="uploader-icon"
-          ></x-icon>
-        </el-upload>
+          确定
+        </el-button>
       </div>
-      <template v-slot:footer>
-        <div class="text-right">
-          <el-button @click="showDialog = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="handleSubmit"
-          >
-            确定
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
-  </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script>
@@ -114,53 +113,34 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "~@/assets/scss/variables.scss";
 
-  .uploader-wrapper {
-    .image-wrapper {
-      min-height: 336px;
-      padding: 12px 12px 0;
-      border: solid 2px #c0ccda;
+  /deep/.image-uploader-dialog {
+    .el-dialog__body {
+      padding-top: 10px;
+      padding-bottom: 10px;
+      .image-wrapper {
+        min-height: 336px;
+        padding: 12px 12px 0;
+        border: solid 2px #c0ccda;
 
-      .image-uploader {
-        /deep/ .el-upload--picture-card {
-          border-width: 2px;
-          margin-bottom: 12px;
+        .image-uploader {
+          /deep/ .el-upload--picture-card {
+            border-width: 2px;
+            margin-bottom: 12px;
 
-          .uploader-icon {
-            display: inline-block;
-            font-size: 40px;
-            color: #c0ccda;
-            vertical-align: middle;
-          }
-
-          &:hover,
-          &:focus {
             .uploader-icon {
-              color: $color-primary;
+              display: inline-block;
+              font-size: 40px;
+              color: #c0ccda;
+              vertical-align: middle;
+            }
+
+            &:hover,
+            &:focus {
+              .uploader-icon {
+                color: $color-primary;
+              }
             }
           }
-        }
-      }
-    }
-
-    /deep/ .image-uploader-dialog {
-      .el-dialog__body {
-        padding-top: 10px;
-        padding-bottom: 10px;
-      }
-
-      @media screen and (max-width: 767px) {
-        & {
-          width: 90% !important;
-        }
-      }
-      @media (min-width: 768px) and (max-width: 1199px) {
-        & {
-          width: 80% !important;
-        }
-      }
-      @media screen and (min-width: 1200px) {
-        & {
-          width: 60% !important;
         }
       }
     }

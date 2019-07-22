@@ -192,3 +192,59 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     }
   }
 }
+
+/* dialog */
+.el-dialog {
+  &.dialog-responsive {
+    @media screen and (max-width: 767px) {
+      &-sm,
+      &-md,
+      &-lg,
+      &-xl {
+        width: 90% !important;
+      }
+    }
+    @media (min-width: 768px) and (max-width: 1199px) {
+      &-sm {
+        width: 60% !important;
+      }
+      &-md {
+        width: 70% !important;
+      }
+      &-lg {
+        width: 80% !important;
+      }
+      &-xl {
+        width: 90% !important;
+      }
+    }
+    @media (min-width: 1200px) and (max-width: 1919px) {
+      &-sm {
+        width: 40% !important;
+      }
+      &-md {
+        width: 50% !important;
+      }
+      &-lg {
+        width: 60% !important;
+      }
+      &-xl {
+        width: 70% !important;
+      }
+    }
+    @media screen and (min-width: 1920px) {
+      &-sm {
+        width: 30% !important;
+      }
+      &-md {
+        width: 40% !important;
+      }
+      &-lg {
+        width: 50% !important;
+      }
+      &-xl {
+        width: 60% !important;
+      }
+    }
+  }
+}

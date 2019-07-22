@@ -73,6 +73,17 @@ export function isEmpty (value) {
   return ['null', null, 'undefined', undefined, ''].includes(value)
 }
 
+/* 随机字符串 */
+export function randomString (length = 64) {
+  const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'w', 'x', 'y', 'z', '2', '3', '4', '5', '6', '7', '8']
+  const maxPos = chars.length
+  let res = ''
+  chars.forEach(() => {
+    res += chars[Math.floor(Math.random() * maxPos)]
+  })
+  return res
+}
+
 /*
  * 字符串占位转换
  * str：接受转换的字符串
