@@ -7,13 +7,17 @@
         </div>
       </template>
       <template v-slot:default>
-        <div class="x-tree">
+        <div class="x-tree margin-bottom-4x">
           <el-tree
             ref="deptTree"
             node-key="deptId"
             :data="deptData"
             :props="props"
             :default-expand-all="true"
+            :draggable="true"
+            :allow-drop="allowDrop"
+            :allow-drag="allowDrag"
+            @node-drop="handleDrop"
           >
             <template v-slot:default="{ node, data }">
               <div class="x-tree-node">
@@ -21,30 +25,44 @@
                 <span class="x-tree-node-options">
                   <a
                     v-if="data.addable !== false"
-                    class="op-add"
+                    class="x-tree-icon x-tree-icon-add"
                     href="javascript:void(0)"
                     title="添加"
-                    @click.stop="handleAdd(node, data)"
+                    @click.stop="openDialog(data)"
                   ></a>
                   <a
                     v-if="data.editable !== false"
-                    class="op-edit"
+                    class="x-tree-icon x-tree-icon-edit"
                     href="javascript:void(0)"
                     title="编辑"
-                    @click.stop="handleEdit(node, data)"
+                    @click.stop="openDialog(data, true)"
                   ></a>
                   <a
                     v-if="data.removable !== false"
-                    class="op-remove"
+                    class="x-tree-icon x-tree-icon-remove"
                     href="javascript:void(0)"
                     title="删除"
-                    @click.stop="handleRemove(node, data)"
+                    @click.stop="removeNode(node, data)"
                   ></a>
                 </span>
               </div>
             </template>
           </el-tree>
         </div>
+        <el-divider></el-divider>
+        <div class="x-description margin-bottom-3x">
+          <h3>操作说明</h3>
+          <h4>1、鼠标移动到树型节点，点击“<span class="x-tree-icon x-tree-icon-add"></span>”可以添加部门，点击“<span class="x-tree-icon x-tree-icon-edit"></span>”可以编辑部门信息，“<span class="x-tree-icon x-tree-icon-remove"></span>”可以删除部门信息
+          </h4>
+          <h4>2、单击部门节点不放开并移动鼠标，可以拖拽部门</h4>
+        </div>
+        <update-tree-node
+          :opened="dialog.opened"
+          :data="dialog.data"
+          :is-edit="dialog.isEdit"
+          @closeHandler="closeDialog"
+          @updateHandler="updateNode"
+        ></update-tree-node>
       </template>
     </el-card>
   </page>
@@ -52,25 +70,29 @@
 
 <script>
 import Page from '@/components/Page'
+import UpdateTreeNode from '@/views/components/tree/dialog/updateTreeNode'
 
 export default {
   name: 'Tree',
   components: {
-    Page
+    Page,
+    UpdateTreeNode
   },
   data () {
     return {
       /* 原始数据 */
       deptData: [{
         deptId: 'X01',
-        deptName: '机构X',
+        deptName: '机构X-FRAMEWORK',
         addable: true,
         editable: false,
         removable: false,
+        draggable: false,
         children: [
           {
             deptId: 'X0101',
-            deptName: '总经办'
+            deptName: '总经办',
+            draggable: false
           },
           {
             deptId: 'X0102',
@@ -128,23 +150,23 @@ export default {
             children: [
               {
                 deptId: 'X010601',
-                deptName: 'UX设计'
+                deptName: '设计组'
               },
               {
                 deptId: 'X010602',
-                deptName: '交互设计'
+                deptName: '产品组'
               },
               {
                 deptId: 'X010603',
-                deptName: '数据管理'
+                deptName: '数据中心'
               },
               {
                 deptId: 'X010604',
-                deptName: '研发'
+                deptName: '研发组'
               },
               {
                 deptId: 'X010605',
-                deptName: '测试'
+                deptName: '测试组'
               }
             ]
           }
@@ -154,21 +176,83 @@ export default {
       props: {
         children: 'children',
         label: 'deptName'
+      },
+      /* updateDialog */
+      dialog: {
+        data: null,
+        isEdit: false,
+        opened: false
       }
     }
   },
   methods: {
-    handleAdd (node, data) {
-      console.log('node：', node)
-      console.log('data：', data)
+    /* 打开新增、编辑节点dialog */
+    openDialog (treeNodeData, isEdit = false) {
+      this.dialog.data = treeNodeData
+      this.dialog.isEdit = isEdit
+      this.dialog.opened = true
     },
-    handleEdit (node, data) {
-      console.log('node：', node)
-      console.log('data：', data)
+    /* 关闭dialog */
+    closeDialog () {
+      this.dialog.opened = false
+      this.dialog.data = null
+      this.dialog.isEdit = false
     },
-    handleRemove (node, data) {
-      console.log('node：', node)
-      console.log('data：', data)
+    /* dialog将数据提交后，更新界面节点 */
+    updateNode (newNodeData, currentNodeData) {
+      /* 编辑操作 */
+      if (this.dialog.isEdit) {
+        currentNodeData = Object.assign(currentNodeData, newNodeData)
+        return
+      }
+      /* 新增操作 */
+      if (!currentNodeData.children) {
+        this.$set(currentNodeData, 'children', [])
+      }
+      currentNodeData.children.push(newNodeData)
+    },
+    /* 删除节点 */
+    removeNode (node, data) {
+      const _this = this
+      _this.$confirm(`确认删除部门 <strong class="color-danger">${data.deptName}</strong> ?`, '提示', {
+        dangerouslyUseHTMLString: true
+      }).then(() => {
+        /* **************************** */
+        /* 异步处理数据 */
+        /* **************************** */
+        const parent = node.parent
+        const children = parent.data.children || parent.data
+        const index = children.findIndex(d => d.deptId === data.deptId)
+        children.splice(index, 1)
+        this.$message({
+          type: 'success',
+          message: '删除成功!'
+        })
+      }).catch(() => {
+        /* 点击取消 */
+        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', {
+          dangerouslyUseHTMLString: true
+        })
+      })
+    },
+    /* 拖拽成功完成时触发的事件 */
+    handleDrop (draggingNode, dropNode, type, event) {
+      console.log('draggingNode: ', draggingNode)
+      console.log('dropNode: ', dropNode)
+      console.log('type: ', type)
+      console.log('event: ', event)
+      /* ******************************************************** */
+      /* 异步处理数据，将拖拽的节点，放置的节点以及类型提交至后台 */
+      /* ******************************************************** */
+    },
+    /* 拖拽时判定目标节点能否被放置，如果拖拽到跟节点，且类型是‘next’或者‘prev’则不允许放置 */
+    allowDrop (draggingNode, dropNode, type) {
+      const dropNodeData = dropNode.data
+      return !(dropNodeData.deptId === this.deptData[0].deptId && ['next', 'prev'].includes(type))
+    },
+    /* 判断节点能否被拖拽，如果设置了draggable:false则不允许拖拽 */
+    allowDrag (draggingNode) {
+      return draggingNode.data.draggable !== false
     }
   }
 }

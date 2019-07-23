@@ -31,6 +31,7 @@ const componentsRouter = {
           component: () => import('@/views/components/tree/editTree'),
           meta: {
             title: '可编辑树',
+            headerTitle: '树型组件-可编辑树',
             describe: '可编辑树，通常包含了“增”、“删”、“改”、“拖拽”等功能，一般应用于树形结构数据的管理和应用，例如“机构管理”，“权限管理”等。',
             icon: 'apartment'
           }
@@ -42,6 +43,7 @@ const componentsRouter = {
           component: () => import('@/views/components/tree/checkboxTree'),
           meta: {
             title: '可选择树（多选）',
+            headerTitle: '树型组件-可选择树（多选）',
             describe: '可选择树（多选）',
             icon: 'apartment'
           }
@@ -53,6 +55,7 @@ const componentsRouter = {
           component: () => import('@/views/components/tree/radioTree'),
           meta: {
             title: '可选择树（单选）',
+            headerTitle: '树型组件-可选择树（单选）',
             describe: '可选择树（单选）',
             icon: 'apartment'
           }
@@ -64,6 +67,7 @@ const componentsRouter = {
           component: () => import('@/views/components/tree/lazyTree'),
           meta: {
             title: '懒加载树',
+            headerTitle: '树型组件-懒加载树',
             describe: '懒加载树',
             icon: 'apartment'
           }

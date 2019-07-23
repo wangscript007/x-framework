@@ -113,32 +113,28 @@ export default {
 <style rel="stylesheet/scss" lang="scss" scoped>
   @import "~@/assets/scss/variables.scss";
 
-  /deep/.image-uploader-dialog {
-    .el-dialog__body {
-      padding-top: 10px;
-      padding-bottom: 10px;
-      .image-wrapper {
-        min-height: 336px;
-        padding: 12px 12px 0;
-        border: solid 2px #c0ccda;
+  .image-uploader-dialog {
+    .image-wrapper {
+      min-height: 336px;
+      padding: 12px 12px 0;
+      border: solid 2px #c0ccda;
 
-        .image-uploader {
-          /deep/ .el-upload--picture-card {
-            border-width: 2px;
-            margin-bottom: 12px;
+      .image-uploader {
+        /deep/ .el-upload--picture-card {
+          border-width: 2px;
+          margin-bottom: 12px;
 
+          .uploader-icon {
+            display: inline-block;
+            font-size: 40px;
+            color: #c0ccda;
+            vertical-align: middle;
+          }
+
+          &:hover,
+          &:focus {
             .uploader-icon {
-              display: inline-block;
-              font-size: 40px;
-              color: #c0ccda;
-              vertical-align: middle;
-            }
-
-            &:hover,
-            &:focus {
-              .uploader-icon {
-                color: $color-primary;
-              }
+              color: $color-primary;
             }
           }
         }
