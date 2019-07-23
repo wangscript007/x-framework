@@ -1,3 +1,4 @@
+import to from 'await-to-js'
 import { getStaff } from '@/api/staff'
 
 export default {
@@ -8,22 +9,21 @@ export default {
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
       })
-      try {
-        const res = await getStaff(staffId)
-        if (callback && typeof (callback) === 'function') {
-          (callback)(res.data)
-        }
-      } catch (e) {
+      const [err, res] = await to(getStaff(staffId))
+      this.$nextTick(() => {
+        loading.close()
+      })
+      if (err) {
         this.$message({
           showClose: true,
           type: 'error',
-          message: e.message
+          message: err.message
         })
         this.backHandler()
-      } finally {
-        this.$nextTick(() => {
-          loading.close()
-        })
+        return
+      }
+      if (callback && typeof (callback) === 'function') {
+        (callback)(res.data)
       }
     },
     backHandler () {

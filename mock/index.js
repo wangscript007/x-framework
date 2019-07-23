@@ -3,8 +3,9 @@ const Mock = require('mockjs')
 const user = require('./user')
 const staff = require('./staff')
 const validate = require('./validate')
+const tree = require('./tree')
 
-const mocks = [...user, ...staff, ...validate]
+const mocks = [...user, ...staff, ...validate, ...tree]
 
 const responseFake = (url, type, respond) => {
   return {

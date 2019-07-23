@@ -7,7 +7,10 @@
         </div>
       </template>
       <template v-slot:default>
-        <div class="x-tree margin-bottom-4x">
+        <div
+          v-loading="loading"
+          class="x-tree margin-bottom-4x"
+        >
           <el-tree
             ref="deptTree"
             node-key="deptId"
@@ -69,6 +72,8 @@
 </template>
 
 <script>
+import to from 'await-to-js'
+import * as api from '@/api/tree'
 import Page from '@/components/Page'
 import UpdateTreeNode from '@/views/components/tree/dialog/updateTreeNode'
 
@@ -80,104 +85,15 @@ export default {
   },
   data () {
     return {
+      loading: true,
       /* 原始数据 */
-      deptData: [{
-        deptId: 'X01',
-        deptName: '机构X-FRAMEWORK',
-        addable: true,
-        editable: false,
-        removable: false,
-        draggable: false,
-        children: [
-          {
-            deptId: 'X0101',
-            deptName: '总经办',
-            draggable: false
-          },
-          {
-            deptId: 'X0102',
-            deptName: '财务部',
-            children: [
-              {
-                deptId: 'X010201',
-                deptName: '会计'
-              },
-              {
-                deptId: 'X010202',
-                deptName: '出纳'
-              }
-            ]
-          },
-          {
-            deptId: 'X0103',
-            deptName: '行政部',
-            children: [
-              {
-                deptId: 'X010301',
-                deptName: '人力资源'
-              },
-              {
-                deptId: 'X010302',
-                deptName: '综合管理'
-              }
-            ]
-          },
-          {
-            deptId: 'X0104',
-            deptName: '市场部',
-            children: [
-              {
-                deptId: 'X010401',
-                deptName: '市场营销'
-              },
-              {
-                deptId: 'X010402',
-                deptName: '市场调研'
-              },
-              {
-                deptId: 'X010403',
-                deptName: '投标组'
-              }
-            ]
-          },
-          {
-            deptId: 'X0105',
-            deptName: '资质管理部'
-          },
-          {
-            deptId: 'X0106',
-            deptName: '软件技术部',
-            children: [
-              {
-                deptId: 'X010601',
-                deptName: '设计组'
-              },
-              {
-                deptId: 'X010602',
-                deptName: '产品组'
-              },
-              {
-                deptId: 'X010603',
-                deptName: '数据中心'
-              },
-              {
-                deptId: 'X010604',
-                deptName: '研发组'
-              },
-              {
-                deptId: 'X010605',
-                deptName: '测试组'
-              }
-            ]
-          }
-        ]
-      }],
+      deptData: [],
       /* 数据对应关系 */
       props: {
         children: 'children',
         label: 'deptName'
       },
-      /* updateDialog */
+      /* 新增、编辑dialog */
       dialog: {
         data: null,
         isEdit: false,
@@ -185,7 +101,24 @@ export default {
       }
     }
   },
+  mounted () {
+    this.getDeptTree()
+  },
   methods: {
+    /* 获取部门数据 */
+    getDeptTree: async function () {
+      const [err, res] = await to(api.getDeptTree())
+      this.loading = false
+      if (err) {
+        this.$message({
+          showClose: true,
+          type: 'error',
+          message: err.message
+        })
+        return
+      }
+      this.deptData = res.data
+    },
     /* 打开新增、编辑节点dialog */
     openDialog (treeNodeData, isEdit = false) {
       this.dialog.data = treeNodeData
@@ -228,12 +161,7 @@ export default {
           type: 'success',
           message: '删除成功!'
         })
-      }).catch(() => {
-        /* 点击取消 */
-        this.$alert('<strong>这是 <i>HTML</i> 片段</strong>', {
-          dangerouslyUseHTMLString: true
-        })
-      })
+      }).catch(() => {})
     },
     /* 拖拽成功完成时触发的事件 */
     handleDrop (draggingNode, dropNode, type, event) {

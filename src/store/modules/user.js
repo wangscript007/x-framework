@@ -1,3 +1,4 @@
+import { commonRequest } from '@/api/common'
 import * as userApi from '@/api/user'
 import * as cache from '@/common/cache/user'
 import CommonException from '@/common/model/exception'
@@ -21,15 +22,11 @@ const user = {
     }
   },
   actions: {
-    login: async ({ commit, state }, formData) => {
-      const { data } = await userApi.login(formData)
-      if (!data || !data.success) {
-        throw new CommonException({
-          message: data && data.message ? data.message : '验证失败，请重试'
-        })
-      }
-      commit(userTypes.SET_TOKEN, data.data)
-      cache.setToken(data.data, state.remember)
+    login ({ commit, state }, formData) {
+      return commonRequest(userApi.login(formData), '验证失败，请重试', (data) => {
+        commit(userTypes.SET_TOKEN, data.data)
+        cache.setToken(data.data, state.remember)
+      })
     },
     getUserInfo: async ({ commit, state }) => {
       const { data } = await userApi.getUserInfo(state.token)

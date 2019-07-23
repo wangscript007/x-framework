@@ -229,6 +229,7 @@
 </template>
 
 <script>
+import to from 'await-to-js'
 import * as api from '@/api/staff'
 import Page from '@/components/Page'
 import Badge from '@/components/Badge'
@@ -273,27 +274,26 @@ export default {
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
       })
-      try {
-        await api.deleteStaff(row.staffId)
-        this.$message({
-          showClose: true,
-          type: 'success',
-          message: '删除成功'
-        })
-        this.$refs.staffTable.toggleRowSelection(row, false)
-        this.queryStaff(this.query.page)
-      } catch (e) {
+      const [err] = await to(api.deleteStaff(row.staffId))
+      this.closePopover(row.staffId)
+      this.$nextTick(() => {
+        loading.close()
+      })
+      if (err) {
         this.$message({
           showClose: true,
           type: 'error',
-          message: e.message
+          message: err.message
         })
-      } finally {
-        this.closePopover(row.staffId)
-        this.$nextTick(() => {
-          loading.close()
-        })
+        return
       }
+      this.$message({
+        showClose: true,
+        type: 'success',
+        message: '删除成功'
+      })
+      this.$refs.staffTable.toggleRowSelection(row, false)
+      this.queryStaff(this.query.page)
     },
     batchDeleteStaff () {
       const _this = this
@@ -305,58 +305,55 @@ export default {
         })
         return
       }
-      _this.$confirm(`此操作将删除${_this.selectedList.length}位员工的信息, 是否继续?`, '提示', {
+      _this.$confirm(`此操作将删除 <strong class="color-danger">${_this.selectedList.length}</strong> 位员工的信息, 是否继续?`, '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        type: 'warning'
+        type: 'warning',
+        dangerouslyUseHTMLString: true
       }).then(async function () {
         const loading = _this.$loading({
           text: '正在删除',
           spinner: 'fa fa-spinner fa-spin fa-2x',
           background: 'rgba(255, 255, 255, 0.5)'
         })
-        try {
-          await api.batchDeleteStaff(_this.selectedList)
-          _this.$message({
-            showClose: true,
-            type: 'success',
-            message: '删除成功'
-          })
-          _this.clearSelectedList()
-          _this.queryStaff(_this.query.page)
-        } catch (e) {
+        const [err] = await to(api.batchDeleteStaff(_this.selectedList))
+        _this.$nextTick(() => {
+          loading.close()
+        })
+        if (err) {
           _this.$message({
             showClose: true,
             type: 'error',
-            message: e.message
+            message: err.message
           })
-        } finally {
-          _this.$nextTick(() => {
-            loading.close()
-          })
+          return
         }
+        _this.$message({
+          showClose: true,
+          type: 'success',
+          message: '删除成功'
+        })
+        _this.clearSelectedList()
+        _this.queryStaff(_this.query.page)
       })
     },
     queryStaff: async function (pageNo) {
       if (Number.isInteger(pageNo)) {
         this.query.page = pageNo
       }
-      try {
-        this.tableLoading = true
-        const data = await api.staffList(this.query)
-        this.staffList = data.data || []
-        this.total = data.total || 0
-      } catch (e) {
+      this.tableLoading = true
+      const [err, res] = await to(api.staffList(this.query))
+      this.tableLoading = false
+      if (err) {
         this.$message({
           showClose: true,
           type: 'error',
-          message: e.message
+          message: err.message
         })
-      } finally {
-        this.$nextTick(() => {
-          this.tableLoading = false
-        })
+        return
       }
+      this.staffList = res.data || []
+      this.total = res.total || 0
     },
     resetQuery () {
       this.query.key = ''
@@ -382,5 +379,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

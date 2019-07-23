@@ -1,78 +1,48 @@
 import request from '@/common/utils/request'
-import CommonException from '@/common/model/exception'
+import { commonRequest } from './common'
 
-export async function staffList (query) {
-  const { data } = await request({
+export function staffList (query) {
+  return commonRequest(request({
     url: '/staff/list',
     method: 'get',
     params: query
-  })
-  if (!data || !data.success) {
-    throw new CommonException({
-      message: data && data.message ? data.message : '员工数据获取失败，请重试'
-    })
-  }
-  return data
+  }), '员工数据获取失败，请重试')
 }
 
-export async function getStaff (staffId) {
-  const { data } = await request({
+export function getStaff (staffId) {
+  return commonRequest(request({
     url: '/staff/info',
     method: 'get',
     params: {
       staffId
     }
-  })
-  if (!data || !data.success) {
-    throw new CommonException({
-      message: data && data.message ? data.message : `员工Id为‘${staffId}’的员工不存在`
-    })
-  }
-  return data
+  }), `员工Id为‘${staffId}’的员工不存在`)
 }
 
-export async function deleteStaff (staffId) {
-  const { data } = await request({
+export function deleteStaff (staffId) {
+  return commonRequest(request({
     url: '/staff/delete',
     method: 'post',
     data: {
       staffId
     }
-  })
-  if (!data || !data.success) {
-    throw new CommonException({
-      message: data && data.message ? data.message : '操作失败，请重试'
-    })
-  }
-  return data
+  }), '操作失败，请重试')
 }
 
-export async function batchDeleteStaff (ids) {
-  const { data } = await request({
+export function batchDeleteStaff (ids) {
+  return commonRequest(request({
     url: '/staff/batchDelete',
     method: 'post',
     data: {
       ids
     }
-  })
-  if (!data || !data.success) {
-    throw new CommonException({
-      message: data && data.message ? data.message : '操作失败，请重试'
-    })
-  }
-  return data
+  }), '操作失败，请重试')
 }
 
-export async function updateStaff (form) {
-  const { data } = await request({
+export function updateStaff (form) {
+  return commonRequest(request({
     url: '/staff/update',
     method: 'post',
     data: form
-  })
-  if (!data || !data.success) {
-    throw new CommonException({
-      message: data && data.message ? data.message : '操作失败，请重试'
-    })
-  }
-  return data
+  }), '操作失败，请重试')
 }

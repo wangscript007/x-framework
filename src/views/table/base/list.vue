@@ -235,6 +235,7 @@
 </template>
 
 <script>
+import to from 'await-to-js'
 import * as api from '@/api/staff'
 import Page from '@/components/Page'
 import Badge from '@/components/Badge'
@@ -283,26 +284,25 @@ export default {
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
       })
-      try {
-        await api.deleteStaff(staffId)
-        this.$message({
-          showClose: true,
-          type: 'success',
-          message: '删除成功'
-        })
-        this.queryStaff(this.query.page)
-      } catch (e) {
+      const [err] = await to(api.deleteStaff(staffId))
+      this.closePopover(staffId)
+      this.$nextTick(() => {
+        loading.close()
+      })
+      if (err) {
         this.$message({
           showClose: true,
           type: 'error',
-          message: e.message
+          message: err.message
         })
-      } finally {
-        this.closePopover(staffId)
-        this.$nextTick(() => {
-          loading.close()
-        })
+        return
       }
+      this.$message({
+        showClose: true,
+        type: 'success',
+        message: '删除成功'
+      })
+      this.queryStaff(this.query.page)
     },
     editStaff (staffId) {
       this.$router.push({ path: `/table/base/edit/${staffId}`, query: this.queryParamFilter() })
@@ -311,22 +311,19 @@ export default {
       if (Number.isInteger(pageNo)) {
         this.query.page = pageNo
       }
-      try {
-        this.tableLoading = true
-        const data = await api.staffList(this.query)
-        this.staffList = data.data || []
-        this.total = data.total || 0
-      } catch (e) {
+      this.tableLoading = true
+      const [err, res] = await to(api.staffList(this.query))
+      this.tableLoading = false
+      if (err) {
         this.$message({
           showClose: true,
           type: 'error',
-          message: e.message
+          message: err.message
         })
-      } finally {
-        this.$nextTick(() => {
-          this.tableLoading = false
-        })
+        return
       }
+      this.staffList = res.data || []
+      this.total = res.total || 0
     },
     staffDetail (staffId) {
       this.$router.push({ path: `/table/base/detail/${staffId}`, query: this.queryParamFilter() })
@@ -352,5 +349,3 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

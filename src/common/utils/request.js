@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '@/store'
-import { Message } from 'element-ui'
 import { getToken } from '@/common/cache/user'
 
 const SERVER_TOKEN_KEY = 'X-FRAMEWORK-TOKEN'
@@ -21,11 +20,6 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    Message({
-      showClose: true,
-      message: error.message,
-      type: 'error'
-    })
     return Promise.reject(error)
   }
 )
@@ -34,11 +28,6 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => response,
   error => {
-    Message({
-      showClose: true,
-      message: error.message,
-      type: 'error'
-    })
     return Promise.reject(error)
   }
 )

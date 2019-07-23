@@ -152,6 +152,7 @@
 </template>
 
 <script>
+import to from 'await-to-js'
 import dayjs from 'dayjs'
 import { regionData } from 'element-china-area-data'
 import { updateStaff } from '@/api/staff'
@@ -230,45 +231,40 @@ export default {
     },
     submitHandler (isContinue = false) {
       this.$refs.staffForm.validate(async (valid) => {
-        if (valid) {
-          const loading = this.$loading({
-            text: '正在处理',
-            spinner: 'fa fa-spinner fa-spin fa-2x',
-            background: 'rgba(255, 255, 255, 0.5)'
-          })
-          try {
-            await updateStaff(this.staff)
-            this.$message({
-              showClose: true,
-              type: 'success',
-              message: '操作成功'
-            })
-            if (isContinue) {
-              this.initStaff()
-              this.$refs.staffForm.resetFields()
-            } else {
-              this.backHandler()
-            }
-          } catch (e) {
-            this.$message.error({
-              showClose: true,
-              type: 'error',
-              message: e.message
-            })
-          } finally {
-            this.$nextTick(() => {
-              loading.close()
-            })
-          }
-        } else {
+        if (!valid) {
           return false
         }
+        const loading = this.$loading({
+          text: '正在处理',
+          spinner: 'fa fa-spinner fa-spin fa-2x',
+          background: 'rgba(255, 255, 255, 0.5)'
+        })
+        const [err] = await to(updateStaff(this.staff))
+        this.$nextTick(() => {
+          loading.close()
+        })
+        if (err) {
+          this.$message({
+            showClose: true,
+            type: 'error',
+            message: err.message
+          })
+          return
+        }
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '操作成功'
+        })
+        if (!isContinue) {
+          this.backHandler()
+          return
+        }
+        this.initStaff()
+        this.$refs.staffForm.resetFields()
       })
     }
   }
 }
 </script>
 
-<style scoped>
-
-</style>

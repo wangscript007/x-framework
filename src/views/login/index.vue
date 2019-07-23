@@ -114,6 +114,7 @@
 </template>
 
 <script>
+import to from 'await-to-js'
 import { mapGetters, mapMutations } from 'vuex'
 import validator from '@/common/utils/validate'
 
@@ -126,16 +127,8 @@ export default {
         password: '123456'
       },
       rules: {
-        username: [
-          { required: true, trigger: 'blur', message: '请输入用户名' },
-          { min: 4, max: 30, message: '用户名长度应在4到30为之间' },
-          { validator: validator('username', '用户名'), trigger: 'blur' }
-        ],
-        password: [
-          { required: true, trigger: 'blur', message: '请输入密码' },
-          { min: 6, max: 30, message: '密码长度应在6到30为之间' },
-          { validator: validator('password', '密码'), trigger: 'blur' }
-        ]
+        username: validator({ type: 'username', required: true, min: 4, max: 30 }, '用户名'),
+        password: validator({ type: 'password', required: true, min: 5, max: 30 }, '密码')
       },
       showPassword: false,
       loading: false,
@@ -166,23 +159,21 @@ export default {
     }),
     loginHandler () {
       this.$refs.loginForm.validate(async (valid) => {
-        if (valid) {
-          try {
-            this.loading = true
-            await this.$store.dispatch('login', this.form)
-            this.$router.push({ path: this.redirect || '/' })
-          } catch (e) {
-            this.$message.error({
-              showClose: true,
-              type: 'error',
-              message: e.message
-            })
-          } finally {
-            this.loading = false
-          }
-        } else {
+        if (!valid) {
           return false
         }
+        this.loading = true
+        const [err] = await to(this.$store.dispatch('login', this.form))
+        this.loading = false
+        if (err) {
+          this.$message.error({
+            showClose: true,
+            type: 'error',
+            message: err.message
+          })
+          return
+        }
+        this.$router.push({ path: this.redirect || '/' })
       })
     }
   }
