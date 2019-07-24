@@ -1,4 +1,4 @@
-<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
+<template>
   <page>
     <el-card shadow="never">
       <template v-slot:header>
@@ -54,7 +54,7 @@
         </div>
         <el-divider></el-divider>
         <div class="x-description margin-bottom-3x">
-          <h3>操作说明</h3>
+          <h3>温馨提示</h3>
           <h4>1、鼠标移动到树型节点，点击“<span class="x-tree-icon x-tree-icon-add"></span>”可以添加部门，点击“<span class="x-tree-icon x-tree-icon-edit"></span>”可以编辑部门信息，“<span class="x-tree-icon x-tree-icon-remove"></span>”可以删除部门信息
           </h4>
           <h4>2、单击部门节点不放开并移动鼠标，可以拖拽部门</h4>

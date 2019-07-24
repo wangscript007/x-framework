@@ -43,6 +43,12 @@
             </el-form>
           </el-col>
         </el-row>
+        <el-divider></el-divider>
+        <div class="x-description margin-bottom-3x">
+          <h3>温馨提示</h3>
+          <h4>1、此处可以写一些操作说明和注意事项</h4>
+          <h4>2、此处可以写一些操作说明和注意事项</h4>
+        </div>
       </div>
       <div v-if="currentStep === 1">
         <el-row>
@@ -72,6 +78,12 @@
             </el-form>
           </el-col>
         </el-row>
+        <el-divider></el-divider>
+        <div class="x-description margin-bottom-3x">
+          <h3>温馨提示</h3>
+          <h4>1、此处可以写一些操作说明和注意事项</h4>
+          <h4>2、此处可以写一些操作说明和注意事项</h4>
+        </div>
       </div>
       <div v-if="currentStep === 2">
         <result
@@ -85,6 +97,12 @@
             <el-link @click="currentStep = 0">回到首页</el-link>
           </template>
         </result>
+        <el-divider></el-divider>
+        <div class="x-description margin-bottom-3x">
+          <h3>温馨提示</h3>
+          <h4>1、此处可以写一些操作说明和注意事项</h4>
+          <h4>2、此处可以写一些操作说明和注意事项</h4>
+        </div>
       </div>
     </el-card>
   </page>

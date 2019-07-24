@@ -149,6 +149,12 @@
           </el-form>
         </el-col>
       </el-row>
+      <el-divider></el-divider>
+      <div class="x-description margin-bottom-3x">
+        <h3>温馨提示</h3>
+        <h4>1、此处可以写一些操作说明和注意事项</h4>
+        <h4>2、此处可以写一些操作说明和注意事项</h4>
+      </div>
     </el-card>
   </page>
 </template>
@@ -186,11 +192,8 @@ export default {
         private: false
       },
       rules: {
-        name: { required: true, message: '请输入姓名', trigger: 'blur' },
-        cerNo: [
-          { required: true, message: '请输入身份证号', trigger: 'blur' },
-          { validator: validator('idCardNo'), trigger: 'blur' }
-        ]
+        name: validator({ required: true }, '姓名'),
+        cerNo: validator({ required: true, type: 'id' }, '身份证')
       },
       sex: EMI_SEX,
       region: {
@@ -214,6 +217,4 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>
 

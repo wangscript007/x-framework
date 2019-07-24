@@ -693,11 +693,13 @@
 </template>
 
 <script>
+import awaitTo from 'await-to-js'
 import request from '@/common/utils/request'
 import { debounce } from 'lodash'
 import { regionData } from 'element-china-area-data'
 import { EMI_SEX, EMI_NATION } from '@/common/emi/standard'
 import validator from '@/common/utils/validate'
+import * as api from '@/api/validate'
 import Page from '@/components/Page'
 import FormSelect from '@/components/Form/Select'
 import FormCheckbox from '@/components/Form/Checkbox'
@@ -892,23 +894,10 @@ export default {
       if (!value) {
         return
       }
-      request({
-        url: '/validate/username',
-        method: 'get',
-        params: {
-          username: value
-        }
-      }).then(res => {
-        const { data } = res
-        if (!data) {
-          return callback(new Error('校验失败，请重试'))
-        }
-        if (!data.success) {
-          return callback(new Error(data.message || '用户名已被注册'))
-        }
+      api.validUsername(value).then(() => {
         return callback()
-      }).catch(e => {
-        return callback(new Error(e.message || '校验失败，请重试'))
+      }).catch(err => {
+        return callback(err)
       })
     }, VALID_USERNAME_DELAY)
   }

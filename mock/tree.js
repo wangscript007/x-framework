@@ -94,7 +94,7 @@ module.exports = [
   {
     url: '/tree/deptTree',
     type: 'get',
-    response: config => {
+    response: () => {
       return {
         success: true,
         message: 'success',

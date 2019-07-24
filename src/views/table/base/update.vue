@@ -9,7 +9,7 @@
             type="text"
             @click="backHandler"
           >
-            员工管理
+            返回列表
           </el-button>
         </div>
       </template>
@@ -138,9 +138,8 @@
                 >提交并继续添加
                 </el-button>
                 <el-button
-                  v-else
                   @click="backHandler"
-                >返回
+                >返回列表
                 </el-button>
               </el-form-item>
             </el-col>
@@ -153,7 +152,7 @@
 
 <script>
 import awaitTo from 'await-to-js'
-import dayjs from 'dayjs'
+import dayJs from 'dayjs'
 import { regionData } from 'element-china-area-data'
 import { updateStaff } from '@/api/staff'
 import validator from '@/common/utils/validate'
@@ -170,20 +169,10 @@ export default {
     return {
       staff: {},
       rules: {
-        staffName: [
-          { required: true, message: '请输入员工姓名', trigger: 'blur' }
-        ],
-        staffNo: [
-          { required: true, message: '请输入工号', trigger: 'blur' }
-        ],
-        cerNo: [
-          { required: true, message: '请输入身份证号', trigger: 'blur' },
-          { validator: validator('idCardNo'), trigger: 'blur' }
-        ],
-        phone: [
-          { required: true, message: '请输入手机号码', trigger: 'blur' },
-          { validator: validator('mobileNo'), trigger: 'blur' }
-        ]
+        staffName: validator({ required: true }, '员工姓名'),
+        staffNo: validator({ required: true }, '工号'),
+        cerNo: validator({ required: true, type: 'id' }, '身份证'),
+        phone: validator({ required: true, type: 'mobile' }, '手机号码')
       },
       region: {
         options: regionData,
@@ -223,7 +212,7 @@ export default {
         sex: '1',
         native: '',
         phone: '',
-        entryTime: dayjs().format('YYYY-MM-DD'),
+        entryTime: dayJs().format('YYYY-MM-DD'),
         address: '',
         state: '1',
         remark: ''

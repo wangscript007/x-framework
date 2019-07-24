@@ -112,6 +112,22 @@
             </el-col>
           </el-row>
         </el-form>
+        <el-divider></el-divider>
+        <div class="x-description margin-bottom-3x">
+          <h3>温馨提示</h3>
+          <h4>1、文件上传需要对接fs文件服务器</h4>
+          <h4>
+            2、x-framework中以七牛云上传为例，请参考：
+            <el-link
+              target="_blank"
+              href="https://www.cnblogs.com/raind/p/10307508.html"
+            >elementui上传图片到七牛云服务器</el-link>&nbsp;&nbsp;
+            <el-link
+              target="_blank"
+              href="https://blog.csdn.net/qq_36020836/article/details/80845880"
+            >vue element-ui 上传文件到七牛云</el-link>
+          </h4>
+        </div>
       </template>
     </el-card>
   </page>
