@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import to from 'await-to-js'
+import awaitTo from 'await-to-js'
 import * as api from '@/api/tree'
 import Page from '@/components/Page'
 import UpdateTreeNode from '@/views/components/tree/dialog/updateTreeNode'
@@ -107,7 +107,7 @@ export default {
   methods: {
     /* 获取部门数据 */
     getDeptTree: async function () {
-      const [err, res] = await to(api.getDeptTree())
+      const [err, res] = await awaitTo(api.getDeptTree())
       this.loading = false
       if (err) {
         this.$message({

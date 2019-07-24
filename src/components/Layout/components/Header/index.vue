@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import awaitTo from 'await-to-js'
 import { mapGetters } from 'vuex'
 import screen from '@/common/constants/screen'
 import Toggle from '@/components/Layout/components/Header/Toggle'
@@ -93,7 +94,7 @@ export default {
   },
   methods: {
     logout: async function () {
-      await this.$store.dispatch('logout')
+      await awaitTo(this.$store.dispatch('logout'))
       location.reload()
     }
   }

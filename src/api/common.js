@@ -1,21 +1,27 @@
-import to from 'await-to-js'
+import awaitTo from 'await-to-js'
+import request from '@/common/utils/request'
 import CommonException from '@/common/model/exception'
 
 const DEFAULT_ERROR_MESSAGE = 'Request fail'
 
-export async function commonRequest (request, errorMessage = DEFAULT_ERROR_MESSAGE, successCallback) {
-  const [err, res] = await to(request)
+/*
+* options: request的参数
+* message：当获取不到data或者data.success = false的时候的提示
+* callback：成功后的回调
+* */
+export async function commonRequest ({ options, message, callback } = { options: {}, message: DEFAULT_ERROR_MESSAGE, callback: null }) {
+  const [err, res] = await awaitTo(request(options))
   if (err) {
     return Promise.reject(err)
   }
   const { data } = res
   if (!data || !data.success) {
     return Promise.reject(new CommonException({
-      message: data && data.message ? data.message : errorMessage
+      message: data && data.message ? data.message : message
     }))
   }
-  if (successCallback && typeof (successCallback) === 'function') {
-    (successCallback)(data)
+  if (callback && typeof (callback) === 'function') {
+    (callback)(data)
   }
   return Promise.resolve(data)
 }

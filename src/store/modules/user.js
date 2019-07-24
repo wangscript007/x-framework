@@ -1,7 +1,5 @@
-import { commonRequest } from '@/api/common'
 import * as userApi from '@/api/user'
 import * as cache from '@/common/cache/user'
-import CommonException from '@/common/model/exception'
 import { userTypes } from '@/store/mutation-types'
 
 const user = {
@@ -23,36 +21,30 @@ const user = {
   },
   actions: {
     login ({ commit, state }, formData) {
-      return commonRequest(userApi.login(formData), '验证失败，请重试', (data) => {
+      return userApi.login(formData, data => {
         commit(userTypes.SET_TOKEN, data.data)
         cache.setToken(data.data, state.remember)
       })
     },
-    getUserInfo: async ({ commit, state }) => {
-      const { data } = await userApi.getUserInfo(state.token)
-      if (!data || !data.success) {
-        throw new CommonException({
-          message: data && data.message ? data.message : '获取用户信息失败，请刷新重试'
-        })
-      }
-      commit(userTypes.SET_USER, data.data)
-      return data.data
+    getUserInfo ({ commit, state }) {
+      return userApi.getUserInfo(state.token, data => {
+        commit(userTypes.SET_USER, data.data)
+      })
     },
-    logout: async ({ commit, state }) => {
-      const { data } = await userApi.logout(state.user.token)
-      if (!data || !data.success) {
-        throw new CommonException({
-          message: data && data.message ? data.message : '操作失败，请重试'
-        })
-      }
-      commit(userTypes.SET_TOKEN, '')
-      commit(userTypes.SET_USER, null)
-      cache.removeToken(state.remember)
+    logout ({ commit, state }) {
+      return userApi.logout(() => {
+        commit(userTypes.SET_TOKEN, '')
+        commit(userTypes.SET_USER, null)
+        cache.removeToken(state.remember)
+      })
     },
-    resetUser: async ({ commit, state }) => {
-      commit(userTypes.SET_TOKEN, '')
-      commit(userTypes.SET_USER, null)
-      cache.removeToken(state.remember)
+    resetUser ({ commit, state }) {
+      return new Promise(resolve => {
+        commit(userTypes.SET_TOKEN, '')
+        commit(userTypes.SET_USER, null)
+        cache.removeToken(state.remember)
+        resolve()
+      })
     }
   },
   getters: {

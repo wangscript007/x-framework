@@ -152,7 +152,7 @@
 </template>
 
 <script>
-import to from 'await-to-js'
+import awaitTo from 'await-to-js'
 import dayjs from 'dayjs'
 import { regionData } from 'element-china-area-data'
 import { updateStaff } from '@/api/staff'
@@ -239,7 +239,7 @@ export default {
           spinner: 'fa fa-spinner fa-spin fa-2x',
           background: 'rgba(255, 255, 255, 0.5)'
         })
-        const [err] = await to(updateStaff(this.staff))
+        const [err] = await awaitTo(updateStaff(this.staff))
         this.$nextTick(() => {
           loading.close()
         })

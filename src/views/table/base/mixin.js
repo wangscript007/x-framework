@@ -1,4 +1,4 @@
-import to from 'await-to-js'
+import awaitTo from 'await-to-js'
 import { getStaff } from '@/api/staff'
 
 export default {
@@ -9,7 +9,7 @@ export default {
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
       })
-      const [err, res] = await to(getStaff(staffId))
+      const [err, res] = await awaitTo(getStaff(staffId))
       this.$nextTick(() => {
         loading.close()
       })

@@ -114,7 +114,7 @@
 </template>
 
 <script>
-import to from 'await-to-js'
+import awaitTo from 'await-to-js'
 import { mapGetters, mapMutations } from 'vuex'
 import validator from '@/common/utils/validate'
 
@@ -163,7 +163,7 @@ export default {
           return false
         }
         this.loading = true
-        const [err] = await to(this.$store.dispatch('login', this.form))
+        const [err] = await awaitTo(this.$store.dispatch('login', this.form))
         this.loading = false
         if (err) {
           this.$message.error({

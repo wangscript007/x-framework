@@ -63,10 +63,7 @@ const permission = {
     }
   },
   mutations: {
-    [permissionTypes.SET_ROUTERS]: (state, {
-      matchedRouters,
-      defaultPath
-    }) => {
+    [permissionTypes.SET_ROUTERS]: (state, { matchedRouters, defaultPath }) => {
       state.permission.matchedRouters = matchedRouters
       state.permission.routers = systemRouterMap.concat(matchedRouters)
       state.permission.defaultPath = defaultPath
@@ -74,12 +71,12 @@ const permission = {
   },
   actions: {
     /* 创建路由表 */
-    createRouterMap: async ({ commit }, userRoles) => {
-      const matchedRouters = routerFilter(asyncRouterMap, userRoles)
-      const defaultPath = findDefaultPath(matchedRouters)
-      commit(permissionTypes.SET_ROUTERS, {
-        matchedRouters,
-        defaultPath
+    createRouterMap ({ commit }, userRoles) {
+      return new Promise(resolve => {
+        const matchedRouters = routerFilter(asyncRouterMap, userRoles)
+        const defaultPath = findDefaultPath(matchedRouters)
+        commit(permissionTypes.SET_ROUTERS, { matchedRouters, defaultPath })
+        resolve({ matchedRouters, defaultPath })
       })
     }
   },

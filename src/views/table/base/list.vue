@@ -235,7 +235,7 @@
 </template>
 
 <script>
-import to from 'await-to-js'
+import awaitTo from 'await-to-js'
 import * as api from '@/api/staff'
 import Page from '@/components/Page'
 import Badge from '@/components/Badge'
@@ -284,7 +284,7 @@ export default {
         spinner: 'fa fa-spinner fa-spin fa-2x',
         background: 'rgba(255, 255, 255, 0.5)'
       })
-      const [err] = await to(api.deleteStaff(staffId))
+      const [err] = await awaitTo(api.deleteStaff(staffId))
       this.closePopover(staffId)
       this.$nextTick(() => {
         loading.close()
@@ -312,7 +312,7 @@ export default {
         this.query.page = pageNo
       }
       this.tableLoading = true
-      const [err, res] = await to(api.staffList(this.query))
+      const [err, res] = await awaitTo(api.staffList(this.query))
       this.tableLoading = false
       if (err) {
         this.$message({
