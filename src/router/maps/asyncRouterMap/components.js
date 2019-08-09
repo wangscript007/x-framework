@@ -11,7 +11,7 @@ const componentsRouter = {
     redirectInBreadcrumb: true
   },
   children: [
-    /* page模板 */
+    /* 树型组件 */
     {
       path: 'tree',
       name: 'Tree',
@@ -82,6 +82,18 @@ const componentsRouter = {
       meta: {
         title: '富文本编辑器',
         describe: '富文本编辑器，是后台管理系统的核心功能之一。常用于发布消息，编辑文章等功能。',
+        icon: 'fa fa-upload',
+        iconType: 'class'
+      }
+    },
+    /* 手写板 */
+    {
+      path: 'signature',
+      name: 'Signature',
+      component: () => import('@/views/components/signature'),
+      meta: {
+        title: '手写板',
+        describe: '手写板，常用于一些在线签名操作。',
         icon: 'fa fa-upload',
         iconType: 'class'
       }
