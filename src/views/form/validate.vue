@@ -693,8 +693,6 @@
 </template>
 
 <script>
-import awaitTo from 'await-to-js'
-import request from '@/common/utils/request'
 import { debounce } from 'lodash'
 import { regionData } from 'element-china-area-data'
 import { EMI_SEX, EMI_NATION } from '@/common/emi/standard'

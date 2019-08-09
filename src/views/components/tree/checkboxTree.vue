@@ -79,6 +79,7 @@ export default {
           message: '请选择部门',
           showClose: true
         })
+        return
       }
       let html = ''
       for (const i of checkedKeys) {
