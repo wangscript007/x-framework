@@ -1,27 +1,16 @@
-import storage from 'good-storage'
+import Vue from 'vue'
+import { ACCESS_USER } from '@/cache/cache-types'
 
-const TOKEN_KEY = 'X_FRAMEWORK_TOKEN'
+const TOKEN_EFFECTIVE_DATES = 7 * 24 * 60 * 60 * 1000
 
-export function getToken () {
-  const res = {
-    token: '',
-    isLocal: false
-  }
-  let token = storage.session.get(TOKEN_KEY, '')
-  if (!token) {
-    token = storage.get(TOKEN_KEY, '')
-    if (token) {
-      res.isLocal = true
-    }
-  }
-  res.token = token
-  return res
+export function getUser () {
+  Vue.ls.get(ACCESS_USER, null)
 }
 
-export function setToken (token, isLocal = false) {
-  return isLocal ? storage.set(TOKEN_KEY, token) : storage.session.set(TOKEN_KEY, token)
+export function setUser (user) {
+  Vue.ls.set(ACCESS_USER, user, TOKEN_EFFECTIVE_DATES)
 }
 
-export function removeToken (isLocal = false) {
-  return isLocal ? storage.remove(TOKEN_KEY) : storage.session.remove(TOKEN_KEY)
+export function removeUser () {
+  Vue.ls.remove(ACCESS_USER)
 }

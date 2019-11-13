@@ -4,7 +4,7 @@
       <div
         v-if="app.screenSize !== screen.xs.name"
         class="x-layout-sider"
-        :class="{collapsed: app.siderCollapsed, fixed: app.siderFixed}"
+        :class="{collapsed: app.sidebarCollapsed, fixed: app.sidebarFixed}"
       >
         <slot name="sider"></slot>
       </div>

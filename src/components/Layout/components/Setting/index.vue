@@ -40,23 +40,23 @@
           label-position="left"
         >
           <el-form-item label="固定导航">
-            <el-switch v-model="settings.siderFixed"></el-switch>
+            <el-switch v-model="settings.sidebarFixed"></el-switch>
           </el-form-item>
           <el-form-item label="固定头部">
             <el-switch v-model="settings.headerFixed"></el-switch>
           </el-form-item>
           <el-form-item label="路径导航">
             <el-select
-              v-model="settings.breadcrumbPosition"
+              v-model="settings.breadcrumbWrapper"
               :disabled="breadcrumbSelectDisabled"
               size="mini"
             >
               <el-option
-                v-for="item in breadcrumbPosition"
+                v-for="item in breadcrumbWrapper"
                 :key="item.value"
                 :label="item.label"
                 :value="item.value"
-                :selected="item.value === settings.breadcrumbPosition"
+                :selected="item.value === settings.breadcrumbWrapper"
               >
               </el-option>
             </el-select>
@@ -92,12 +92,12 @@ export default {
     return {
       settings: {
         layout: '',
-        siderFixed: false,
+        sidebarFixed: false,
         headerFixed: false,
-        breadcrumbPosition: ''
+        breadcrumbWrapper: ''
       },
       breadcrumbSelectDisabled: false,
-      breadcrumbPosition: [
+      breadcrumbWrapper: [
         {
           value: 'appHeader',
           label: '头部显示'
@@ -114,35 +114,35 @@ export default {
   watch: {
     'settings.layout' (layout) {
       if (layout === 'classic') {
-        if (this.settings.siderFixed !== this.settings.headerFixed) {
-          this.settings.siderFixed = false
+        if (this.settings.sidebarFixed !== this.settings.headerFixed) {
+          this.settings.sidebarFixed = false
           this.settings.headerFixed = false
         }
       }
       this.breadcrumbSelectDisabled = layout === 'classic'
       this.setLayout(layout)
     },
-    'settings.siderFixed' (siderFixed) {
-      this.setSiderFixed(siderFixed)
+    'settings.sidebarFixed' (sidebarFixed) {
+      this.setSiderFixed(sidebarFixed)
       if (this.settings.layout === 'classic') {
-        this.settings.headerFixed = siderFixed
+        this.settings.headerFixed = sidebarFixed
       }
     },
     'settings.headerFixed' (headerFixed) {
       this.setHeaderFixed(headerFixed)
       if (this.settings.layout === 'classic') {
-        this.settings.siderFixed = headerFixed
+        this.settings.sidebarFixed = headerFixed
       }
     },
-    'settings.breadcrumbPosition' (breadcrumbPosition) {
-      this.setBreadcrumbPosition(breadcrumbPosition)
+    'settings.breadcrumbWrapper' (breadcrumbWrapper) {
+      this.setBreadcrumbPosition(breadcrumbWrapper)
     }
   },
   created () {
     this.settings.layout = this.app.layout
-    this.settings.siderFixed = this.app.siderFixed
+    this.settings.sidebarFixed = this.app.sidebarFixed
     this.settings.headerFixed = this.app.headerFixed
-    this.settings.breadcrumbPosition = this.app.breadcrumbPosition
+    this.settings.breadcrumbWrapper = this.app.breadcrumbWrapper
     this.breadcrumbSelectDisabled = this.app.layout === 'classic'
   },
   methods: {

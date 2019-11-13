@@ -18,11 +18,11 @@
     <div class="x-header-menu-left">
       <toggle
         class="menu-item"
-        :title="`${app.siderCollapsed ? '展开' : '收起'}导航`"
+        :title="`${app.sidebarCollapsed ? '展开' : '收起'}导航`"
       ></toggle>
     </div>
     <div class="x-header-menu-breadcrumb">
-      <breadcrumb v-if="app.layout === 'default' && app.breadcrumbPosition === 'appHeader'"></breadcrumb>
+      <breadcrumb v-if="app.layout === 'default' && app.breadcrumbWrapper === 'appHeader'"></breadcrumb>
     </div>
     <div class="x-header-menu-right">
       <el-dropdown

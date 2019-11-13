@@ -86,18 +86,6 @@ const componentsRouter = {
         iconType: 'class'
       }
     },
-    /* 手写板 */
-    {
-      path: 'signature',
-      name: 'Signature',
-      component: () => import('@/views/components/signature'),
-      meta: {
-        title: '手写板',
-        describe: '手写板，常用于一些在线签名操作。',
-        icon: 'fa fa-upload',
-        iconType: 'class'
-      }
-    },
     /* page模板 */
     {
       path: 'page',

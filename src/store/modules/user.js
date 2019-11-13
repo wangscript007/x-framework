@@ -1,55 +1,79 @@
+import awaitTo from 'await-to-js'
 import * as userApi from '@/api/user'
-import * as cache from '@/common/cache/user'
-import { userTypes } from '@/store/mutation-types'
+import { setToken, removeToken } from '@/common/cache/token'
+import { setUser, removeUser } from '@/common/cache/user'
+import { MUT_USER_TYPES } from '@/store/mutation-types'
 
 const user = {
   state: {
-    token: cache.getToken().token,
-    remember: false,
-    user: null
+    token: '',
+    user: null,
+    role: []
   },
   mutations: {
-    [userTypes.SET_TOKEN]: (state, token) => {
+    [MUT_USER_TYPES.SET_TOKEN]: (state, token) => {
       state.token = token
     },
-    [userTypes.SET_REMEMBER]: (state, remember) => {
-      state.remember = remember
-    },
-    [userTypes.SET_USER]: (state, user) => {
+    [MUT_USER_TYPES.SET_USER]: (state, user) => {
       state.user = user
+    },
+    [MUT_USER_TYPES.SET_ROLE]: (state, role) => {
+      state.role = role
     }
   },
   actions: {
-    login ({ commit, state }, formData) {
-      return userApi.login(formData, data => {
-        commit(userTypes.SET_TOKEN, data.data)
-        cache.setToken(data.data, state.remember)
-      })
+    async login ({ commit }, form) {
+      const [err, res] = await awaitTo(userApi.login(form))
+      if (err) {
+        return Promise.reject(err)
+      }
+      const token = res.data
+      setToken(token)
+      commit(MUT_USER_TYPES.SET_TOKEN, token)
+      return Promise.resolve()
     },
-    getUserInfo ({ commit, state }) {
-      return userApi.getUserInfo(state.token, data => {
-        commit(userTypes.SET_USER, data.data)
-      })
+    async getUserInfo ({ commit }) {
+      const [err, res] = await awaitTo(userApi.getUserInfo())
+      if (err) {
+        return Promise.reject(err)
+      }
+      const user = res.data
+      setUser(user)
+      commit(MUT_USER_TYPES.SET_USER, user)
+      return Promise.resolve()
     },
-    logout ({ commit, state }) {
-      return userApi.logout(() => {
-        commit(userTypes.SET_TOKEN, '')
-        commit(userTypes.SET_USER, null)
-        cache.removeToken(state.remember)
-      })
+    async getUserRole ({ commit }) {
+      const [err, res] = await awaitTo(userApi.getUserRole())
+      if (err) {
+        return Promise.reject(err)
+      }
+      const role = res.data
+      commit(MUT_USER_TYPES.SET_ROLE, role)
+      return Promise.resolve()
     },
-    resetUser ({ commit, state }) {
-      return new Promise(resolve => {
-        commit(userTypes.SET_TOKEN, '')
-        commit(userTypes.SET_USER, null)
-        cache.removeToken(state.remember)
-        resolve()
-      })
+    async logout ({ commit }) {
+      const [err] = await awaitTo(userApi.logout())
+      if (err) {
+        return Promise.reject(err)
+      }
+      removeToken()
+      removeUser()
+      commit(MUT_USER_TYPES.SET_TOKEN, '')
+      commit(MUT_USER_TYPES.SET_USER, null)
+      return Promise.resolve()
+    },
+    clearUserCache ({ commit }) {
+      removeToken()
+      removeUser()
+      commit(MUT_USER_TYPES.SET_TOKEN, '')
+      commit(MUT_USER_TYPES.SET_USER, null)
+      return Promise.resolve()
     }
   },
   getters: {
     token: state => state.token,
-    user: state => state.user
+    user: state => state.user,
+    role: state => state.role
   }
 }
 

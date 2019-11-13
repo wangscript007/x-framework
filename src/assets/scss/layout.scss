@@ -208,22 +208,23 @@ $x-drawer-z-index: 1000;
       width: 24px;
       height: 19px;
       margin-right: 5px;
-      @include x-transition(0.3s);
     }
 
     .class-icon {
       text-align: center;
       font-size: 16px;
       line-height: 19px;
+      transition: all 0.3s;
     }
 
     .image-icon {
       background-size: 16px 16px;
+      transition: all 0.3s;
     }
 
     [class^=el-icon-] {
       height: 19px;
-      @include x-transition(0.3s);
+      transition: all 0.3s;
     }
   }
   .el-menu-item {

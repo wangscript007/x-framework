@@ -1,38 +1,42 @@
 import { commonRequest } from '@/api/common'
 
-export function login (formData, callback) {
+export function login (data) {
   return commonRequest({
     options: {
       url: '/user/login',
       method: 'post',
-      data: formData
+      data
     },
-    message: '验证失败，请重试',
-    callback
+    message: '验证失败，请重试'
   })
 }
 
-export function logout (callback) {
+export function logout () {
   return commonRequest({
     options: {
       url: '/user/logout',
       method: 'post'
     },
-    message: '操作失败，请重试',
-    callback
+    message: '操作失败，请重试'
   })
 }
 
-export function getUserInfo (token, callback) {
+export function getUserInfo () {
   return commonRequest({
     options: {
       url: '/user/info',
-      method: 'get',
-      params: {
-        token
-      }
+      method: 'get'
     },
-    message: '获取用户信息失败，请重试',
-    callback
+    message: '获取用户信息失败，请重试'
+  })
+}
+
+export function getUserRole () {
+  return commonRequest({
+    options: {
+      url: '/user/role',
+      method: 'get'
+    },
+    message: '获取用户权限失败，请重试'
   })
 }

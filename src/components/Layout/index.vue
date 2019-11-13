@@ -13,8 +13,8 @@
       >
         <template v-slot:sider>
           <x-sider
-            :collapsed="app.siderCollapsed"
-            :fixed="app.siderFixed"
+            :collapsed="app.sidebarCollapsed"
+            :fixed="app.sidebarFixed"
           ></x-sider>
         </template>
         <template v-slot:header>
@@ -33,8 +33,8 @@
       >
         <template v-slot:sider>
           <x-sider
-            :collapsed="app.siderCollapsed"
-            :fixed="app.siderFixed"
+            :collapsed="app.sidebarCollapsed"
+            :fixed="app.sidebarFixed"
             :show-header="false"
           ></x-sider>
         </template>
@@ -51,7 +51,7 @@
     </transition>
     <drawer
       v-if="xsScreen"
-      :opened="app.siderOpened"
+      :opened="app.sidebarOpened"
       @maskClick="closeSiderDrawer"
     >
       <template v-slot:default>
@@ -70,7 +70,7 @@
       <back-to-top />
     </el-tooltip>
     <drawer
-      v-if="app.showSettings"
+      v-if="app.enableSetting"
       type="right"
       handler-top="20%"
       class-name="x-settings"

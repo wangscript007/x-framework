@@ -20,7 +20,7 @@ export default {
   computed: {
     ...mapGetters(['app']),
     icon () {
-      return this.app.siderCollapsed ? 'indent' : 'outdent'
+      return this.app.sidebarCollapsed ? 'indent' : 'outdent'
     }
   },
   methods: {
@@ -30,9 +30,9 @@ export default {
     }),
     toggle: debounce(function () {
       if (this.app.screenSize === screen.xs.name) {
-        this.setSiderOpened(!this.app.siderOpened)
+        this.setSiderOpened(!this.app.sidebarOpened)
       } else {
-        this.setSiderCollapsed(!this.app.siderCollapsed)
+        this.setSiderCollapsed(!this.app.sidebarCollapsed)
       }
     }, TOGGLE_BUTTON_CLICK_DELAY, {
       leading: true,
