@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import layoutMixin from '@/components/Layout/mixin/Layout'
+import layoutMixin from '@/layout/mixin/Layout'
 
 export default {
   name: 'LayoutClassic',

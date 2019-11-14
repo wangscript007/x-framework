@@ -1,7 +1,0 @@
-export { default as LayoutDefault } from '@/components/Layout/components/Layout/Default'
-export { default as LayoutClassic } from '@/components/Layout/components/Layout/Classic'
-export { default as XSider } from '@/components/Layout/components/Sider'
-export { default as XHeader } from '@/components/Layout/components/Header'
-export { default as XMain } from '@/components/Layout/components/Main'
-export { default as XFooter } from '@/components/Layout/components/Footer'
-export { default as LayoutSetting } from '@/components/Layout/components/Setting'

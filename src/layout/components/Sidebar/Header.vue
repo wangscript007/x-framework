@@ -21,7 +21,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'SiderHeader',
+  name: 'SidebarHeader',
   props: {
     collapsed: {
       type: Boolean,

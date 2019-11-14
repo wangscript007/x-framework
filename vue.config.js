@@ -1,21 +1,22 @@
 'use strict'
 const path = require('path')
-const defaultSetting = require('./src/settings.js')
 
 function resolve (dir) {
   return path.join(__dirname, dir)
 }
 
-const port = 8099
+const PORT = 8099
+const API_SERVER = `http://localhost:${PORT}/mock`
+// const API_SERVER = `https://hxk.nanhuokeji.com/api`
 
 module.exports = {
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
   devServer: {
-    port: port,
+    port: PORT,
     open: true,
     hotOnly: true,
     overlay: {
@@ -23,10 +24,11 @@ module.exports = {
       errors: true
     },
     proxy: {
-      // change xxx-api/login => mock/login
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
+      /* api代理 */
+      /* 例：/api/xxx => http://localhost:8099/mock/xxx */
+      /* 详情参考: https://cli.vuejs.org/config/#devserver-proxy */
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:${port}/mock`,
+        target: API_SERVER,
         changeOrigin: true,
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
@@ -36,7 +38,7 @@ module.exports = {
     after: require('./mock/server.js')
   },
   configureWebpack: {
-    name: defaultSetting.name || 'X-FRAMEWORK',
+    name: 'X-FRAMEWORK',
     resolve: {
       alias: {
         '@': resolve('src')

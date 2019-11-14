@@ -11,9 +11,9 @@
 export default {
   name: 'ItemLink',
   props: {
-    external: {
-      type: Boolean,
-      default: false
+    target: {
+      type: String,
+      default: null
     },
     path: {
       type: String,
@@ -22,10 +22,10 @@ export default {
   },
   computed: {
     linkType () {
-      return this.external ? 'a' : 'router-link'
+      return this.target ? 'a' : 'router-link'
     },
     linkProps () {
-      return this.external ? { href: this.path, target: '_blank' } : { to: this.path, tag: 'a' }
+      return this.target ? { href: this.path, target: this.target } : { to: this.path, tag: 'a' }
     }
   }
 }

@@ -19,10 +19,10 @@ export function hasScrollBar () {
 
 /* 获取滚动条宽度 */
 export function getScrollbarWidth () {
-  var scrollDiv = document.createElement('div')
+  const scrollDiv = document.createElement('div')
   scrollDiv.style.cssText = 'width:99px;height:99px;overflow:scroll;position:absolute;top:-9999px;opacity:0;'
   document.body.appendChild(scrollDiv)
-  var scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
+  const scrollbarWidth = scrollDiv.offsetWidth - scrollDiv.clientWidth
   document.body.removeChild(scrollDiv)
   return scrollbarWidth
 }
@@ -76,10 +76,9 @@ export function isEmpty (value) {
 /* 随机字符串 */
 export function randomString (length = 64) {
   const chars = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'q', 'r', 's', 't', 'w', 'x', 'y', 'z', '2', '3', '4', '5', '6', '7', '8']
-  const maxPos = chars.length
   let res = ''
   chars.forEach(() => {
-    res += chars[Math.floor(Math.random() * maxPos)]
+    res += chars[Math.floor(Math.random() * length)]
   })
   return res
 }

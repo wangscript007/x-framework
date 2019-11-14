@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { ACCESS_TOKEN } from '@/common/cache/cache-types'
-import { getToken } from '@/common/cache/token'
+import { ACCESS_TOKEN } from '@/cache/cache-types'
+import { getToken } from '@/cache'
 import { Message } from 'element-ui'
 
 /* 创建axios对象 */

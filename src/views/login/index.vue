@@ -57,7 +57,7 @@
                   :placeholder="'密码'"
                   name="password"
                   auto-complete="on"
-                  @keyup.enter.native="handleLogin"
+                  @keyup.enter.native="loginHandler"
                 >
                   <template v-slot:suffix>
                     <i
@@ -74,7 +74,6 @@
                   :span="12"
                   class="remember-me"
                 >
-                  <el-checkbox v-model="remember">记住我</el-checkbox>
                 </el-col>
                 <el-col
                   :span="12"
@@ -115,7 +114,7 @@
 
 <script>
 import awaitTo from 'await-to-js'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 import validator from '@/common/utils/validate'
 
 export default {
@@ -145,18 +144,13 @@ export default {
   watch: {
     $route: {
       handler: function (route) {
-        this.redirect = route.query && route.query.redirect
+        const { redirect } = route.query
+        this.redirect = redirect
       },
       immediate: true
-    },
-    remember (value) {
-      this.setRemember(value)
     }
   },
   methods: {
-    ...mapMutations({
-      setRemember: 'SET_REMEMBER'
-    }),
     loginHandler () {
       this.$refs.loginForm.validate(async (valid) => {
         if (!valid) {
@@ -166,14 +160,11 @@ export default {
         const [err] = await awaitTo(this.$store.dispatch('login', this.form))
         this.loading = false
         if (err) {
-          this.$message.error({
-            showClose: true,
-            type: 'error',
-            message: err.message
-          })
+          this.$message.error({ showClose: true, type: 'error', message: err.message })
           return
         }
-        this.$router.push({ path: this.redirect || '/' })
+        const redirect = this.redirect ? decodeURIComponent(this.redirect) : '/'
+        this.$router.push({ path: redirect })
       })
     }
   }

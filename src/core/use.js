@@ -15,7 +15,7 @@ Vue.component('x-icon', XIcon)
 
 Vue.use(Element, { size: 'medium' })
 Vue.use(VueStorage, {
-  namespace: 'x__', // key prefix
+  namespace: '', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
   storage: 'local' // storage name session, local, memory
 })

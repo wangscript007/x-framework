@@ -1,9 +1,9 @@
-import ItemAlone from '@/components/Layout/components/Sider/ItemAlone'
+import ItemAlone from '@/layout/components/Sidebar/ItemAlone'
 
 export default {
   methods: {
     /* 递归判断当前路由下的每一层嵌套是否只有一个子路由 */
-    isAloneRoute (route, res = null) {
+    isAloneRoute (route, res = false) {
       const { children } = route
       if (!children) {
         res = true

@@ -19,10 +19,10 @@
       <toggle
         class="menu-item"
         :title="`${app.sidebarCollapsed ? '展开' : '收起'}导航`"
-      ></toggle>
+      />
     </div>
     <div class="x-header-menu-breadcrumb">
-      <breadcrumb v-if="app.layout === 'default' && app.breadcrumbWrapper === 'appHeader'"></breadcrumb>
+      <breadcrumb v-if="app.layout === 'default' && app.breadcrumbWrapper === 'app'"></breadcrumb>
     </div>
     <div class="x-header-menu-right">
       <el-dropdown
@@ -34,6 +34,7 @@
             v-if="user && user.avatar"
             :src="user.avatar"
             class="user-avatar"
+            alt=""
           >
           <span v-if="!xsScreen">{{ user && user.realName ? user.realName : '' }}</span>
         </div>
@@ -75,7 +76,7 @@
 import awaitTo from 'await-to-js'
 import { mapGetters } from 'vuex'
 import screen from '@/common/constants/screen'
-import Toggle from '@/components/Layout/components/Header/Toggle'
+import Toggle from '@/layout/components/Header/Toggle'
 import FullScreen from '@/components/FullScreen'
 import Breadcrumb from '@/components/Breadcrumb'
 

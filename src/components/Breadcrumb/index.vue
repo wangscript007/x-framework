@@ -8,30 +8,29 @@
         v-for="(item,index) in breadcrumb"
         :key="item.path"
       >
+        <router-link
+          v-if="item.name !== name && index !== 1"
+          :to="item.path || '/'"
+        >
+          {{ item.meta.title }}
+        </router-link>
         <span
-          v-if="item.meta.redirectInBreadcrumb === false || index === breadcrumb.length - 1"
+          v-else
           class="no-redirect"
         >
           {{ item.meta.title }}
         </span>
-        <a
-          v-else
-          @click.prevent="handleLink(item)"
-        >
-          {{ item.meta.title }}
-        </a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
 </template>
 
 <script>
-import pathToRegexp from 'path-to-regexp'
-
 export default {
   data () {
     return {
-      breadcrumb: null
+      name: '',
+      breadcrumb: []
     }
   },
   watch: {
@@ -44,20 +43,11 @@ export default {
   },
   methods: {
     getBreadcrumb () {
-      this.breadcrumb = [{ path: '/', redirect: '/', meta: { title: '首页' } }].concat(this.$route.matched).filter(item => item.meta && item.meta.title && item.meta.showInBreadcrumb !== false)
-    },
-    pathCompile (path) {
-      const { params } = this.$route
-      const toPath = pathToRegexp.compile(path)
-      return toPath(params)
-    },
-    handleLink (item) {
-      const { redirect, path } = item
-      if (redirect) {
-        this.$router.push(redirect)
-        return
-      }
-      this.$router.push(this.pathCompile(path))
+      this.breadcrumb = []
+      this.name = this.$route.name
+      this.$route.matched.forEach(item => {
+        this.breadcrumb.push(item)
+      })
     }
   }
 }

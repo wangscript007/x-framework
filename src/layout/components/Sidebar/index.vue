@@ -3,10 +3,10 @@
     class="x-sider"
     :class="{fixed: fixed, 'with-header': showHeader}"
   >
-    <sider-header
+    <sidebar-header
       v-if="showHeader"
       :collapsed="collapsed"
-    ></sider-header>
+    />
     <div class="x-sider-nav">
       <scroll>
         <el-menu
@@ -16,20 +16,18 @@
           :router="false"
           :unique-opened="true"
         >
-          <template v-for="item in permission.routers">
-            <template v-if="item.meta && !item.meta.hidden">
+          <template v-for="item in routers">
+            <template v-if="!item.meta.hidden">
               <item-alone
                 v-if="isAloneRoute(item) && !item.meta.alwaysShow"
                 :key="item.path"
                 :route="item"
-                :base-path="item.path"
-              ></item-alone>
+              />
               <item-nested
                 v-else
                 :key="item.path"
                 :route="item"
-                :base-path="item.path"
-              ></item-nested>
+              />
             </template>
           </template>
         </el-menu>
@@ -41,18 +39,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import Scroll from '@/components/Scroll'
-import SiderHeader from '@/components/Layout/components/Sider/Header'
-import SiderMixin from '@/components/Layout/mixin/Sider'
-import ItemNested from '@/components/Layout/components/Sider/ItemNested'
+import SidebarHeader from '@/layout/components/Sidebar/Header'
+import SidebarMixin from '@/layout/mixin/Sidebar'
+import ItemNested from '@/layout/components/Sidebar/ItemNested'
 
 export default {
-  name: 'LayoutSider',
+  name: 'Sidebar',
   components: {
-    SiderHeader,
+    SidebarHeader,
     Scroll,
     ItemNested
   },
-  mixins: [SiderMixin],
+  mixins: [SidebarMixin],
   props: {
     collapsed: {
       type: Boolean,
@@ -68,7 +66,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['permission']),
+    ...mapGetters(['routers']),
     activePath () {
       const { meta, path } = this.$route
       return meta && meta.activePath ? meta.activePath : path

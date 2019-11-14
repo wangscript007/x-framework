@@ -15,7 +15,7 @@ export const MUT_APP_TYPES = {
 export const MUT_USER_TYPES = {
   SET_TOKEN: 'SET_TOKEN',
   SET_USER: 'SET_USER',
-  SET_ROLE: 'SET_ROLE'
+  SET_ROLES: 'SET_ROLES'
 }
 
 export const permissionTypes = {

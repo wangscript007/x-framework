@@ -1,14 +1,13 @@
 import awaitTo from 'await-to-js'
 import * as userApi from '@/api/user'
-import { setToken, removeToken } from '@/common/cache/token'
-import { setUser, removeUser } from '@/common/cache/user'
+import { setToken, removeToken, setUser, removeUser } from '@/cache'
 import { MUT_USER_TYPES } from '@/store/mutation-types'
 
 const user = {
   state: {
     token: '',
     user: null,
-    role: []
+    roles: null
   },
   mutations: {
     [MUT_USER_TYPES.SET_TOKEN]: (state, token) => {
@@ -17,8 +16,8 @@ const user = {
     [MUT_USER_TYPES.SET_USER]: (state, user) => {
       state.user = user
     },
-    [MUT_USER_TYPES.SET_ROLE]: (state, role) => {
-      state.role = role
+    [MUT_USER_TYPES.SET_ROLES]: (state, roles) => {
+      state.roles = roles
     }
   },
   actions: {
@@ -27,7 +26,7 @@ const user = {
       if (err) {
         return Promise.reject(err)
       }
-      const token = res.data
+      const token = res.data.token
       setToken(token)
       commit(MUT_USER_TYPES.SET_TOKEN, token)
       return Promise.resolve()
@@ -47,8 +46,8 @@ const user = {
       if (err) {
         return Promise.reject(err)
       }
-      const role = res.data
-      commit(MUT_USER_TYPES.SET_ROLE, role)
+      const roles = res.data || []
+      commit(MUT_USER_TYPES.SET_ROLES, roles)
       return Promise.resolve()
     },
     async logout ({ commit }) {
@@ -73,7 +72,7 @@ const user = {
   getters: {
     token: state => state.token,
     user: state => state.user,
-    role: state => state.role
+    roles: state => state.roles
   }
 }
 

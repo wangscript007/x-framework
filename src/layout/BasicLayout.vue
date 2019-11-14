@@ -12,19 +12,24 @@
         key="layout-default"
       >
         <template v-slot:sider>
-          <x-sider
+          <sidebar
             :collapsed="app.sidebarCollapsed"
             :fixed="app.sidebarFixed"
-          ></x-sider>
+          />
         </template>
         <template v-slot:header>
-          <x-header></x-header>
+          <global-header />
         </template>
         <template v-slot:main>
-          <x-main></x-main>
+          <transition
+            name="animate-layout-main"
+            mode="out-in"
+          >
+            <route-view />
+          </transition>
         </template>
         <template v-slot:footer>
-          <x-footer></x-footer>
+          <global-footer />
         </template>
       </layout-default>
       <layout-classic
@@ -32,34 +37,39 @@
         key="layout-classic"
       >
         <template v-slot:sider>
-          <x-sider
+          <global-sider
             :collapsed="app.sidebarCollapsed"
             :fixed="app.sidebarFixed"
             :show-header="false"
-          ></x-sider>
+          />
         </template>
         <template v-slot:header>
-          <x-header></x-header>
+          <global-header />
         </template>
         <template v-slot:main>
-          <x-main></x-main>
+          <transition
+            name="animate-layout-main"
+            mode="out-in"
+          >
+            <route-view />
+          </transition>
         </template>
         <template v-slot:footer>
-          <x-footer></x-footer>
+          <global-footer />
         </template>
       </layout-classic>
     </transition>
     <drawer
       v-if="xsScreen"
       :opened="app.sidebarOpened"
-      @maskClick="closeSiderDrawer"
+      @maskClick="closeSidebarDrawer"
     >
       <template v-slot:default>
         <div class="x-layout-sider fixed">
-          <x-sider
+          <sidebar
             :collapsed="false"
             :fixed="true"
-          ></x-sider>
+          />
         </div>
       </template>
     </drawer>
@@ -91,7 +101,7 @@
         </a>
       </template>
       <template v-slot:default>
-        <layout-setting></layout-setting>
+        <global-setting />
       </template>
     </drawer>
   </div>
@@ -99,10 +109,12 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import { MUT_APP_TYPES } from '@/store/mutation-types'
 import { getScreenSize } from '@/common/utils'
 import { debounce } from 'lodash'
 import screen from '@/common/constants/screen'
-import { LayoutDefault, LayoutClassic, XSider, XHeader, XMain, XFooter, LayoutSetting } from '@/components/Layout/components'
+import RouteView from './RouteView'
+import { LayoutDefault, LayoutClassic, Sidebar, GlobalHeader, GlobalFooter, GlobalSetting } from '@/layout/components'
 import Drawer from '@/components/Drawer'
 import BackToTop from '@/components/BackToTop'
 
@@ -110,15 +122,15 @@ const WINDOW_RESIZE_HANDLER_DELAY = 300
 const SETTING_DRAWER_TOGGLE_DELAY = 300
 
 export default {
-  name: 'Layout',
+  name: 'BasicLayout',
   components: {
+    RouteView,
     LayoutDefault,
     LayoutClassic,
-    XSider,
-    XHeader,
-    XMain,
-    XFooter,
-    LayoutSetting,
+    Sidebar,
+    GlobalHeader,
+    GlobalFooter,
+    GlobalSetting,
     Drawer,
     BackToTop
   },
@@ -136,13 +148,13 @@ export default {
   watch: {
     $route () {
       if (this.xsScreen) {
-        this.closeSiderDrawer()
+        this.closeSidebarDrawer()
       }
     },
     'app.screenSize' (size) {
       this.$nextTick(() => {
-        this.closeSiderDrawer()
-        this.setSiderCollapsed(size === screen.md.name || size === screen.sm.name || size === screen.xs.name)
+        this.closeSidebarDrawer()
+        this.setSidebarCollapsed(size === screen.md.name || size === screen.sm.name || size === screen.xs.name)
       })
     }
   },
@@ -154,15 +166,15 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setScreenSize: 'SET_SCREEN_SIZE',
-      setSiderCollapsed: 'SET_SIDER_COLLAPSED',
-      setSiderOpened: 'SET_SIDER_OPENED'
+      setScreenSize: MUT_APP_TYPES.SET_SCREEN_SIZE,
+      setSidebarCollapsed: MUT_APP_TYPES.SET_SIDEBAR_COLLAPSED,
+      setSidebarOpened: MUT_APP_TYPES.SET_SIDEBAR_OPENED
     }),
     windowResizeHandler: debounce(function () {
       this.setScreenSize(getScreenSize())
     }, WINDOW_RESIZE_HANDLER_DELAY),
-    closeSiderDrawer () {
-      this.setSiderOpened(false)
+    closeSidebarDrawer () {
+      this.setSidebarOpened(false)
     },
     toggleSettingDrawer: debounce(function () {
       this.settingDrawerOpened = !this.settingDrawerOpened

@@ -9,8 +9,9 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex'
 import { debounce } from 'lodash'
+import { mapGetters, mapMutations } from 'vuex'
+import { MUT_APP_TYPES } from '@/store/mutation-types'
 import screen from '@/common/constants/screen'
 
 const TOGGLE_BUTTON_CLICK_DELAY = 500
@@ -25,14 +26,14 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setSiderCollapsed: 'SET_SIDER_COLLAPSED',
-      setSiderOpened: 'SET_SIDER_OPENED'
+      setSidebarCollapsed: MUT_APP_TYPES.SET_SIDEBAR_COLLAPSED,
+      setSidebarOpened: MUT_APP_TYPES.SET_SIDEBAR_OPENED
     }),
     toggle: debounce(function () {
       if (this.app.screenSize === screen.xs.name) {
-        this.setSiderOpened(!this.app.sidebarOpened)
+        this.setSidebarOpened(!this.app.sidebarOpened)
       } else {
-        this.setSiderCollapsed(!this.app.sidebarCollapsed)
+        this.setSidebarCollapsed(!this.app.sidebarCollapsed)
       }
     }, TOGGLE_BUTTON_CLICK_DELAY, {
       leading: true,

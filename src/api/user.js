@@ -34,7 +34,7 @@ export function getUserInfo () {
 export function getUserRole () {
   return commonRequest({
     options: {
-      url: '/user/role',
+      url: '/user/roles',
       method: 'get'
     },
     message: '获取用户权限失败，请重试'
