@@ -37,7 +37,7 @@
         key="layout-classic"
       >
         <template v-slot:sider>
-          <global-sider
+          <sidebar
             :collapsed="app.sidebarCollapsed"
             :fixed="app.sidebarFixed"
             :show-header="false"

@@ -81,6 +81,7 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex'
+import { MUT_APP_TYPES } from '@/store/mutation-types'
 import Scroll from '@/components/Scroll'
 
 export default {
@@ -99,10 +100,10 @@ export default {
       breadcrumbSelectDisabled: false,
       breadcrumbWrapper: [
         {
-          value: 'appHeader',
+          value: 'app',
           label: '头部显示'
         }, {
-          value: 'pageHeader',
+          value: 'page',
           label: '页头显示'
         }
       ]
@@ -123,7 +124,7 @@ export default {
       this.setLayout(layout)
     },
     'settings.sidebarFixed' (sidebarFixed) {
-      this.setSiderFixed(sidebarFixed)
+      this.setSidebarFixed(sidebarFixed)
       if (this.settings.layout === 'classic') {
         this.settings.headerFixed = sidebarFixed
       }
@@ -135,7 +136,7 @@ export default {
       }
     },
     'settings.breadcrumbWrapper' (breadcrumbWrapper) {
-      this.setBreadcrumbPosition(breadcrumbWrapper)
+      this.setBreadcrumbWrapper(breadcrumbWrapper)
     }
   },
   created () {
@@ -147,10 +148,10 @@ export default {
   },
   methods: {
     ...mapMutations({
-      setLayout: 'SET_LAYOUT',
-      setSiderFixed: 'SET_SIDER_FIXED',
-      setHeaderFixed: 'SET_HEADER_FIXED',
-      setBreadcrumbPosition: 'SET_BREADCRUMB_POSITION'
+      setLayout: MUT_APP_TYPES.SET_LAYOUT,
+      setSidebarFixed: MUT_APP_TYPES.SET_SIDEBAR_FIXED,
+      setHeaderFixed: MUT_APP_TYPES.SET_HEADER_FIXED,
+      setBreadcrumbWrapper: MUT_APP_TYPES.SET_BREADCRUMB_WRAPPER
     })
   }
 }

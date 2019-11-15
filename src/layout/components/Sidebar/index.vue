@@ -16,7 +16,7 @@
           :router="false"
           :unique-opened="true"
         >
-          <template v-for="item in routers">
+          <template v-for="item in menus">
             <template v-if="!item.meta.hidden">
               <item-alone
                 v-if="isAloneRoute(item) && !item.meta.alwaysShow"
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 import Scroll from '@/components/Scroll'
 import SidebarHeader from '@/layout/components/Sidebar/Header'
 import SidebarMixin from '@/layout/mixin/Sidebar'
@@ -65,12 +65,22 @@ export default {
       default: true
     }
   },
+  data () {
+    return {
+      menus: []
+    }
+  },
   computed: {
-    ...mapGetters(['routers']),
+    ...mapState({
+      mainMenu: state => state.permission.addRouters
+    }),
     activePath () {
       const { meta, path } = this.$route
       return meta && meta.activePath ? meta.activePath : path
     }
+  },
+  created () {
+    this.menus = this.mainMenu.find(item => item.path === '/').children
   }
 }
 </script>
