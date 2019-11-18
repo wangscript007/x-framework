@@ -3,6 +3,7 @@ import VueStorage from 'vue-ls'
 
 import Element from 'element-ui'
 import XIcon from '@/components/Icon'
+import XPage from '@/components/Page'
 
 import '@/assets/icon/iconfont'
 import 'normalize.css/normalize.css'
@@ -12,6 +13,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import '@/assets/icon/iconfont.css'
 
 Vue.component('x-icon', XIcon)
+Vue.component('x-page', XPage)
 
 Vue.use(Element, { size: 'medium' })
 Vue.use(VueStorage, {

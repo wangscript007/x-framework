@@ -4,7 +4,7 @@
       v-if="showHeader"
       class="x-page-header"
     >
-      <breadcrumb v-if="(app.layout==='classic' || app.breadcrumbWrapper === 'pageHeader') && showBreadcrumb"></breadcrumb>
+      <breadcrumb v-if="(app.layout==='classic' || app.breadcrumbWrapper === 'pageHeader') && showBreadcrumb" />
       <h1
         v-if="showTitle"
         class="x-page-header-title"
@@ -13,12 +13,12 @@
         v-if="showDescribe"
         class="x-page-header-describe"
       >
-        {{ $route.meta.describe || '' }}
+        {{ pageHeaderDescribe }}
       </div>
-      <slot name="page-header"></slot>
+      <slot name="page-header" />
     </div>
     <div class="x-page-content">
-      <slot></slot>
+      <slot />
     </div>
   </div>
 </template>
@@ -45,20 +45,27 @@ export default {
       type: Boolean,
       default: true
     },
+    title: {
+      type: String,
+      default: ''
+    },
     showDescribe: {
       type: Boolean,
       default: true
+    },
+    describe: {
+      type: String,
+      default: ''
     }
   },
   computed: {
     ...mapGetters(['app']),
     pageHeaderTitle () {
-      const { meta } = this.$route
-      return meta ? meta.headerTitle ? meta.headerTitle : meta.title ? meta.title : '' : ''
+      return this.title || this.$route.meta.title || ''
+    },
+    pageHeaderDescribe () {
+      return this.describe || this.$route.meta.describe || ''
     }
   }
 }
 </script>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-</style>

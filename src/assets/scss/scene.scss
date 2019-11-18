@@ -1,7 +1,7 @@
 /* 场景 x-page */
 .x-page {
   &-header {
-    padding: x-space(3) x-space(4) x-space(1) x-space(4);
+    padding: x-space(2) x-space(4) 0 x-space(4);
     background: $color-gray-1;
     border-bottom: 1px solid $color-gray-6;
 
@@ -13,7 +13,7 @@
     &-title {
       margin-top: 0;
       margin-bottom: x-space(2);
-      font-weight: 600;
+      font-weight: 500;
       font-size: 20px;
       color: $color-title;
     }

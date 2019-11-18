@@ -84,7 +84,8 @@ $x-drawer-z-index: 1000;
     height: $layout-header-height;
     z-index: 10;
     background: $layout-header-bg-color;
-    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.35);
+    //box-shadow: 0 1px 4px rgba(0, 21, 41, 0.35);
+    box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
     @include x-transition(0.3s);
 
     &.header-fixed {
