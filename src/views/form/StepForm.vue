@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card shadow="never">
       <template v-slot:header>
         <div class="fix">
@@ -105,18 +105,16 @@
         </div>
       </div>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
-import Page from '@/components/Page'
 import Steps from '@/components/Steps'
 import Result from '@/components/Result'
 
 export default {
   name: 'StepForm',
   components: {
-    Page,
     Steps,
     Result
   },

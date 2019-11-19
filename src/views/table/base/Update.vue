@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card shadow="never">
       <template v-slot:header>
         <div class="fix">
@@ -147,7 +147,7 @@
         </el-form>
       </el-col>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
@@ -156,14 +156,10 @@ import dayJs from 'dayjs'
 import { regionData } from 'element-china-area-data'
 import { updateStaff } from '@/api/staff'
 import validator from '@/common/utils/validate'
-import Page from '@/components/Page'
 import mixin from '@/views/table/base/mixin'
 
 export default {
   name: 'UpdateStaff',
-  components: {
-    Page
-  },
   mixins: [mixin],
   data () {
     return {

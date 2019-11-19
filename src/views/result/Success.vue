@@ -1,5 +1,5 @@
 <template>
-  <page :show-header="false">
+  <x-page :show-header="false">
     <el-card shadow="never">
       <result type="success">
         <template v-slot:title>提交成功</template>
@@ -44,17 +44,15 @@
         </template>
       </result>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
-import Page from '@/components/Page'
 import Result from '@/components/Result'
 
 export default {
   name: 'ResultSuccess',
   components: {
-    Page,
     Result
   },
   data () {

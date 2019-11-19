@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card
       shadow="never"
       class="margin-bottom-2x"
@@ -191,17 +191,15 @@
         </el-table-column>
       </el-table>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
-import Page from '@/components/Page'
 import Steps from '@/components/Steps'
 
 export default {
   name: 'SeniorDetail',
   components: {
-    Page,
     Steps
   },
   data () {

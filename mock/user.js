@@ -31,7 +31,7 @@ const roles = {
 module.exports = [
   /* 登录 */
   {
-    url: '/user/login',
+    url: '/login',
     type: 'post',
     response: config => {
       const { username, password } = config.body
@@ -58,7 +58,7 @@ module.exports = [
   },
   /* 用户信息 */
   {
-    url: '/user/info.*',
+    url: '/getUserInfo',
     type: 'get',
     response: config => {
       return {
@@ -71,7 +71,7 @@ module.exports = [
   },
   /* 用户权限 */
   {
-    url: '/user/roles.*',
+    url: '/getUserRole',
     type: 'get',
     response: config => {
       return {
@@ -84,7 +84,7 @@ module.exports = [
   },
   /* 登出 */
   {
-    url: '/user/logout',
+    url: '/logout',
     type: 'post',
     response: () => {
       return {

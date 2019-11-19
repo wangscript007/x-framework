@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card shadow="never">
       <template v-slot:header>
         <div class="fix">
@@ -156,14 +156,13 @@
         <h4>2、此处可以写一些操作说明和注意事项</h4>
       </div>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
 import { regionData } from 'element-china-area-data'
 import { EMI_SEX, EMI_HOUSEHOLD_TYPE, EMI_NATION, EMI_POLITICAL_STATUS } from '@/common/emi/standard'
 import validator from '@/common/utils/validate'
-import Page from '@/components/Page'
 import FormSelect from '@/components/Form/Select'
 import FormCheckbox from '@/components/Form/Checkbox'
 import FormRadio from '@/components/Form/Radio'
@@ -171,7 +170,6 @@ import FormRadio from '@/components/Form/Radio'
 export default {
   name: 'BaseForm',
   components: {
-    Page,
     FormSelect,
     FormCheckbox,
     FormRadio

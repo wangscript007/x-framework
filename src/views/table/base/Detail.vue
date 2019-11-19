@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card shadow="never">
       <template v-slot:header>
         <div class="fix">
@@ -95,18 +95,14 @@
         </el-row>
       </el-form>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
-import Page from '@/components/Page'
 import mixin from '@/views/table/base/mixin'
 
 export default {
   name: 'StaffDetail',
-  components: {
-    Page
-  },
   mixins: [mixin],
   data () {
     return {

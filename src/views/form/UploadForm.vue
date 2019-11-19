@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card
       shadow="never"
       class="margin-bottom-2x"
@@ -130,19 +130,16 @@
         </div>
       </template>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
 import validator from '@/common/utils/validate'
-import { createUploadToken } from '@/common/utils/qiniu'
-import Page from '@/components/Page'
 import Tinymce from '@/components/Tinymce'
 
 export default {
   name: 'Upload',
   components: {
-    Page,
     Tinymce
   },
   data () {
@@ -165,12 +162,9 @@ export default {
         content: validator({ required: true, message: '请填写内容' })
       },
       enclosure: [],
-      uploadPath: 'http://upload.qiniu.com',
+      uploadPath: '',
       uploadData: {}
     }
-  },
-  created () {
-    this.uploadData.token = createUploadToken()
   },
   methods: {
     enclosureBeforeUpload (file) {

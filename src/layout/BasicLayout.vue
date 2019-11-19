@@ -21,12 +21,7 @@
           <global-header />
         </template>
         <template v-slot:main>
-          <transition
-            name="animate-layout-main"
-            mode="out-in"
-          >
-            <route-view />
-          </transition>
+          <route-view />
         </template>
         <template v-slot:footer>
           <global-footer />
@@ -47,12 +42,7 @@
           <global-header />
         </template>
         <template v-slot:main>
-          <transition
-            name="animate-layout-main"
-            mode="out-in"
-          >
-            <route-view />
-          </transition>
+          <route-view />
         </template>
         <template v-slot:footer>
           <global-footer />

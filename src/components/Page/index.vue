@@ -4,7 +4,7 @@
       v-if="showHeader"
       class="x-page-header"
     >
-      <breadcrumb v-if="(app.layout==='classic' || app.breadcrumbWrapper === 'pageHeader') && showBreadcrumb" />
+      <breadcrumb v-if="(app.layout==='classic' || app.breadcrumbWrapper === 'page') && showBreadcrumb" />
       <h1
         v-if="showTitle"
         class="x-page-header-title"

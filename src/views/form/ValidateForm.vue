@@ -1,5 +1,5 @@
 <template>
-  <page>
+  <x-page>
     <el-card
       shadow="never"
       class="margin-bottom-2x"
@@ -689,7 +689,7 @@
         </el-form>
       </template>
     </el-card>
-  </page>
+  </x-page>
 </template>
 
 <script>
@@ -698,7 +698,6 @@ import { regionData } from 'element-china-area-data'
 import { EMI_SEX, EMI_NATION } from '@/common/emi/standard'
 import validator from '@/common/utils/validate'
 import * as api from '@/api/validate'
-import Page from '@/components/Page'
 import FormSelect from '@/components/Form/Select'
 import FormCheckbox from '@/components/Form/Checkbox'
 import FormRadio from '@/components/Form/Radio'
@@ -709,7 +708,6 @@ const VALID_USERNAME_DELAY = 300
 export default {
   name: 'ValidateForm',
   components: {
-    Page,
     FormSelect,
     FormCheckbox,
     FormRadio,

@@ -75,7 +75,7 @@
 import awaitTo from 'await-to-js'
 import * as api from '@/api/tree'
 import Page from '@/components/Page'
-import UpdateTreeNode from '@/views/components/tree/dialog/updateTreeNode'
+import UpdateTreeNode from '@/views/components/tree/dialog/UpdateTreeNode'
 
 export default {
   name: 'Tree',
