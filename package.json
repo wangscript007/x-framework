@@ -21,7 +21,7 @@
     "element-ui": "^2.12.0",
     "font-awesome": "^4.7.0",
     "good-storage": "^1.1.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^3.1.0",
